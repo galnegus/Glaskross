@@ -1,4 +1,5 @@
 HC = require "hardoncollider"
+Timer = require "hump.timer"
 require "World"
 require "Entity" 
 require "component.RenderComponent"
@@ -37,6 +38,7 @@ end
 
 function love.update(dt)
     Collider:update(dt)
+    Timer.update(dt)
     entity:update(dt)
 
     if love.keyboard.isDown("w") then

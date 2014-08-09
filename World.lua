@@ -22,8 +22,6 @@ end
 function generateFloor(Collider, width, height, tileSize)
     local floor = {}
 
-    print((width % tileSize) - 2)
-
     for i = 1, (width / tileSize) - 2, 1 do
         floor[i] = {}
         for j = 1, (height / tileSize) - 2, 1 do
