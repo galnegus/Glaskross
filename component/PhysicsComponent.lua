@@ -1,15 +1,11 @@
-Class = require "hump.class"
-Timer = require "hump.timer"
-require "component.Component"
-require "FloorQueue"
-
 PhysicsComponent = Class{}
 PhysicsComponent:include(Component)
 
 function PhysicsComponent:init(Collider, x, y, width, height)
     self.type = "physics"
-    self.body = Collider:addRectangle(x, y, width, height)
-    self.body.type = "entity"
+
+    self._body = Collider:addRectangle(x, y, width, height)
+    self._body.type = "entity"
 
     self._floorColorR = 160
     self._floorColorG = 122
@@ -19,17 +15,21 @@ function PhysicsComponent:init(Collider, x, y, width, height)
 end
 
 function PhysicsComponent:setOwner(owner)
-    self.owner = owner
-    self.body.owner = self
+    Component.setOwner(self, owner)
+
+    self._body.owner = self
+
+    self.owner.events:register("move", function(x, y)
+        self._body:move(x, y)
+    end)
 end
 
 function PhysicsComponent:on_collide(dt, shapeCollidedWith, dx, dy)
     dx = dx or 0
     dy = dy or 0
     if shapeCollidedWith.type == "wall" then 
-        self.owner.movement.velocity.x = 0
-        self.owner.movement.velocity.y = 0
-        self.body:move(dx, dy)     
+        self.owner.movement:stopMoving()
+        self._body:move(dx, dy)     
     elseif shapeCollidedWith.type == "floor" then
         if shapeCollidedWith ~= self._lastCollidedWith or shapeCollidedWith.alpha <= 0 then
             self._lastCollidedWith = shapeCollidedWith
@@ -38,13 +38,14 @@ function PhysicsComponent:on_collide(dt, shapeCollidedWith, dx, dy)
             shapeCollidedWith.g = self._floorColorG
             shapeCollidedWith.b = self._floorColorB
 
+            local nSteps = 10
             Timer.addPeriodic(0.05, function()
-                local step = 255 / 7
+                local step = 255 / nSteps
                 if shapeCollidedWith.alpha - step < 0 then
                     step = shapeCollidedWith.alpha
                 end
                 shapeCollidedWith.alpha = shapeCollidedWith.alpha - step
-            end, 7)
+            end, nSteps)
         end
     end
 end
@@ -57,7 +58,7 @@ function PhysicsComponent:draw()
     local oldR, oldG, oldB, oldA = love.graphics.getColor()
 
     love.graphics.setColor(255, 255, 255, 100)
-    self.body:draw('fill')
+    self._body:draw('fill')
 
     love.graphics.setColor(oldR, oldG, oldB, oldA)
 end

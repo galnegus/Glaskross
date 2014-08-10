@@ -1,25 +1,29 @@
-HC = require "hardoncollider"
+Class = require "hump.class"
+Signal = require 'hump.signal'
 Timer = require "hump.timer"
+Vector = require "hump.vector"
+HC = require "hardoncollider"
+Constants = require "constants"
+
 require "World"
-require "Entity" 
+require "Entity"
+require "Entities"
+require "EntityCreator"
+require "component.Component"
 require "component.RenderComponent"
 require "component.PhysicsComponent"
 require "component.MovementComponent"
+require "component.WasdComponent"
 
 function love.load()
     io.stdout:setvbuf("no")
 
     Collider = HC(100, on_collide)
 
-    walls = generateWalls(Collider, love.graphics.getWidth(), love.graphics.getHeight())
-    floor = generateFloor(Collider, love.graphics.getWidth(), love.graphics.getHeight(), 32)
+    world = World(Collider, love.graphics.getWidth(), love.graphics.getHeight(), Constants.TILE_SIZE)
 
-    entity = Entity.new("Player")
-    physicsComponent = PhysicsComponent(Collider, 200, 200, 1, 1)
-
-    entity:addComponent(physicsComponent)
-    entity:addComponent(RenderComponent(physicsComponent))
-    entity:addComponent(MovementComponent(physicsComponent))
+    Signal.emit("add entity", EntityCreator.create("player", 200, 200))
+    Signal.emit("add entity", EntityCreator.create("glare", 200, 200, 3, 5))
     
     shader = love.graphics.newShader("shader.fs")
     canvas = love.graphics.newCanvas()
@@ -39,38 +43,15 @@ end
 function love.update(dt)
     Collider:update(dt)
     Timer.update(dt)
-    entity:update(dt)
-
-    if love.keyboard.isDown("w") then
-        entity:getComponent("movement"):moveUp()
-    end
-    if love.keyboard.isDown("a") then
-        entity:getComponent("movement"):moveLeft()
-    end
-    if love.keyboard.isDown("s") then
-        entity:getComponent("movement"):moveDown()
-    end
-    if love.keyboard.isDown("d") then
-        entity:getComponent("movement"):moveRight()
-    end
+    Entities.update(dt)
 end
 
 function love.draw()
+
     love.graphics.setCanvas(canvas)
         canvas:clear()
-        local oldR, oldG, oldB, oldA = love.graphics.getColor()
-
-        love.graphics.setColor(0, 0, 0, 100)
-        walls.bottom:draw('fill')
-        walls.left:draw('fill')
-        walls.right:draw('fill')
-        walls.top:draw('fill')
-
-        drawFloor(floor)
-
-        love.graphics.setColor(oldR, oldG, oldB, oldA)
-        
-        entity:draw()
+        world:draw()
+        Entities.draw()
     love.graphics.setCanvas()
 
     love.graphics.setShader(shader)

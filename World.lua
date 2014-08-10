@@ -1,56 +1,55 @@
-function generateWalls(Collider, width, height)
-    local size = 64
-    local walls = {}
+World = Class{}
 
-    walls.top = Collider:addRectangle(0, 0, width, size)
-    walls.top.type = "wall"
+function World:init(Collider, width, height, tileSize)
+    local wallSize = 64
 
-    walls.right = Collider:addRectangle(width - size, 0, size, height)
-    walls.right.type = "wall"
+    -- init walls
+    self._walls = {}
+    self._walls.top = Collider:addRectangle(0, 0, width, wallSize)
+    self._walls.top.type = "wall"
+    self._walls.right = Collider:addRectangle(width - wallSize, 0, wallSize, height)
+    self._walls.right.type = "wall"
+    self._walls.bottom = Collider:addRectangle(0, height - wallSize, width, wallSize)
+    self._walls.bottom.type = "wall"
+    self._walls.left = Collider:addRectangle(0, 0, wallSize, height)
+    self._walls.left.type = "wall"   
+    Collider:setPassive(self._walls.top, self._walls.right, self._walls.bottom, self._walls.left)
 
-    walls.bottom = Collider:addRectangle(0, height - size, width, size)
-    walls.bottom.type = "wall"
-
-    walls.left = Collider:addRectangle(0, 0, size, height)
-    walls.left.type = "wall"   
-
-    Collider:setPassive(walls.top, walls.right, walls.bottom, walls.left)
-
-    return walls
-end
-
-function generateFloor(Collider, width, height, tileSize)
-    local floor = {}
-
+    -- init floor
+    self._floor = {}
     for i = 1, (width / tileSize) - 2, 1 do
-        floor[i] = {}
+        self._floor[i] = {}
         for j = 1, (height / tileSize) - 2, 1 do
-            floor[i][j] = Collider:addRectangle(tileSize * i, tileSize * j, tileSize - 1, tileSize - 1)
-            floor[i][j].type = "floor"
-            floor[i][j].alpha = 0
-            Collider:setPassive(floor[i][j])
+            self._floor[i][j] = Collider:addRectangle(tileSize * i, tileSize * j, tileSize - 1, tileSize - 1)
+            self._floor[i][j].type = "floor"
+            self._floor[i][j].alpha = 0
+            Collider:setPassive(self._floor[i][j])
         end
     end
-
-    return floor
 end
 
-function drawFloor(floor)
+function World:draw()
     local oldR, oldG, oldB, oldA = love.graphics.getColor()
 
-    for i, row in ipairs(floor) do
+    -- draw walls
+    love.graphics.setColor(0, 0, 0, 100)
+    self._walls.bottom:draw('fill')
+    self._walls.left:draw('fill')
+    self._walls.right:draw('fill')
+    self._walls.top:draw('fill')
+
+    -- draw floor
+    for i, row in ipairs(self._floor) do
         for j, tile in ipairs(row) do
-            love.graphics.setColor(93 + math.random() * 20, 56 + math.random() * 20, 130 + math.random() * 20, 100)
+            love.graphics.setColor(88 + math.random() * 30, 51 + math.random() * 30, 125 + math.random() * 30, 100)
             tile:draw("fill")
             if tile.alpha ~= 0 then
                 love.graphics.setColor(tile.r, tile.g, tile.b, tile.alpha)
                 local x1,y1, x2,y2 = tile:bbox()
                 love.graphics.rectangle("fill", x1, y1, x2 - x1, y2 - y1)
             end
-            
         end
     end
 
     love.graphics.setColor(oldR, oldG, oldB, oldA)
-
 end

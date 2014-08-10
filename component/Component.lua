@@ -1,5 +1,3 @@
-Class = require "hump.class"
-
 Component = Class{}
 
 function Component:setOwner(owner)
