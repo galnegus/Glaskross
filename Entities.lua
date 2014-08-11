@@ -4,18 +4,22 @@ Entities._entityArray = {}
 Entities._toRemove = {}
 
 Signal.register("add entity", function(entity)
-    table.insert(Entities._entityArray, entity)
+    Entities._entityArray[entity.id] = entity
 end)
 
-Signal.register("kill entity", function(entity)
-    for index, value in ipairs(Entities._entityArray) do
-        if entity == value then
-            table.insert(Entities._toRemove, index)
-        end
-    end
+Signal.register("kill entity", function(id)
+    table.insert(Entities._toRemove, id)
 end)
 
 function Entities.update(dt)
+    if #Entities._toRemove ~= 0 then
+        for removeKey, entityId in pairs(Entities._toRemove) do
+            Entities._entityArray[entityId]:kill()
+            table.remove(Entities._entityArray, entityId)
+            Entities._toRemove[removeKey] = nil
+        end
+    end
+
     for _, entity in pairs(Entities._entityArray) do
         entity:update(dt)
     end

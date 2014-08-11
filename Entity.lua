@@ -33,3 +33,7 @@ function Entity:draw()
         end
     end
 end
+
+function Entity:kill()
+    Collider:remove(self.physics._body)
+end
