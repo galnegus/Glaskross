@@ -1,7 +1,7 @@
 PhysicsComponent = Class{}
 PhysicsComponent:include(Component)
 
-function PhysicsComponent:init(Collider, x, y, width, height)
+function PhysicsComponent:init(x, y, width, height)
     self.type = "physics"
 
     self._body = Collider:addRectangle(x, y, width, height)
@@ -33,7 +33,7 @@ function PhysicsComponent:on_collide(dt, shapeCollidedWith, dx, dy)
         local tile = shapeCollidedWith.parent
         if shapeCollidedWith ~= self._lastCollidedWith or tile.alpha <= 0 then
             self._lastCollidedWith = shapeCollidedWith
-            tile:stepLightUp(self._floorColorR, self._floorColorG, self._floorColorB)
+            tile:stepLightUp(self._floorColorR, self._floorColorG, self._floorColorB, 0.05, 5)
         end
     end
 end

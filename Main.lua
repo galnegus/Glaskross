@@ -12,7 +12,9 @@ require "World"
 require "component.Component"
 require "component.RenderComponent"
 require "component.PhysicsComponent"
+require "component.GlarePhysicsComponent"
 require "component.MovementComponent"
+require "component.GlareMovementComponent"
 require "component.WasdComponent"
 
 function love.load()
@@ -21,7 +23,7 @@ function love.load()
 
     world = World(love.graphics.getWidth(), love.graphics.getHeight(), Constants.TILE_SIZE)
 
-    Signal.emit("add entity", EntityCreator.create("player", 200, 200))
+    Signal.emit("add entity", EntityCreator.create("player", 300, 300))
     
     shader = love.graphics.newShader("shader.fs")
     canvas = love.graphics.newCanvas()

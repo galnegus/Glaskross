@@ -20,7 +20,7 @@ function World:init(width, height, tileSize)
     for i = 1, (width / tileSize) - 2, 1 do
         self._floor[i] = {}
         for j = 1, (height / tileSize) - 2, 1 do
-            self._floor[i][j] = Tile(tileSize * i, tileSize * j, tileSize - 1, tileSize - 1)
+            self._floor[i][j] = Tile(tileSize * i, tileSize * j, tileSize, tileSize)
         end
     end
 end

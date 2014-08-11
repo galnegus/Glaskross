@@ -8,26 +8,31 @@ function Tile:init(x, y, width, height)
     Collider:setPassive(self._body)
 
     self.alpha = 0
+    self._timerHandle = nil
 end
 
 function Tile:on_collide(dt, shapeCollidedWith, dx, dy)
     --
 end
 
-function Tile:stepLightUp(r, g, b)
+function Tile:stepLightUp(r, g, b, freq, steps)
+    -- cancel any already running timers so that they don't both tick
+    if self.alpha ~= 0 and self._timerHandle ~= nil then
+        Timer.cancel(self._timerHandle)
+    end
+
     self.alpha = 255
     self.r = r
     self.g = g
     self.b = b
 
-    local nSteps = 10
-    Timer.addPeriodic(0.05, function()
-        local step = 255 / nSteps
+    self._timerHandle = Timer.addPeriodic(freq, function()
+        local step = 255 / steps
         if self.alpha - step < 0 then
             step = self.alpha
         end
         self.alpha = self.alpha - step
-    end, nSteps)
+    end, steps)
 end
 
 function Tile:draw()
