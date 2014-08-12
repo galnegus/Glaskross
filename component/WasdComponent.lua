@@ -56,5 +56,5 @@ end
 
 function WasdComponent:_shootCooler()
     self._shoot = false
-    Timer.add(1, function() self._shoot = true end)
+    Timer.add(0.5, function() self._shoot = true end)
 end

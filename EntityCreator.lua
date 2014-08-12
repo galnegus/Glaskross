@@ -7,7 +7,7 @@ function EntityCreator.create(type, x, y, ...)
     if type == "player" then
         local entity = Entity.new(EntityCreator._idCounter, "player")
         entity:addComponent(PhysicsComponent(x, y, 0.1, 0.1))
-        entity:addComponent(RenderComponent())
+        entity:addComponent(PlayerRenderComponent())
         entity:addComponent(MovementComponent())
         entity:addComponent(WasdComponent())
         return entity
