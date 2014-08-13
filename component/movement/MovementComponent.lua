@@ -70,7 +70,7 @@ end
 function MovementComponent:update(dt)
     local oldVelocity = self._velocity:clone()
 
-    local diagonal = (self._direction.x ^ 2 + self._direction.y ^ 2) ^ 0.5
+    local diagonal = math.sqrt((self._direction.x ^ 2 + self._direction.y ^ 2))
     if diagonal ~= 0 then
         self._direction.x = self._direction.x / diagonal
         self._direction.y = self._direction.y / diagonal

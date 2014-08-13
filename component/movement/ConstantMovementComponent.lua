@@ -1,13 +1,13 @@
-GlareMovementComponent = Class{}
-GlareMovementComponent:include(MovementComponent)
+ConstantMovementComponent = Class{}
+ConstantMovementComponent:include(MovementComponent)
 
-function GlareMovementComponent:init(targetDirX, targetDirY)
+function ConstantMovementComponent:init(targetDirX, targetDirY)
     MovementComponent.init(self)
 
     self._targetDirX, self._targetDirY = targetDirX, targetDirY
 end
 
-function GlareMovementComponent:update(dt)
+function ConstantMovementComponent:update(dt)
     
     self._direction.x = self._targetDirX
     self._direction.y = self._targetDirY

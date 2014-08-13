@@ -7,7 +7,7 @@ function EntityCreator.create(type, x, y, ...)
     if type == "player" then
         local entity = Entity.new(EntityCreator._idCounter, "player")
         entity:addComponent(PhysicsComponent(x, y, 0.1, 0.1))
-        entity:addComponent(PlayerRenderComponent())
+        entity:addComponent(VelocityRectangleRenderComponent())
         entity:addComponent(MovementComponent())
         entity:addComponent(WasdComponent())
         return entity
@@ -49,7 +49,7 @@ function EntityCreator.create(type, x, y, ...)
             local entity = Entity.new(EntityCreator._idCounter, "glare")
             entity:addComponent(GlarePhysicsComponent(startX, startY, width, height))
             entity:addComponent(RenderComponent())
-            entity:addComponent(GlareMovementComponent(targetDirX, targetDirY))
+            entity:addComponent(ConstantMovementComponent(targetDirX, targetDirY))
             return entity
         else
             error("Couldn't find any tiles =(")

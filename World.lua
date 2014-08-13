@@ -3,7 +3,7 @@ World = Class{}
 function World:init(width, height, tileSize)
     
     -- init walls
-    local wallSize = 32
+    local wallSize = 64
     self._walls = {}
     self._walls.top = Collider:addRectangle(0, 0, width, wallSize)
     self._walls.top.type = "wall"
