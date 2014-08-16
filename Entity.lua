@@ -26,6 +26,14 @@ function Entity:update(dt)
     end
 end
 
+function Entity:bgDraw()
+    for compType, comp in pairs(self._components) do
+        if compType == "background" then
+            comp:bgDraw()
+        end
+    end
+end
+
 function Entity:draw()
     for compType, comp in pairs(self._components) do
         if compType == "render" then

@@ -1,11 +1,11 @@
 EntityCreator = {}
 
-EntityCreator._idCounter = 0
+local _idCounter = 0
 
 function EntityCreator.create(type, x, y, ...)
-    EntityCreator._idCounter = EntityCreator._idCounter + 1
+    _idCounter = _idCounter + 1
     if type == "player" then
-        local entity = Entity.new(EntityCreator._idCounter, "player")
+        local entity = Entity.new(_idCounter, "player")
         entity:addComponent(PhysicsComponent(x, y, 0.1, 0.1))
         entity:addComponent(VelocityRectangleRenderComponent())
         entity:addComponent(MovementComponent())
@@ -18,7 +18,7 @@ function EntityCreator.create(type, x, y, ...)
         local targetDirX, targetDirY = select(1, ...)
 
         local x1, y1, x2, y2 = -1, -1, -1, -1
-        for _, shape in ipairs(Collider:shapesAt(x,y)) do
+        for _, shape in pairs(Collider:shapesAt(x,y)) do
             if shape.type == "tile" then
                 x1, y1, x2, y2 = shape:bbox()
             end
@@ -46,14 +46,18 @@ function EntityCreator.create(type, x, y, ...)
                 startY = y2 - 2
             end
 
-            local entity = Entity.new(EntityCreator._idCounter, "glare")
+            local entity = Entity.new(_idCounter, "glare")
             entity:addComponent(GlarePhysicsComponent(startX, startY, width, height))
-            entity:addComponent(RenderComponent())
+            entity:addComponent(RotatingRectangleRenderComponent())
             entity:addComponent(ConstantMovementComponent(targetDirX, targetDirY))
             return entity
         else
             error("Couldn't find any tiles =(")
         end
+    elseif type == "boxy" then
+        local entity = Entity.new(_idCounter, "boxy")
+        entity:addComponent(BoxyBackgroundComponent())
+        return entity
     end
     error("Invalid entity type: " .. type)
 end

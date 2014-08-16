@@ -13,13 +13,12 @@ function GlarePhysicsComponent:on_collide(dt, shapeCollidedWith, dx, dy)
     dx = dx or 0
     dy = dy or 0
     if shapeCollidedWith.type == "wall" then 
-        self.owner.movement:stopMoving()
         Signal.emit("kill entity", self.owner.id)
     elseif shapeCollidedWith.type == "tile" then
         local tile = shapeCollidedWith.parent
-        if shapeCollidedWith ~= self._lastCollidedWith or tile.alpha <= 0 then
+        if shapeCollidedWith ~= self._lastCollidedWith then
             self._lastCollidedWith = shapeCollidedWith
-            tile:stepLightUp(self._floorColorR, self._floorColorG, self._floorColorB, 0.03, 5)
+            tile:stepLightUp(self.owner, 0.03, 5, self._floorColorR, self._floorColorG, self._floorColorB)
         end
     end
 end

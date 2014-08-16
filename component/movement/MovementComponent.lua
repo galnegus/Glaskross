@@ -1,15 +1,25 @@
 MovementComponent = Class{}
 MovementComponent:include(Component)
 
+local terminalVelocity = function(acceleration, friction)
+    return -acceleration / ((1 / friction) - 1)
+end
+
+local calcAcceleration = function(terminalVelocity, friction)
+    return -terminalVelocity / friction + terminalVelocity
+end
+
 function MovementComponent:init()
     self.type = "movement"
 
     self._direction = Vector(0, 0)
     self._velocity = Vector(0, 0)
 
-    self._friction = 1000000
-    self._terminalVelocity = 1000
-    self._acceleration = MovementComponent.calcAcceleration(self._terminalVelocity, self._friction)
+    -- terminal velocity needs to be less than 960 pixels per second
+    -- to avoid collision bugs (walls being 32 pixels)
+    self._terminalVelocity = 950
+    self._friction = 100000
+    self._acceleration = calcAcceleration(self._terminalVelocity, self._friction)
 end
 
 function MovementComponent:setOwner(owner)
@@ -37,33 +47,17 @@ function MovementComponent:stopMoving()
     self._velocity.y = 0
 end
 
-function MovementComponent.newVelocity(oldVelocity, acceleration, friction, dt)
+function MovementComponent:_resetAcceleration()
+    self._direction.x = 0
+    self._direction.y = 0
+end
+
+local newVelocity = function(oldVelocity, acceleration, friction, dt)
     local newVelocity = (oldVelocity / friction^dt)
     if friction == 1 then
         return newVelocity + acceleration * dt
     else
         return newVelocity + acceleration * (( 1 / friction^dt - 1) / ((1 / friction) - 1))
-    end
-end
-
-function MovementComponent.terminalVelocity(acceleration, friction)
-    return -acceleration / ((1 / friction) - 1)
-end
-
-function MovementComponent.calcAcceleration(terminalVelocity, friction)
-    return -terminalVelocity / friction + terminalVelocity
-end
-
-function MovementComponent:resetAcceleration()
-    self._direction.x = 0
-    self._direction.y = 0
-end
-
-function MovementComponent:fullStop()
-    if self._direction.x == 0 then
-        self._velocity.x = 0
-    elseif self._direction.y == 0 then
-        self._velocity.y = 0
     end
 end
 
@@ -76,13 +70,11 @@ function MovementComponent:update(dt)
         self._direction.y = self._direction.y / diagonal
     end
 
-    self._velocity.x = MovementComponent.newVelocity(self._velocity.x, self._direction.x * self._acceleration, self._friction, dt)
-    self._velocity.y = MovementComponent.newVelocity(self._velocity.y, self._direction.y * self._acceleration, self._friction, dt)
-
-    --self:fullStop()
+    self._velocity.x = newVelocity(self._velocity.x, self._direction.x * self._acceleration, self._friction, dt)
+    self._velocity.y = newVelocity(self._velocity.y, self._direction.y * self._acceleration, self._friction, dt)
 
     local movement = Vector((oldVelocity.x + self._velocity.x) * dt / 2, (oldVelocity.y + self._velocity.y) * dt / 2)
     self.owner.events:emit("move", movement.x, movement.y)
 
-    self:resetAcceleration()
+    self:_resetAcceleration()
 end
