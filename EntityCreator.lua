@@ -57,6 +57,7 @@ function EntityCreator.create(type, x, y, ...)
     elseif type == "boxy" then
         local entity = Entity.new(_idCounter, "boxy")
         entity:addComponent(BoxyBackgroundComponent())
+        entity:addComponent(BoxyAIComponent())
         return entity
     end
     error("Invalid entity type: " .. type)

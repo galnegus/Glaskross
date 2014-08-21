@@ -17,7 +17,9 @@ function RotatingRectangleRenderComponent:update(dt)
     self._x = x
     self._y = y
 
-    self._rotation = (self._rotation + dt * math.pi) % (2 * math.pi)
+    local vX, vY = self.owner.movement._velocity:unpack()
+    local dir = vX > 0 and 1 or -1
+    self._rotation = (self._rotation + dir * dt * math.pi) % (2 * math.pi)
 
 end
 
@@ -26,7 +28,7 @@ function RotatingRectangleRenderComponent:draw()
         -- set origin of coordinate system to center of rectangle
         love.graphics.translate(self._x, self._y)
         love.graphics.rotate(self._rotation)
-        
+
         love.graphics.setColor(255, 120, 120, 255)
         love.graphics.rectangle("fill", -self._width / 2, -self._height / 2, self._width, self._height)
     love.graphics.pop()

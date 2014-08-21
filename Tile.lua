@@ -10,13 +10,16 @@ function Tile:init(x, y, width, height)
 
     self._alpha = 0
     self._source = nil
-    self._timerHandle = nil
+    self._stepTimerHandle = nil
+
+    -- true if areabeam is active
+    self._beaming = false
 
     self.r = 125
     self.r = 125
     self.r = 200
 
-    -- global timers cannot be cancelled by other global timers 
+    -- global timers cannot consistently be cancelled by other global timers 
     -- because of stupid programming, why this is needed
     self.cancellingTimer = Timer.new()
 end
@@ -26,33 +29,36 @@ function Tile:on_collide(dt, shapeCollidedWith, dx, dy)
 end
 
 function Tile:stepLightUp(source, freq, steps, r, g, b)
-    self._source = source
+    if not self._beaming then
+        self._source = source
 
-    -- cancel any already running timers so that they don't both tick
-    if self._alpha ~= 0 and self._timerHandle ~= nil then
-        Timer.cancel(self._timerHandle)
-    end
-
-    self._alpha = 255
-    self.r = r or self.r
-    self.g = g or self.g
-    self.b = b or self.b
-
-    self._timerHandle = Timer.addPeriodic(freq, function()
-        local step = 255 / steps
-        if self._alpha - step < 0 then
-            step = self._alpha
+        -- cancel any already running timers so that they don't both tick
+        if self._alpha ~= 0 and self._stepTimerHandle ~= nil then
+            Timer.cancel(self._stepTimerHandle)
         end
-        self._alpha = self._alpha - step
-    end, steps)
+
+        self._alpha = 255
+        self.r = r or self.r
+        self.g = g or self.g
+        self.b = b or self.b
+
+        self._stepTimerHandle = Timer.addPeriodic(freq, function()
+            local step = 255 / steps
+            if self._alpha - step < 0 then
+                step = self._alpha
+            end
+            self._alpha = self._alpha - step
+        end, steps)
+    end
 end
 
 function Tile:areaBeam(source, r, g, b)
     -- reset tile just in case
-    if self._alpha ~= 0 and self._timerHandle ~= nil then
-        Timer.cancel(self._timerHandle)
+    if self._alpha ~= 0 and self._stepTimerHandle ~= nil then
+        Timer.cancel(self._stepTimerHandle)
     end
     self._source = source
+    self._beaming = true
 
     self._alpha = 0
     self.r = r
@@ -60,17 +66,14 @@ function Tile:areaBeam(source, r, g, b)
     self.b = b
 
     -- color scramble
-    -- 
     local scramble = Timer.addPeriodic(0.1, function()
         self.r = (self.r - 10 + 20 * math.random()) % 255
         self.g = (self.b - 10 + 20 * math.random()) % 255
         self.g = (self.b - 10 + 20 * math.random()) % 255
-
-
     end)
 
     -- fade in
-    Timer.tween(1, self, {_alpha = 20}, "linear", function()
+    Timer.tween(1, self, {_alpha = 50}, "linear", function()
         self._body.killer = true
         self._alpha = 255
 
@@ -88,6 +91,7 @@ function Tile:areaBeam(source, r, g, b)
             Timer.cancel(scramble)
             Timer.cancel(flasher)
             
+            self._beaming = false
             self._body.killer = false
             self._alpha = 0
         end)

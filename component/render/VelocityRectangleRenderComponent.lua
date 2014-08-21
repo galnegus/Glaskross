@@ -11,8 +11,8 @@ function VelocityRectangleRenderComponent:init()
     self._rotation = 0
     self._rotationDirection = 1
 
-    -- not what unit, since rotation is exponential
-    self._rotationSpeed = 5
+    -- not sure what unit, since rotation is exponential
+    self._rotationSpeed = 10
 end
 
 function VelocityRectangleRenderComponent:update(dt)
@@ -26,7 +26,7 @@ function VelocityRectangleRenderComponent:update(dt)
     local limit = 200
     if math.sqrt(math.abs(vX) ^ 2 + math.abs(vY) ^ 2) > limit then
         -- get angle of velocity vector
-        local targetRotation = math.atan2(vY, vX) 
+        local targetRotation = math.atan2(vY, vX)
 
         -- find closest 2 / pi angle
         while math.abs(targetRotation - self._rotation) >= math.pi / 4 and math.abs(targetRotation - self._rotation) <= 7 * math.pi / 4 do
@@ -49,7 +49,7 @@ end
 -- i.e. when numeric difference between current rotation and target rotation is greater than pi, 
 -- but actual rotation difference is less than pi rad
 function VelocityRectangleRenderComponent._distanceToTargetRotation(targetRotation, currRotation)
-    if math.abs(targetRotation - currRotation) <= math.pi then
+    if math.abs(targetRotation - currRotation) <= 7 * math.pi / 4 then
         return targetRotation - currRotation
     else
         return (2 * math.pi - (targetRotation + currRotation)) % (2 * math.pi)

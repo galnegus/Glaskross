@@ -15,8 +15,8 @@ function MovementComponent:init()
     self._direction = Vector(0, 0)
     self._velocity = Vector(0, 0)
 
-    -- terminal velocity needs to be less than 960 pixels per second
-    -- to avoid collision bugs (walls being 32 pixels)
+    -- terminal velocity needs to be less than 960 pixels per second to avoid
+    -- collision bugs (walls being 32 pixels) at 60 fps (lower fps breaks game)
     self._terminalVelocity = 950
     self._friction = 100000
     self._acceleration = calcAcceleration(self._terminalVelocity, self._friction)

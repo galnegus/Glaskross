@@ -26,6 +26,13 @@ function World:init(width, height, tileSize)
             self._floor[i][j] = Tile(tileSize * (i - 1), tileSize * (j - 1), tileSize, tileSize)
         end
     end
+
+    Signal.register("area beam", function(x, y, owner, r, g, b)
+        tiles = self:getFloorSection(x, y)
+        for _, tile in pairs(tiles) do
+            tile:areaBeam(owner, r, g, b)
+        end
+    end)
 end
 
 function World:getFloorSection(x, y)

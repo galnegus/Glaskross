@@ -10,6 +10,9 @@ require "EntityCreator"
 require "Tile"
 require "World"
 require "component.Component"
+require "component.ai.BoxyAIComponent"
+require "component.ai.BoxyBeamPattern"
+require "component.ai.PatternChainer"
 require "component.background.BoxyBackgroundComponent"
 require "component.render.RenderComponent"
 require "component.render.RotatingRectangleRenderComponent"
@@ -77,16 +80,16 @@ function love.keyreleased(key)
         tiles4 = world:getFloorSection(4, 2)
 
         for _, tile in pairs(tiles1) do
-            tile:areaBeam(nil, 100, 50, 50, 0.1, 5)
+            tile:areaBeam(nil, 100, 50, 50)
         end
         for _, tile in pairs(tiles2) do
-            tile:areaBeam(nil, 100, 50, 50, 0.1, 5)
+            tile:areaBeam(nil, 100, 50, 50)
         end
         for _, tile in pairs(tiles3) do
-            tile:areaBeam(nil, 100, 50, 50, 0.1, 5)
+            tile:areaBeam(nil, 100, 50, 50)
         end
         for _, tile in pairs(tiles4) do
-            tile:areaBeam(nil, 100, 50, 50, 0.1, 5)
+            tile:areaBeam(nil, 100, 50, 50)
         end
 
         --ignal.emit("kill entity", 1)
