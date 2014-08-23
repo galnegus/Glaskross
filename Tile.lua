@@ -4,113 +4,130 @@ Tile:include(Shape)
 function Tile:init(x, y, width, height)
     self._body = Collider:addRectangle(x, y, width, height)
     self._body.type = "tile"
-    self._body.killer = false
+    self._killer = false
     self._body.parent = self
     Collider:setPassive(self._body)
 
-    self._alpha = 0
+    -- _fg is used for entities stepping and stuff and so on (dynamic stuffs)
+    self._fg = {}
+    self._fg.alpha = 0
+    self._fg.r = 200
+    self._fg.g = 100
+    self._fg.b = 200
+    self._fg.stepHandle = nil
+
+    -- _bg is used for environmental effects like the floor being a deathray
+    self._bg = {}
+    self._bg.alpha = 0
+    self._bg.r = 200
+    self._bg.g = 100
+    self._bg.b = 200
+    -- global timers cannot consistently be cancelled by other global timers 
+    -- because of stupid programming, why this is needed
+    self._bg.cancellingTimer = Timer.new()
+
     self._source = nil
-    self._stepTimerHandle = nil
 
     -- true if areabeam is active
     self._beaming = false
-
-    self.r = 125
-    self.r = 125
-    self.r = 200
-
-    -- global timers cannot consistently be cancelled by other global timers 
-    -- because of stupid programming, why this is needed
-    self.cancellingTimer = Timer.new()
 end
 
 function Tile:on_collide(dt, shapeCollidedWith, dx, dy)
     --
 end
 
-function Tile:stepLightUp(source, freq, steps, r, g, b)
-    if not self._beaming then
-        self._source = source
-
-        -- cancel any already running timers so that they don't both tick
-        if self._alpha ~= 0 and self._stepTimerHandle ~= nil then
-            Timer.cancel(self._stepTimerHandle)
-        end
-
-        self._alpha = 255
-        self.r = r or self.r
-        self.g = g or self.g
-        self.b = b or self.b
-
-        self._stepTimerHandle = Timer.addPeriodic(freq, function()
-            local step = 255 / steps
-            if self._alpha - step < 0 then
-                step = self._alpha
-            end
-            self._alpha = self._alpha - step
-        end, steps)
-    end
+function Tile:getFgAlpha()
+    return self._fg.alpha
 end
 
-function Tile:areaBeam(source, r, g, b)
-    -- reset tile just in case
-    if self._alpha ~= 0 and self._stepTimerHandle ~= nil then
-        Timer.cancel(self._stepTimerHandle)
+function Tile:step(freq, steps, r, g, b)
+    -- cancel any already running timers so that they don't both tick
+    if self._fg.alpha ~= 0 and self._fg.stepHandle ~= nil then
+        gameTimer:cancel(self._fg.stepHandle)
     end
+
+    self._fg.alpha = 255
+    self._fg.r = r or self._fg.r
+    self._fg.g = g or self._fg.g
+    self._fg.b = b or self._fg.b
+
+    self._fg.stepHandle = gameTimer:addPeriodic(freq, function()
+        local step = 255 / steps
+        if self._fg.alpha - step < 0 then
+            step = self._fg.alpha
+        end
+        self._fg.alpha = self._fg.alpha - step
+    end, steps)
+end
+
+function Tile:beam(source, r, g, b)
+    -- reset tile just in case
+    --[[
+    if self._alpha ~= 0 and self._stepTimerHandle ~= nil then
+        gameTimer:cancel(self._stepTimerHandle)
+    end
+    ]]
+
     self._source = source
     self._beaming = true
 
-    self._alpha = 0
-    self.r = r
-    self.g = g
-    self.b = b
+    self._bg.alpha = 0
+    self._bg.r = r or self._bg.r
+    self._bg.g = g or self._bg.g
+    self._bg.b = b or self._bg.b
 
     -- color scramble
-    local scramble = Timer.addPeriodic(0.1, function()
-        self.r = (self.r - 10 + 20 * math.random()) % 255
-        self.g = (self.b - 10 + 20 * math.random()) % 255
-        self.g = (self.b - 10 + 20 * math.random()) % 255
+    local scramble = gameTimer:addPeriodic(0.1, function()
+        self._bg.r = (self._bg.r - 10 + 20 * math.random()) % 255
+        self._bg.g = (self._bg.b - 10 + 20 * math.random()) % 255
+        self._bg.g = (self._bg.b - 10 + 20 * math.random()) % 255
     end)
 
     -- fade in
-    Timer.tween(1, self, {_alpha = 50}, "linear", function()
-        self._body.killer = true
-        self._alpha = 255
+    gameTimer:tween(1, self._bg, {alpha = 50}, "linear", function()
+        self._killer = true
+        self._bg.alpha = 255
 
         -- flashing effect
-        local flasher = Timer.addPeriodic(0.1, function()
-            if self._alpha == 255 then
-                self._alpha = 20
+        local flasher = gameTimer:addPeriodic(0.1, function()
+            if self._bg.alpha == 255 then
+                self._bg.alpha = 20
             else
-                self._alpha = 255
+                self._bg.alpha = 255
             end
         end)
         
         -- turn it off when its done
-        self.cancellingTimer:add(1, function()
-            Timer.cancel(scramble)
-            Timer.cancel(flasher)
+        self._bg.cancellingTimer:add(1, function()
+            gameTimer:cancel(scramble)
+            gameTimer:cancel(flasher)
             
             self._beaming = false
-            self._body.killer = false
-            self._alpha = 0
+            self._killer = false
+            self._bg.alpha = 0
         end)
     end)
 end
 
 function Tile:update(dt)
-    self.cancellingTimer:update(dt)
+    self._bg.cancellingTimer:update(dt)
 end
 
 function Tile:draw()
     local x1, y1, x2, y2 = self._body:bbox()
 
-    love.graphics.setColor(88 + math.random() * 30, 51 + math.random() * 30, 125 + math.random() * 30, 100)
+    love.graphics.setColor(44 + math.random() * 30, 25 + math.random() * 30, 62 + math.random() * 30, 100)
     self._body:draw("fill")
-    if self._alpha ~= 0 then
-        love.graphics.setColor(self.r, self.g, self.b, self._alpha / 10)
+    if self._bg.alpha ~= 0 then
+        love.graphics.setColor(self._bg.r, self._bg.g, self._bg.b, self._bg.alpha / 10)
         love.graphics.rectangle("fill", x1 + 1, y1 + 1, x2 - x1 - 2, y2 - y1 - 2)
-        love.graphics.setColor(self.r, self.g, self.b, self._alpha)
+        love.graphics.setColor(self._bg.r, self._bg.g, self._bg.b, self._bg.alpha)
+        love.graphics.rectangle("line", x1 + 1.5, y1 + 1.5, x2 - x1 - 2, y2 - y1 - 2)
+    end
+    if self._fg.alpha ~= 0 then
+        love.graphics.setColor(self._fg.r, self._fg.g, self._fg.b, self._fg.alpha / 10)
+        love.graphics.rectangle("fill", x1 + 1, y1 + 1, x2 - x1 - 2, y2 - y1 - 2)
+        love.graphics.setColor(self._fg.r, self._fg.g, self._fg.b, self._fg.alpha)
         love.graphics.rectangle("line", x1 + 1.5, y1 + 1.5, x2 - x1 - 2, y2 - y1 - 2)
     end
 end

@@ -11,7 +11,7 @@ function EntityCreator.create(type, x, y, ...)
         entity:addComponent(MovementComponent())
         entity:addComponent(WasdComponent())
         return entity
-    elseif type == "glare" then
+    elseif type == "bullet" then
         if select("#", ...) < 2 then
             error("Arguments missing.")
         end
@@ -25,8 +25,8 @@ function EntityCreator.create(type, x, y, ...)
         end
 
         if x1 ~= -1 and x2 ~= -1 and y1 ~= -1 and y2 ~= -1 then
-            -- adjust size and position of glare so that it has the shape
-            -- of a stick going in a direction perpendicular to its side
+            -- adjust size and position of bullet's collider shape so that it has the
+            -- dimensions of a stick going in a direction perpendicular to its (longer) side
 
             -- adjust height and width
             local width = x2 - x1 - 2
@@ -46,8 +46,8 @@ function EntityCreator.create(type, x, y, ...)
                 startY = y2 - 2
             end
 
-            local entity = Entity.new(_idCounter, "glare")
-            entity:addComponent(GlarePhysicsComponent(startX, startY, width, height))
+            local entity = Entity.new(_idCounter, "bullet")
+            entity:addComponent(BulletPhysicsComponent(startX, startY, width, height))
             entity:addComponent(RotatingRectangleRenderComponent())
             entity:addComponent(ConstantMovementComponent(targetDirX, targetDirY))
             return entity

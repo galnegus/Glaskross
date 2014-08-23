@@ -30,7 +30,7 @@ function World:init(width, height, tileSize)
     Signal.register("area beam", function(x, y, owner, r, g, b)
         tiles = self:getFloorSection(x, y)
         for _, tile in pairs(tiles) do
-            tile:areaBeam(owner, r, g, b)
+            tile:beam(owner, r, g, b)
         end
     end)
 end
@@ -65,11 +65,13 @@ end
 
 function World:draw()
     -- draw walls
+    --[[
     love.graphics.setColor(0, 0, 0, 255)
     self._walls.bottom:draw('fill')
     self._walls.left:draw('fill')
     self._walls.right:draw('fill')
     self._walls.top:draw('fill')
+    ]]
 
     -- draw floor
     for _, row in ipairs(self._floor) do

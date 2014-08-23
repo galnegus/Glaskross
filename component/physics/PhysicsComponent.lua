@@ -25,6 +25,10 @@ function PhysicsComponent:setOwner(owner)
     end)
 end
 
+function PhysicsComponent:center()
+    return self._body:center()
+end
+
 function PhysicsComponent:on_collide(dt, shapeCollidedWith, dx, dy)
     dx = dx or 0
     dy = dy or 0
@@ -34,9 +38,12 @@ function PhysicsComponent:on_collide(dt, shapeCollidedWith, dx, dy)
         self._body:move(dx, dy)     
     elseif shapeCollidedWith.type == "tile" then
         local tile = shapeCollidedWith.parent
-        if shapeCollidedWith ~= self._lastCollidedWith or tile._alpha <= 0 then
+        if tile._killer then
+            Gamestate.switch(menu)
+        end
+        if shapeCollidedWith ~= self._lastCollidedWith or tile:getFgAlpha() <= 0 then
             self._lastCollidedWith = shapeCollidedWith
-            tile:stepLightUp(self.owner, 0.05, 5, self._floorColorR, self._floorColorG, self._floorColorB)
+            tile:step(0.05, 5, self._floorColorR, self._floorColorG, self._floorColorB)
         end
     end
 end

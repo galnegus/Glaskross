@@ -42,6 +42,10 @@ function MovementComponent:setDirection(direction)
     end
 end
 
+function MovementComponent:getVelocity()
+    return self._velocity:unpack()
+end
+
 function MovementComponent:stopMoving()
     self._velocity.x = 0
     self._velocity.y = 0
@@ -53,11 +57,11 @@ function MovementComponent:_resetAcceleration()
 end
 
 local newVelocity = function(oldVelocity, acceleration, friction, dt)
-    local newVelocity = (oldVelocity / friction^dt)
+    local newVelocity = (oldVelocity / friction ^ dt)
     if friction == 1 then
         return newVelocity + acceleration * dt
     else
-        return newVelocity + acceleration * (( 1 / friction^dt - 1) / ((1 / friction) - 1))
+        return newVelocity + acceleration * ((1 / friction^dt - 1) / ((1 / friction) - 1))
     end
 end
 
@@ -73,6 +77,7 @@ function MovementComponent:update(dt)
     self._velocity.x = newVelocity(self._velocity.x, self._direction.x * self._acceleration, self._friction, dt)
     self._velocity.y = newVelocity(self._velocity.y, self._direction.y * self._acceleration, self._friction, dt)
 
+    -- heun's method, overkill?
     local movement = Vector((oldVelocity.x + self._velocity.x) * dt / 2, (oldVelocity.y + self._velocity.y) * dt / 2)
     self.owner.events:emit("move", movement.x, movement.y)
 

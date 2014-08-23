@@ -8,10 +8,10 @@ function BoxyBeamPattern:init(source)
     self._source = source
 end
 
+-- x and y represent the position of the floor section that will be beamed,
+-- check World:getFloorSection() for more info
 function BoxyBeamPattern:add(x, y, delay)
-    if delay < 0 then
-        error("delay must be greater than or equal to 0")
-    end
+    assert(delay >= 0, "delay must be greater than or equal to 0")
 
     table.insert(self._beams, {x = x, y = y, delay = delay})
 end
@@ -26,7 +26,7 @@ function BoxyBeamPattern:_nextBeam(callback)
     self._i = self._i > #self._beams and 1 or self._i
 
     if i > #self._beams then
-        -- we're done! go to callback function
+        -- and we're done! go to callback function (if there is one)
         if callback ~= nil then
             callback()
         end
@@ -37,7 +37,7 @@ function BoxyBeamPattern:_nextBeam(callback)
         if beam.delay == 0 then
             self:_nextBeam(callback)
         else
-            Timer.add(beam.delay, function() self:_nextBeam(callback) end)
+            gameTimer:add(beam.delay, function() self:_nextBeam(callback) end)
         end
     end
 end
@@ -51,6 +51,6 @@ function BoxyBeamPattern:start(callback)
     if beam.delay == 0 then
         self:_nextBeam(callback)
     else
-        Timer.add(beam.delay, function() self:_nextBeam(callback) end)
+        gameTimer:add(beam.delay, function() self:_nextBeam(callback) end)
     end
 end

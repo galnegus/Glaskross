@@ -12,12 +12,12 @@ function RotatingRectangleRenderComponent:init()
 end
 
 function RotatingRectangleRenderComponent:update(dt)
-    local x, y = self.owner.physics._body:center()
+    local x, y = self.owner.physics:center()
 
     self._x = x
     self._y = y
 
-    local vX, vY = self.owner.movement._velocity:unpack()
+    local vX, vY = self.owner.movement:getVelocity()
     local dir = vX > 0 and 1 or -1
     self._rotation = (self._rotation + dir * dt * math.pi) % (2 * math.pi)
 

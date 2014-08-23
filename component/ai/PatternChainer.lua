@@ -7,7 +7,6 @@ end
 
 function PatternChainer:add(pattern)
     table.insert(self._patterns, pattern)
-    print(self._i)
 end
 
 function PatternChainer:start()
