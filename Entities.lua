@@ -8,20 +8,30 @@ Signal.register("add entity", function(entity)
 end)
 
 Signal.register("kill entity", function(id)
-    table.insert(_toRemove, id)
+    _toRemove[id] = true
 end)
 
 function Entities.update(dt)
-    if #_toRemove ~= 0 then
-        for removeKey, entityId in pairs(_toRemove) do
-            _entityArray[entityId]:kill()
-            _entityArray[entityId] = nil
-            _toRemove[removeKey] = nil
-        end
+    for entityId, _ in pairs(_toRemove) do
+        _entityArray[entityId]:kill()
+        _entityArray[entityId] = nil
+        _toRemove[entityId] = nil
     end
 
     for _, entity in pairs(_entityArray) do
-        entity:update(dt)
+        -- bullets get finer granularity (atm 120 updates/second) to avoid "tunneling"
+        if entity:bullet() then
+            local dtBullet = dt
+            while dtBullet > Constants.BULLET_TIMESLICE do
+                dtBullet = dtBullet - Constants.BULLET_TIMESLICE
+
+                entity:update(Constants.BULLET_TIMESLICE)
+                Collider:update(Constants.BULLET_TIMESLICE)
+            end
+            entity:update(dtBullet)
+        else
+            entity:update(dt)
+        end
     end
 end
 

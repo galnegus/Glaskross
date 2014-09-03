@@ -18,6 +18,6 @@ function RenderComponent:update(dt)
 end
 
 function RenderComponent:draw()
-    --self.owner.physics:draw()
+    self.owner.physics:draw()
     --love.graphics.draw(self.image, self.physicsComponent.body:getX(), self.physicsComponent.body:getY(), 0, 1, 1, self.image:getWidth() / 2, self.image:getHeight() / 2)
 end

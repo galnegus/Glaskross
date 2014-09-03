@@ -1,17 +1,25 @@
 Entity = {}
 Entity.__index = Entity
 
-function Entity.new(id, type)
+function Entity.new(id, type, bullet)
     local e = {}
 
     e.id = id
     e.type = type
     e.events = Signal.new()
 
+    -- more granular updates (i.e. forced 120 updates per second or something)
+    -- check Entities.update() for actual shitcode
+    e._bullet = bullet or false
+
     -- used for update() and draw()
     e._components = {}
 
     return setmetatable(e, Entity)
+end
+
+function Entity:bullet()
+    return self._bullet
 end
 
 function Entity:addComponent(component)

@@ -22,7 +22,3 @@ function BulletPhysicsComponent:on_collide(dt, shapeCollidedWith, dx, dy)
         end
     end
 end
-
-function BulletPhysicsComponent:draw()
-    PhysicsComponent.draw(self)
-end

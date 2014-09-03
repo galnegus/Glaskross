@@ -6,11 +6,12 @@ function EntityCreator.create(type, x, y, ...)
     _idCounter = _idCounter + 1
     if type == "player" then
         local entity = Entity.new(_idCounter, "player")
-        entity:addComponent(PhysicsComponent(x, y, 0.1, 0.1))
+        entity:addComponent(PlayerPhysicsComponent(x, y, 0.1, 0.1))
         entity:addComponent(VelocityRectangleRenderComponent())
         entity:addComponent(MovementComponent())
         entity:addComponent(WasdComponent())
         return entity
+
     elseif type == "bullet" then
         if select("#", ...) < 2 then
             error("Arguments missing.")
@@ -46,7 +47,7 @@ function EntityCreator.create(type, x, y, ...)
                 startY = y2 - 2
             end
 
-            local entity = Entity.new(_idCounter, "bullet")
+            local entity = Entity.new(_idCounter, "bullet", true)
             entity:addComponent(BulletPhysicsComponent(startX, startY, width, height))
             entity:addComponent(RotatingRectangleRenderComponent())
             entity:addComponent(ConstantMovementComponent(targetDirX, targetDirY))
@@ -54,11 +55,25 @@ function EntityCreator.create(type, x, y, ...)
         else
             error("Couldn't find any tiles =(")
         end
+
     elseif type == "boxy" then
         local entity = Entity.new(_idCounter, "boxy")
         entity:addComponent(BoxyBackgroundComponent())
         entity:addComponent(BoxyAIComponent())
         return entity
+
+    elseif type == "death wall" then
+        local startX = 1
+        local startY = 1
+        local width = 32
+        local height = love.graphics.getHeight() - 2
+
+        local entity = Entity.new(_idCounter, "death wall", true)
+        entity:addComponent(DeathWallPhysicsComponent(startX, startY, width, height))
+        entity:addComponent(ConstantMovementComponent(1, 0))
+        entity:addComponent(RenderComponent())
+        return entity
     end
+
     error("Invalid entity type: " .. type)
 end

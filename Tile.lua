@@ -87,7 +87,7 @@ function Tile:beam(source, r, g, b, duration)
         -- flashing effect
         local flasher = gameTimer:addPeriodic(0.1, function()
             if self._bg.alpha == 255 then
-                self._bg.alpha = 125
+                self._bg.alpha = 60
             else
                 self._bg.alpha = 255
             end

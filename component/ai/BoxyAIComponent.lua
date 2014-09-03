@@ -102,7 +102,9 @@ function BoxyAIComponent:init()
     --chain:add(beamPattern3)
     
 
-    --chain:start()
+    chain:start()
+
+    Signal.emit("add entity", EntityCreator.create("death wall"))
 
     --beamPattern:start(function() beamPattern:start() end)
 end
