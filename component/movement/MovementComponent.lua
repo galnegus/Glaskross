@@ -1,11 +1,11 @@
 MovementComponent = Class{}
 MovementComponent:include(Component)
 
-local terminalVelocity = function(acceleration, friction)
+local function terminalVelocity(acceleration, friction)
     return -acceleration / ((1 / friction) - 1)
 end
 
-local calcAcceleration = function(terminalVelocity, friction)
+local function calcAcceleration(terminalVelocity, friction)
     return -terminalVelocity / friction + terminalVelocity
 end
 
@@ -22,15 +22,7 @@ function MovementComponent:init()
     self._acceleration = calcAcceleration(self._terminalVelocity, self._friction)
 end
 
-function MovementComponent:setOwner(owner)
-    Component.setOwner(self, owner)
-
-    self.owner.events:register("set movement direction", function(direction)
-        self:setDirection(direction)
-    end)    
-end
-
-function MovementComponent:setDirection(direction)
+local function setDirection(self, direction)
     if direction == "up" then
         self._direction.y = -1
     elseif direction == "right" then
@@ -42,6 +34,14 @@ function MovementComponent:setDirection(direction)
     end
 end
 
+function MovementComponent:setOwner(owner)
+    Component.setOwner(self, owner)
+
+    self.owner.events:register("set movement direction", function(direction)
+        setDirection(self, direction)
+    end)    
+end
+
 function MovementComponent:getVelocity()
     return self._velocity:unpack()
 end
@@ -51,12 +51,12 @@ function MovementComponent:stopMoving()
     self._velocity.y = 0
 end
 
-function MovementComponent:_resetAcceleration()
+local function resetAcceleration(self)
     self._direction.x = 0
     self._direction.y = 0
 end
 
-local newVelocity = function(oldVelocity, acceleration, friction, dt)
+local function newVelocity(oldVelocity, acceleration, friction, dt)
     local newVelocity = (oldVelocity / friction ^ dt)
     if friction == 1 then
         return newVelocity + acceleration * dt
@@ -77,9 +77,9 @@ function MovementComponent:update(dt)
     self._velocity.x = newVelocity(self._velocity.x, self._direction.x * self._acceleration, self._friction, dt)
     self._velocity.y = newVelocity(self._velocity.y, self._direction.y * self._acceleration, self._friction, dt)
 
-    -- heun's method, overkill?
+    -- heun's method
     local movement = Vector((oldVelocity.x + self._velocity.x) * dt / 2, (oldVelocity.y + self._velocity.y) * dt / 2)
     self.owner.events:emit("move", movement.x, movement.y)
 
-    self:_resetAcceleration()
+    resetAcceleration(self)
 end

@@ -14,7 +14,6 @@ end)
 function Entities.update(dt)
     if #_toRemove ~= 0 then
         for removeKey, entityId in pairs(_toRemove) do
-            --print("removing entity with id: " .. entityId .. ", active entities: " .. #_entityArray)
             _entityArray[entityId]:kill()
             _entityArray[entityId] = nil
             _toRemove[removeKey] = nil

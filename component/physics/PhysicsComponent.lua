@@ -41,6 +41,7 @@ function PhysicsComponent:on_collide(dt, shapeCollidedWith, dx, dy)
         if tile._killer then
             Gamestate.switch(menu)
         end
+        -- the alpha <= 0 condition makes sure that the tile is relit once it's out
         if shapeCollidedWith ~= self._lastCollidedWith or tile:getFgAlpha() <= 0 then
             self._lastCollidedWith = shapeCollidedWith
             tile:step(0.05, 5, self._floorColorR, self._floorColorG, self._floorColorB)

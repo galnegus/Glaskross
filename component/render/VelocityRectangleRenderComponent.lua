@@ -27,10 +27,13 @@ function VelocityRectangleRenderComponent:update(dt)
     if math.sqrt(math.abs(vX) ^ 2 + math.abs(vY) ^ 2) > limit then
         -- get angle of velocity vector
         local targetRotation = math.atan2(vY, vX)
+        if targetRotation < 0 then 
+            targetRotation = targetRotation + 2 * math.pi 
+        end
 
-        -- find closest 2 / pi angle
+        -- find closest 2 / pi angle to face the velocity angle perpendicularly
         while math.abs(targetRotation - self._rotation) >= math.pi / 4 and math.abs(targetRotation - self._rotation) <= 7 * math.pi / 4 do
-            targetRotation = (targetRotation - math.pi / 2) % (math.pi * 2)
+            targetRotation = (targetRotation + math.pi / 2) % (math.pi * 2)
         end
 
         -- update rotation
@@ -47,13 +50,16 @@ end
 
 -- needed to deal with situations when going crossing the 2 * pi rad mark,
 -- i.e. when numeric difference between current rotation and target rotation is greater than pi, 
--- but actual rotation difference is less than pi rad
+-- but actual rotation difference is less than pi
 function VelocityRectangleRenderComponent._distanceToTargetRotation(targetRotation, currRotation)
-    if math.abs(targetRotation - currRotation) <= 7 * math.pi / 4 then
-        return targetRotation - currRotation
-    else
-        return (2 * math.pi - (targetRotation + currRotation)) % (2 * math.pi)
+    if math.abs(targetRotation - currRotation) > 7 * math.pi / 4 then
+        if currRotation > math.pi then
+            currRotation = currRotation - 2 * math.pi
+        elseif targetRotation > math.pi then
+            targetRotation = targetRotation - 2 * math.pi
+        end
     end
+    return targetRotation - currRotation
 end
 
 function VelocityRectangleRenderComponent:draw()

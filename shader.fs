@@ -1,7 +1,7 @@
 //BlackBulletIV
 extern vec2 size = vec2(20,20);
-extern int samples = 20; // pixels per axis; higher = bigger glow, worse performance
-extern float quality = .01; // lower = smaller glow, better quality
+extern int samples = 5; // pixels per axis; higher = bigger glow, worse performance
+extern float quality = .1; // lower = smaller glow, better quality
 
 vec4 effect(vec4 color, Image tex, vec2 tc, vec2 sc)
 {

@@ -7,7 +7,7 @@ function game:init()
 
     gameTimer = Timer.new()
 
-    Signal.emit("add entity", EntityCreator.create("player", 300, 300))
+    Signal.emit("add entity", EntityCreator.create("player", 355, 500))
     Signal.emit("add entity", EntityCreator.create("boxy"))
 end
 

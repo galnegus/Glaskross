@@ -10,15 +10,15 @@ end
 
 -- x and y represent the position of the floor section that will be beamed,
 -- check World:getFloorSection() for more info
-function BoxyBeamPattern:add(x, y, delay)
+function BoxyBeamPattern:add(x, y, delay, duration)
     assert(delay >= 0, "delay must be greater than or equal to 0")
 
-    table.insert(self._beams, {x = x, y = y, delay = delay})
+    table.insert(self._beams, {x = x, y = y, delay = delay, duration = duration})
 end
 
 function BoxyBeamPattern:_nextBeam(callback)
     local beam = self._beams[self._i]
-    Signal.emit("area beam", beam.x, beam.y, self._source, 100, 50, 50)
+    Signal.emit("area beam", beam.x, beam.y, self._source, 100, 50, 50, beam.duration)
 
     -- increment counter
     self._i = self._i + 1

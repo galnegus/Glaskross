@@ -60,14 +60,7 @@ function Tile:step(freq, steps, r, g, b)
     end, steps)
 end
 
-function Tile:beam(source, r, g, b)
-    -- reset tile just in case
-    --[[
-    if self._alpha ~= 0 and self._stepTimerHandle ~= nil then
-        gameTimer:cancel(self._stepTimerHandle)
-    end
-    ]]
-
+function Tile:beam(source, r, g, b, duration)
     self._source = source
     self._beaming = true
 
@@ -75,6 +68,9 @@ function Tile:beam(source, r, g, b)
     self._bg.r = r or self._bg.r
     self._bg.g = g or self._bg.g
     self._bg.b = b or self._bg.b
+
+    -- default duration is 1 sec
+    duration = duration or 1
 
     -- color scramble
     local scramble = gameTimer:addPeriodic(0.1, function()
@@ -91,14 +87,14 @@ function Tile:beam(source, r, g, b)
         -- flashing effect
         local flasher = gameTimer:addPeriodic(0.1, function()
             if self._bg.alpha == 255 then
-                self._bg.alpha = 20
+                self._bg.alpha = 125
             else
                 self._bg.alpha = 255
             end
         end)
         
         -- turn it off when its done
-        self._bg.cancellingTimer:add(1, function()
+        self._bg.cancellingTimer:add(duration, function()
             gameTimer:cancel(scramble)
             gameTimer:cancel(flasher)
             

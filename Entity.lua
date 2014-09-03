@@ -8,7 +8,7 @@ function Entity.new(id, type)
     e.type = type
     e.events = Signal.new()
 
-    -- user for update() and draw()
+    -- used for update() and draw()
     e._components = {}
 
     return setmetatable(e, Entity)

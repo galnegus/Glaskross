@@ -27,24 +27,24 @@ function World:init(width, height, tileSize)
         end
     end
 
-    Signal.register("area beam", function(x, y, owner, r, g, b)
+    Signal.register("area beam", function(x, y, owner, r, g, b, duration)
         tiles = self:getFloorSection(x, y)
         for _, tile in pairs(tiles) do
-            tile:beam(owner, r, g, b)
+            tile:beam(owner, r, g, b, duration)
         end
     end)
 end
 
 function World:getFloorSection(x, y)
     local ret = {}
-    if x < 1 or x > 4 or y < 1 or y > 2 then
-        error("Conditions: 1<=x<=4 and 1<=y<=2 not met. (x: " .. x .. ", y: " .. y .. ")")
+    if x < 1 or x > Constants.BEAM_COLS or y < 1 or y > Constants.BEAM_ROWS then
+        error("Conditions: 1<=x<=4 and 1<=y<=3 not met. (x: " .. x .. ", y: " .. y .. ")")
     end
 
     -- do some rounding to make sure all tiles are accounted 
     -- for in case the width or height of the world changes
     -- and qCols or qRows arn't integers
-    local qCols, qRows = self._floor.columns / 4, self._floor.rows / 2
+    local qCols, qRows = self._floor.columns / Constants.BEAM_COLS, self._floor.rows / Constants.BEAM_ROWS
     for i = math.floor((x - 1) * qCols + 0.5) + 1, math.floor((x) * qCols + 0.5), 1 do
         for j = math.floor((y - 1) * qRows + 0.5) + 1, math.floor((y) * qRows + 0.5), 1 do
             table.insert(ret, self._floor[i][j])

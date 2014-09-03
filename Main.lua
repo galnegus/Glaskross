@@ -3,8 +3,9 @@ Signal = require 'lib.hump.signal'
 Timer = require "lib.hump.timer"
 Vector = require "lib.hump.vector"
 HC = require "lib.hardoncollider"
-Constants = require "constants"
 Gamestate = require "lib.venus.venus"
+
+Constants = require "constants"
 require "Entities"
 require "Entity"
 require "EntityCreator"
