@@ -70,7 +70,7 @@ function EntityCreator.create(type, x, y, ...)
 
         local entity = Entity.new(_idCounter, "death wall", true)
         entity:addComponent(DeathWallPhysicsComponent(startX, startY, width, height))
-        entity:addComponent(ConstantMovementComponent(1, 0))
+        entity:addComponent(ConstantMovementComponent(1, 0, Constants.DEFAULT_TERMINAL_VELOCITY / 2))
         entity:addComponent(RenderComponent())
         return entity
     end

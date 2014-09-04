@@ -9,15 +9,13 @@ local function calcAcceleration(terminalVelocity, friction)
     return -terminalVelocity / friction + terminalVelocity
 end
 
-function MovementComponent:init()
+function MovementComponent:init(terminalVelocity)
     self.type = "movement"
 
     self._direction = Vector(0, 0)
     self._velocity = Vector(0, 0)
 
-    -- terminal velocity needs to be less than 960 pixels per second to avoid
-    -- collision bugs (walls being 32 pixels) at 60 fps (lower fps breaks game)
-    self._terminalVelocity = 950
+    self._terminalVelocity = terminalVelocity or Constants.DEFAULT_TERMINAL_VELOCITY
     self._friction = 100000
     self._acceleration = calcAcceleration(self._terminalVelocity, self._friction)
 end

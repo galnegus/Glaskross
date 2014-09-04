@@ -1,8 +1,8 @@
 ConstantMovementComponent = Class{}
 ConstantMovementComponent:include(MovementComponent)
 
-function ConstantMovementComponent:init(targetDirX, targetDirY)
-    MovementComponent.init(self)
+function ConstantMovementComponent:init(targetDirX, targetDirY, terminalVelocity)
+    MovementComponent.init(self, terminalVelocity)
 
     self._targetDirX, self._targetDirY = targetDirX, targetDirY
 end

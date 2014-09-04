@@ -70,5 +70,6 @@ function game:keyreleased(key)
 
     if key == "escape" then
         Gamestate.switch(menu)
+        Gamestate.switch(menu)
     end
 end

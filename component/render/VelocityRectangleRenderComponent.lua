@@ -4,8 +4,6 @@ VelocityRectangleRenderComponent:include(RenderComponent)
 function VelocityRectangleRenderComponent:init()
     self.type = "render"
 
-    self._x = 0
-    self._y = 0
     self._width = 32
     self._height = 32
     self._rotation = 0
@@ -16,11 +14,6 @@ function VelocityRectangleRenderComponent:init()
 end
 
 function VelocityRectangleRenderComponent:update(dt)
-    local x, y = self.owner.physics:center()
-
-    self._x = x
-    self._y = y
-
     local vX, vY = self.owner.movement:getVelocity()
 
     local limit = 200
@@ -64,11 +57,10 @@ end
 
 function VelocityRectangleRenderComponent:draw()
     love.graphics.push()
-        love.graphics.translate(self._x, self._y)
+        local x, y = self.owner.physics:center()
+        love.graphics.translate(x, y)
         love.graphics.rotate(self._rotation)
-
         love.graphics.setColor(255, 225, 225, 255)
         love.graphics.rectangle("fill", -self._width / 2, -self._height / 2, self._width, self._height)
-
     love.graphics.pop()
 end

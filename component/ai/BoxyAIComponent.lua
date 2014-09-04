@@ -98,6 +98,7 @@ function BoxyAIComponent:init()
     --chain:add(beamPattern)
     --chain:add(beamPattern2)
     chain:add(circlin)
+    chain:add(circlin)
     chain:add(beamPattern)
     --chain:add(beamPattern3)
     
