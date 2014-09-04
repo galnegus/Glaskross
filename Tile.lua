@@ -114,7 +114,7 @@ end
 function Tile:draw()
     local x1, y1, x2, y2 = self._body:bbox()
 
-    love.graphics.setColor(44 + math.random() * 30, 25 + math.random() * 30, 62 + math.random() * 30, 100)
+    love.graphics.setColor(44 + love.math.random(30), 25 + love.math.random(30), 62 + love.math.random(30), 100)
     self._body:draw("fill")
     if self._bg.alpha ~= 0 then
         love.graphics.setColor(self._bg.r, self._bg.g, self._bg.b, self._bg.alpha / 10)
