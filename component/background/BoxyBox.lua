@@ -1,6 +1,6 @@
 BoxyBox = Class{}
 
-function BoxyBox:init(xOffset, yOffset, r, g, b, a)
+function BoxyBox:init(xOffset, yOffset, r, g, b, a, xHover, yHover)
     self.xOffset = xOffset
     self.yOffset = yOffset
 
@@ -11,14 +11,10 @@ function BoxyBox:init(xOffset, yOffset, r, g, b, a)
     self.a = a
 
     -- variation in position (hovering effect)
-    self.xHover = 50
-    self.yHover = 0
+    self.xHover = xHover or 0
+    self.yHover = yHover or 0
 
     -- must be either 1 or -1 (because it's a fucking direction)
     self.xHoverDir = 1
-    self.yHoverDir = 1
-
-    -- velocity
-    self.xVelocity = 1
-    self.yVelocity = 1
+    self.yHoverDir = -1
 end

@@ -116,6 +116,7 @@ function Tile:draw()
 
     love.graphics.setColor(44 + love.math.random(30), 25 + love.math.random(30), 62 + love.math.random(30), 100)
     self._body:draw("fill")
+    
     if self._bg.alpha ~= 0 then
         love.graphics.setColor(self._bg.r, self._bg.g, self._bg.b, self._bg.alpha / 10)
         love.graphics.rectangle("fill", x1 + 1, y1 + 1, x2 - x1 - 2, y2 - y1 - 2)

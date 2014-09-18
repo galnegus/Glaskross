@@ -1,8 +1,18 @@
 RenderComponent = Class{}
 RenderComponent:include(Component)
 
-function RenderComponent:init()
+function RenderComponent:init(r, g, b, a)
+    Component.init(self)
+
     self.type = "render"
+
+    self._r = r or 255
+    self._g = g or 255
+    self._b = b or 255
+    self._a = a or 100
+
+    self._dying = false
+    self._dyingStep = 0.25 / self._a -- numerator = how many seconds of fade out
 end
 
 function RenderComponent:setOwner(owner)
@@ -13,11 +23,24 @@ function RenderComponent:setOwner(owner)
     end
 end
 
+function RenderComponent:kill()
+    self._dying = true
+end
+
 function RenderComponent:update(dt)
-    -- nada
+    if self._dying then
+        self._a = self._a - dt / self._dyingStep
+
+        if self._a < 0 then
+            self._a = 0
+            Component.kill(self)
+        end
+    end
 end
 
 function RenderComponent:draw()
-    self.owner.physics:draw()
-    --love.graphics.draw(self.image, self.physicsComponent.body:getX(), self.physicsComponent.body:getY(), 0, 1, 1, self.image:getWidth() / 2, self.image:getHeight() / 2)
+    local x1, y1, x2, y2 = self.owner.physics:bbox()
+
+    love.graphics.setColor(self._r, self._g, self._b, self._a)
+    love.graphics.rectangle("fill", x1, y1, x2 - x1, y2 - y1)
 end

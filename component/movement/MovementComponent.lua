@@ -10,6 +10,8 @@ local function calcAcceleration(terminalVelocity, friction)
 end
 
 function MovementComponent:init(terminalVelocity)
+    Component.init(self)
+
     self.type = "movement"
 
     self._direction = Vector(0, 0)
@@ -59,7 +61,7 @@ local function newVelocity(oldVelocity, acceleration, friction, dt)
     if friction == 1 then
         return newVelocity + acceleration * dt
     else
-        return newVelocity + acceleration * ((1 / friction^dt - 1) / ((1 / friction) - 1))
+        return newVelocity + acceleration * ((1 / friction ^ dt - 1) / ((1 / friction) - 1))
     end
 end
 

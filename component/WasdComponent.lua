@@ -2,9 +2,11 @@ WasdComponent = Class{}
 WasdComponent:include(Component)
 
 function WasdComponent:init()
+    Component.init(self)
+
     self.type = "input"
 
-    self._shoot = true
+    self._bullet = true
 end
 
 function WasdComponent:setOwner(owner)
@@ -25,36 +27,36 @@ function WasdComponent:update(dt)
         self.owner.events:emit("set movement direction", "right")
     end
     if love.keyboard.isDown("left") then
-        if self._shoot then
+        if self._bullet then
             local x, y = self.owner.physics._body:center()
             Signal.emit("add entity", EntityCreator.create("bullet", x - Constants.TILE_SIZE, y, -1, 0))
-            self:_shootCooler()
+            self:_bulletCooldown()
         end
     end
     if love.keyboard.isDown("up") then
-        if self._shoot then
+        if self._bullet then
             local x, y = self.owner.physics._body:center()
             Signal.emit("add entity", EntityCreator.create("bullet", x, y - Constants.TILE_SIZE, 0, -1))
-            self:_shootCooler()
+            self:_bulletCooldown()
         end
     end
     if love.keyboard.isDown("right") then
-        if self._shoot then
+        if self._bullet then
             local x, y = self.owner.physics._body:center()
             Signal.emit("add entity", EntityCreator.create("bullet", x + Constants.TILE_SIZE, y, 1, 0))
-            self:_shootCooler()
+            self:_bulletCooldown()
         end
     end
     if love.keyboard.isDown("down") then
-        if self._shoot then
+        if self._bullet then
             local x, y = self.owner.physics._body:center()
             Signal.emit("add entity", EntityCreator.create("bullet", x, y + Constants.TILE_SIZE, 0, 1))
-            self:_shootCooler()
+            self:_bulletCooldown()
         end
     end
 end
 
-function WasdComponent:_shootCooler()
-    self._shoot = false
-    Timer.add(0.5, function() self._shoot = true end)
+function WasdComponent:_bulletCooldown()
+    self._bullet = false
+    Timer.add(0.5, function() self._bullet = true end)
 end

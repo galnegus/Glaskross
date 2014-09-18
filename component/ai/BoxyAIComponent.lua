@@ -2,6 +2,8 @@ BoxyAIComponent = Class{}
 BoxyAIComponent:include(Component)
 
 function BoxyAIComponent:init()
+    Component.init(self)
+
     self.type = "ai"
 
     self._beams = {}
@@ -103,7 +105,7 @@ function BoxyAIComponent:init()
     --chain:add(beamPattern3)
     
 
-    --chain:start()
+    chain:start()
 
     Signal.emit("add entity", EntityCreator.create("death wall"))
 

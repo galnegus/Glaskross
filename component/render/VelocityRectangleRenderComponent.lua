@@ -2,7 +2,7 @@ VelocityRectangleRenderComponent = Class{}
 VelocityRectangleRenderComponent:include(RenderComponent)
 
 function VelocityRectangleRenderComponent:init()
-    self.type = "render"
+    RenderComponent.init(self)
 
     self._width = 32
     self._height = 32
@@ -14,6 +14,8 @@ function VelocityRectangleRenderComponent:init()
 end
 
 function VelocityRectangleRenderComponent:update(dt)
+    RenderComponent.update(self, dt)
+
     local vX, vY = self.owner.movement:getVelocity()
 
     local limit = 200

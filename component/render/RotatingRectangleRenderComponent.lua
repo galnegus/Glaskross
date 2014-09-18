@@ -1,8 +1,8 @@
 RotatingRectangleRenderComponent = Class{}
 RotatingRectangleRenderComponent:include(RenderComponent)
 
-function RotatingRectangleRenderComponent:init()
-    self.type = "render"
+function RotatingRectangleRenderComponent:init(r, g, b, a)
+    RenderComponent.init(self, r, g, b, a)
 
     self._x = 0
     self._y = 0
@@ -12,6 +12,8 @@ function RotatingRectangleRenderComponent:init()
 end
 
 function RotatingRectangleRenderComponent:update(dt)
+    RenderComponent.update(self, dt)
+
     local x, y = self.owner.physics:center()
 
     self._x = x
@@ -29,7 +31,7 @@ function RotatingRectangleRenderComponent:draw()
         love.graphics.translate(self._x, self._y)
         love.graphics.rotate(self._rotation)
 
-        love.graphics.setColor(255, 120, 120, 255)
+        love.graphics.setColor(self._r, self._g, self._b, self._a)
         love.graphics.rectangle("fill", -self._width / 2, -self._height / 2, self._width, self._height)
     love.graphics.pop()
 end

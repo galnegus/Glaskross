@@ -1,7 +1,7 @@
 game = {}
 
 function game:init()
-    Collider = HC(100, on_collide)
+    Collider = HC(32, on_collide)
 
     world = World(love.graphics.getWidth(), love.graphics.getHeight(), Constants.TILE_SIZE)
 

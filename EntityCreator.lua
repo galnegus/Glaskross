@@ -49,7 +49,7 @@ function EntityCreator.create(type, x, y, ...)
 
             local entity = Entity.new(_idCounter, "bullet", true)
             entity:addComponent(BulletPhysicsComponent(startX, startY, width, height))
-            entity:addComponent(RotatingRectangleRenderComponent())
+            entity:addComponent(RotatingRectangleRenderComponent(255, 120, 120, 255))
             entity:addComponent(ConstantMovementComponent(targetDirX, targetDirY))
             return entity
         else

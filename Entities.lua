@@ -1,6 +1,7 @@
 Entities = {}
 
 local _entityArray = {}
+local _toKill = {}
 local _toRemove = {}
 
 Signal.register("add entity", function(entity)
@@ -8,18 +9,33 @@ Signal.register("add entity", function(entity)
 end)
 
 Signal.register("kill entity", function(id)
+    _toKill[id] = true
+end)
+
+Signal.register("remove entity", function(id)
     _toRemove[id] = true
 end)
 
+-- TODO
+--[[
+Signal.register("remove entity", function(id)
+    _toRemove[id] = true
+end)
+]]
+
 function Entities.update(dt)
-    for entityId, _ in pairs(_toRemove) do
+    for entityId, _ in pairs(_toKill) do
         _entityArray[entityId]:kill()
+        _toKill[entityId] = nil
+    end
+
+    for entityId, _ in pairs(_toRemove) do
         _entityArray[entityId] = nil
         _toRemove[entityId] = nil
     end
 
     for _, entity in pairs(_entityArray) do
-        -- bullets get finer granularity (atm 120 updates/second) to avoid "tunneling"
+        -- bullets get finer granularity (defined in Constants.lua) to avoid "tunneling"
         if entity:bullet() then
             local dtBullet = dt
             while dtBullet > Constants.BULLET_TIMESLICE do

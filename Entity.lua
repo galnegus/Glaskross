@@ -29,8 +29,10 @@ function Entity:addComponent(component)
 end
 
 function Entity:update(dt)
-    for compType, comp in pairs(self._components) do
-        comp:update(dt)
+    for _, comp in pairs(self._components) do
+        if comp:isAlive() then
+            comp:update(dt)
+        end
     end
 end
 
@@ -51,5 +53,22 @@ function Entity:draw()
 end
 
 function Entity:kill()
-    Collider:remove(self.physics._body)
+    -- trigger component murdering
+    for _, comp in pairs(self._components) do
+        comp:kill()
+    end
+end
+
+function Entity:suicideAttempt()
+    local allComponentsDead = true
+    for _, comp in pairs(self._components) do
+        if comp:isAlive() then
+            allComponentsDead = false
+            break
+        end
+    end
+
+    if allComponentsDead then
+        Signal.emit("remove entity", self.id)
+    end
 end
