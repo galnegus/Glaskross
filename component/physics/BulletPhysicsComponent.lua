@@ -4,9 +4,7 @@ BulletPhysicsComponent:include(PhysicsComponent)
 function BulletPhysicsComponent:init(x, y, width, height)
     PhysicsComponent.init(self, x, y, width, height)
 
-    self._floorColorR = 225
-    self._floorColorG = 113
-    self._floorColorB = 113
+    self._floorColour = Colours.BULLET_STEP()
 end
 
 function BulletPhysicsComponent:on_collide(dt, shapeCollidedWith, dx, dy)
@@ -16,12 +14,12 @@ function BulletPhysicsComponent:on_collide(dt, shapeCollidedWith, dx, dy)
         local tile = shapeCollidedWith.parent
         if shapeCollidedWith ~= self._lastCollidedWith then
             self._lastCollidedWith = shapeCollidedWith
-            tile:step(0.03, 5, self._floorColorR, self._floorColorG, self._floorColorB)
+            tile:step(0.03, 5, self._floorColour)
         end
     elseif shapeCollidedWith.type == "wall" then 
-        Signal.emit("kill entity", self.owner.id)
+        Signal.emit(Signals.KILL_ENTITY, self.owner.id)
     elseif shapeCollidedWith.type == "death wall" then
-        Signal.emit("kill entity", self.owner.id)
-        Signal.emit("kill entity", shapeCollidedWith.parent.owner.id)
+        Signal.emit(Signals.KILL_ENTITY, self.owner.id)
+        Signal.emit(Signals.KILL_ENTITY, shapeCollidedWith.parent.owner.id)
     end
 end

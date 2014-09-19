@@ -69,6 +69,6 @@ function Entity:suicideAttempt()
     end
 
     if allComponentsDead then
-        Signal.emit("remove entity", self.id)
+        Signal.emit(Signals.REMOVE_ENTITY, self.id)
     end
 end

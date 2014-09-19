@@ -15,7 +15,7 @@ function PhysicsComponent:setOwner(owner)
 
     self._body.type = owner.type
 
-    self.owner.events:register("move", function(x, y)
+    self.owner.events:register(Signals.MOVE_SHAPE, function(x, y)
         self._body:move(x, y)
     end)
 end
@@ -42,10 +42,6 @@ function PhysicsComponent:update(dt)
 end
 
 function PhysicsComponent:draw()
-    local oldR, oldG, oldB, oldA = love.graphics.getColor()
-
-    love.graphics.setColor(255, 255, 255, 100)
+    print("debug drawing in physicsComponent activated")
     self._body:draw('fill')
-
-    love.graphics.setColor(oldR, oldG, oldB, oldA)
 end

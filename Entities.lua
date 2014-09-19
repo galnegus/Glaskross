@@ -4,15 +4,15 @@ local _entityArray = {}
 local _toKill = {}
 local _toRemove = {}
 
-Signal.register("add entity", function(entity)
+Signal.register(Signals.ADD_ENTITY, function(entity)
     _entityArray[entity.id] = entity
 end)
 
-Signal.register("kill entity", function(id)
+Signal.register(Signals.KILL_ENTITY, function(id)
     _toKill[id] = true
 end)
 
-Signal.register("remove entity", function(id)
+Signal.register(Signals.REMOVE_ENTITY, function(id)
     _toRemove[id] = true
 end)
 

@@ -27,10 +27,10 @@ function World:init(width, height, tileSize)
         end
     end
 
-    Signal.register("area beam", function(x, y, owner, r, g, b, duration)
+    Signal.register(Signals.AREA_BEAM, function(x, y, duration)
         tiles = self:getFloorSection(x, y)
         for _, tile in pairs(tiles) do
-            tile:beam(owner, r, g, b, duration)
+            tile:beam(duration)
         end
     end)
 end

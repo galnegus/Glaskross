@@ -22,9 +22,18 @@ function BoxyBackgroundComponent:init()
     self._boxes = {}
 
     -- the first box [1] is the box that is in the back, [2] is in the middle, [3] in front.
-    self._boxes[1] = BoxyBox(32, -32, 225, 112, 112, 10, hoverLimit * 0.6, hoverLimit * 0.4) -- 6, 4
-    self._boxes[2] = BoxyBox(0, 0, 225, 112, 225, 10, hoverLimit * 0.8, hoverLimit * 0.2) -- 8. 2
-    self._boxes[3] = BoxyBox(-32, 32, 112, 112, 225, 10, hoverLimit, 0) -- 10, 0
+    self._boxes[1] = BoxyBox(32, -32, Colours.BOXY_LAYER_ONE(), hoverLimit * 0.6, hoverLimit * 0.4) -- 6, 4
+    self._boxes[2] = BoxyBox(0, 0, Colours.BOXY_LAYER_TWO(), hoverLimit * 0.8, hoverLimit * 0.2) -- 8. 2
+    self._boxes[3] = BoxyBox(-32, 32, Colours.BOXY_LAYER_THREE(), hoverLimit, 0) -- 10, 0
+
+    Signal.register(Signals.BOXY_NEXT_PHASE, function()
+        if #self._boxes > 0 then
+            gameTimer:tween(1, self._boxes[#self._boxes].colour, {a = 0}, 'in-out-sine', function()
+                table.remove(self._boxes)
+            end)
+            
+        end
+    end)
 end
 
 function BoxyBackgroundComponent:setOwner(owner)
@@ -70,9 +79,9 @@ function BoxyBackgroundComponent:bgDraw()
     for _, box in ipairs(self._boxes) do
         local x = self._x + box.xOffset + box.xHover
         local y = self._y + box.yOffset + box.yHover
-        love.graphics.setColor(box.r, box.g, box.b, box.a)
+        love.graphics.setColor(box.colour.r, box.colour.g, box.colour.b, box.colour.a / 10)
         love.graphics.rectangle("fill", x, y, self._boxWidth, self._boxHeight)
-        love.graphics.setColor(box.r, box.g, box.b, 50)
+        love.graphics.setColor(box.colour.r, box.colour.g, box.colour.b, box.colour.a)
         love.graphics.rectangle("line", x + 0.5, y + 0.5, self._boxWidth, self._boxHeight)
     end
 end

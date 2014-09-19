@@ -7,8 +7,8 @@ function game:init()
 
     gameTimer = Timer.new()
 
-    Signal.emit("add entity", EntityCreator.create("player", 355, 500))
-    Signal.emit("add entity", EntityCreator.create("boxy"))
+    Signal.emit(Signals.ADD_ENTITY, EntityCreator.create("player", 355, 500))
+    Signal.emit(Signals.ADD_ENTITY, EntityCreator.create("boxy"))
 end
 
 function on_collide(dt, shape_a, shape_b, dx, dy)
@@ -53,23 +53,25 @@ function game:keyreleased(key)
         tiles4 = world:getFloorSection(4, 2)
 
         for _, tile in pairs(tiles1) do
-            tile:beam(nil, 100, 50, 50)
+            tile:beam()
         end
         for _, tile in pairs(tiles2) do
-            tile:beam(nil, 100, 50, 50)
+            tile:beam()
         end
         for _, tile in pairs(tiles3) do
-            tile:beam(nil, 100, 50, 50)
+            tile:beam()
         end
         for _, tile in pairs(tiles4) do
-            tile:beam(nil, 100, 50, 50)
+            tile:beam()
         end
 
         --ignal.emit("kill entity", 1)
     end
 
     if key == "escape" then
-        Gamestate.switch(menu)
-        Gamestate.switch(menu)
+        --Gamestate.switch(menu)
+        --Gamestate.switch(menu)
+        --Signal.emit(Signals.BACKGROUND_COLOR, 0, 40, 40, 100)
+        Signal.emit(Signals.COLOR_INVERT)
     end
 end
