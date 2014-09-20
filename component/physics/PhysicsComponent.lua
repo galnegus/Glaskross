@@ -32,9 +32,9 @@ function PhysicsComponent:on_collide(dt, shapeCollidedWith, dx, dy)
     -- override
 end
 
-function PhysicsComponent:kill()
+function PhysicsComponent:death()
     Collider:remove(self._body)
-    Component.kill(self)
+    Component.death(self)
 end
 
 function PhysicsComponent:update(dt)

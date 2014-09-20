@@ -3,7 +3,6 @@ DeathWallPhysicsComponent:include(PhysicsComponent)
 
 function DeathWallPhysicsComponent:init(x, y, width, height)
     PhysicsComponent.init(self, x, y, width, height)
-
     Collider:setPassive(self._body)
 end
 

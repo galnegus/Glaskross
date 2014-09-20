@@ -1,17 +1,16 @@
 RenderComponent = Class{}
 RenderComponent:include(Component)
 
-function RenderComponent:init(colour, border)
+function RenderComponent:init(colour, fadeIn, border)
     Component.init(self)
 
     self.type = "render"
 
     self._colour = colour or Colours.DEFAULT_RENDER()
 
-    self._border = border or false
-
+    self._border = border
+    self._fadeIn = fadeIn
     self._dying = false
-    self._dyingStep = 0.25 / self._colour.a -- numerator = how many seconds of fade out
 end
 
 function RenderComponent:setOwner(owner)
@@ -22,19 +21,23 @@ function RenderComponent:setOwner(owner)
     end
 end
 
-function RenderComponent:kill()
-    self._dying = true
+function RenderComponent:conception()
+    if self._fadeIn then
+        local alpha = self._colour.a
+        self._colour.a = 0
+        gameTimer:tween(0.25, self._colour, {a = alpha}, 'in-out-sine', function()
+            Component.conception(self)
+        end)
+    else
+        Component.conception(self)
+    end
 end
 
-function RenderComponent:update(dt)
-    if self._dying then
-        self._colour.a = self._colour.a - dt / self._dyingStep
-
-        if self._colour.a < 0 then
-            self._colour.a = 0
-            Component.kill(self)
-        end
-    end
+function RenderComponent:death()
+    self._dying = true
+    gameTimer:tween(0.25, self._colour, {a = 0}, 'in-out-sine', function()
+        Component.death(self)
+    end)
 end
 
 function RenderComponent:draw()

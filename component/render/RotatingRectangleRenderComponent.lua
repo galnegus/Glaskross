@@ -1,8 +1,8 @@
 RotatingRectangleRenderComponent = Class{}
 RotatingRectangleRenderComponent:include(RenderComponent)
 
-function RotatingRectangleRenderComponent:init(colour)
-    RenderComponent.init(self, colour)
+function RotatingRectangleRenderComponent:init(colour, fadeIn)
+    RenderComponent.init(self, colour, fadeIn, false)
 
     self._x = 0
     self._y = 0
@@ -19,9 +19,11 @@ function RotatingRectangleRenderComponent:update(dt)
     self._x = x
     self._y = y
 
-    local vX, vY = self.owner.movement:getVelocity()
-    local dir = vX > 0 and 1 or -1
-    self._rotation = (self._rotation + dir * dt * math.pi) % (2 * math.pi)
+    if not self._dying then
+        local vX, vY = self.owner.movement:getVelocity()
+        local dir = vX > 0 and 1 or -1
+        self._rotation = (self._rotation + dir * dt * math.pi) % (2 * math.pi)
+    end
 
 end
 

@@ -6,6 +6,7 @@ local _toRemove = {}
 
 Signal.register(Signals.ADD_ENTITY, function(entity)
     _entityArray[entity.id] = entity
+    entity:conception()
 end)
 
 Signal.register(Signals.KILL_ENTITY, function(id)
@@ -16,16 +17,9 @@ Signal.register(Signals.REMOVE_ENTITY, function(id)
     _toRemove[id] = true
 end)
 
--- TODO
---[[
-Signal.register("remove entity", function(id)
-    _toRemove[id] = true
-end)
-]]
-
 function Entities.update(dt)
     for entityId, _ in pairs(_toKill) do
-        _entityArray[entityId]:kill()
+        _entityArray[entityId]:death()
         _toKill[entityId] = nil
     end
 

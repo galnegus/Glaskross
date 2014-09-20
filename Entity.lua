@@ -30,7 +30,7 @@ end
 
 function Entity:update(dt)
     for _, comp in pairs(self._components) do
-        if comp:isAlive() then
+        if comp:isAlive() or not comp:isReadyForBirth() then
             comp:update(dt)
         end
     end
@@ -52,14 +52,36 @@ function Entity:draw()
     end
 end
 
-function Entity:kill()
-    -- trigger component murdering
+function Entity:conception()
+    -- trigger component conception
     for _, comp in pairs(self._components) do
-        comp:kill()
+        comp:conception()
     end
 end
 
-function Entity:suicideAttempt()
+function Entity:birthAttempt()
+    local allComponentsReady = true
+    for _, comp in pairs(self._components) do
+        if not comp:isReadyForBirth() then
+            allComponentsReady = false
+            break
+        end
+    end
+    if allComponentsReady then
+        for _, comp in pairs(self._components) do
+            comp:birth()
+        end
+    end
+end
+
+function Entity:death()
+    -- trigger component murdering
+    for _, comp in pairs(self._components) do
+        comp:death()
+    end
+end
+
+function Entity:burialAttempt()
     local allComponentsDead = true
     for _, comp in pairs(self._components) do
         if comp:isAlive() then
@@ -67,7 +89,6 @@ function Entity:suicideAttempt()
             break
         end
     end
-
     if allComponentsDead then
         Signal.emit(Signals.REMOVE_ENTITY, self.id)
     end
