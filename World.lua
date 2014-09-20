@@ -23,7 +23,7 @@ function World:init(width, height, tileSize)
     for i = 1, self._floor.columns, 1 do
         self._floor[i] = {}
         for j = 1, self._floor.rows, 1 do
-            self._floor[i][j] = Tile(tileSize * (i - 1), tileSize * (j - 1), tileSize, tileSize)
+            self._floor[i][j] = Tile(tileSize * (i - 1), tileSize * (j - 1), tileSize, tileSize, Colours.BG_COLOUR(), Colours.BG_COLOUR_RAND())
         end
     end
 

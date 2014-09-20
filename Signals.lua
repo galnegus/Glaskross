@@ -8,7 +8,8 @@ Signals.REMOVE_ENTITY = "remove entity"
 Signals.BACKGROUND_COLOR = "background color"
 Signals.AREA_BEAM = "area beam"
 
-Signals.COLOR_INVERT = "color invert"
+Signals.COLOUR_INVERT = "color invert"
+Signals.COLOUR_MIX = "color mix"
 
 -- entity signals
 Signals.SET_MOVEMENT_DIRECTION = "set movement direction"

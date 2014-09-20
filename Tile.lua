@@ -1,17 +1,17 @@
 Tile = Class{}
 Tile:include(Shape)
 
-function Tile:init(x, y, width, height)
+function Tile:init(x, y, width, height, bgColour, bgColourRand)
     self._body = Collider:addRectangle(x, y, width, height)
     self._body.type = "tile"
     self._killer = false
     self._body.parent = self
     Collider:setPassive(self._body)
-    Collider:addToGroup("environment", self._body)
+    Collider:addToGroup("tileGroup", self._body)
 
     -- flickering background color + rand(30)
-    self._bgColour = Colours.BG_COLOUR()
-    self._bgColourRand = Colours.BG_COLOUR_RAND()
+    self._bgColour = bgColour
+    self._bgColourRand = bgColourRand
 
     Signal.register(Signals.BACKGROUND_COLOR, function(r, g, b, a)
         assert(r and g and b and a, "set all arguments please")
@@ -69,9 +69,13 @@ function Tile:beam(duration)
 
     -- color scramble
     local scramble = gameTimer:addPeriodic(0.1, function()
-        self._bg.r = (self._bg.r - 10 + 20 * math.random()) % 255
-        self._bg.g = (self._bg.b - 10 + 20 * math.random()) % 255
-        self._bg.g = (self._bg.b - 10 + 20 * math.random()) % 255
+        local rMin, rMax = self._bg.r > 10 and -10 or -1 * self._bg.r, self._bg.r < 245 and 10 or (255 - self._bg.r)
+        local gMin, gMax = self._bg.g > 10 and -10 or -1 * self._bg.g, self._bg.g < 245 and 10 or (255 - self._bg.g)
+        local bMin, bMax = self._bg.b > 10 and -10 or -1 * self._bg.b, self._bg.b < 245 and 10 or (255 - self._bg.b)
+
+        self._bg.r = (self._bg.r + love.math.random(rMin, rMax)) % 255
+        self._bg.g = (self._bg.b + love.math.random(gMin, gMax)) % 255
+        self._bg.g = (self._bg.b + love.math.random(bMin, bMax)) % 255
     end)
 
     -- fade in
@@ -108,7 +112,6 @@ end
 
 function Tile:draw()
     local x1, y1, x2, y2 = self._body:bbox()
-
     love.graphics.setColor(
         self._bgColour.r + love.math.random(self._bgColourRand.r), 
         self._bgColour.g + love.math.random(self._bgColourRand.g), 

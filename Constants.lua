@@ -12,4 +12,7 @@ Constants.DEFAULT_TERMINAL_VELOCITY = 950
 -- 960 pixels per second, one of them being at least 16 pixels wide will always collide without any "tunneling"
 Constants.BULLET_TIMESLICE = 1/120
 
+-- how many seconds are spent on transitions between phases, i.e. colour transitions
+Constants.BOXY_PHASE_TRANS_TIME = 1
+
 return Constants
