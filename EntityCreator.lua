@@ -7,7 +7,7 @@ function EntityCreator.create(type, x, y, ...)
     if type == "player" then
         local entity = Entity.new(_idCounter, "player")
         entity:addComponent(PlayerPhysicsComponent(x, y, 0.1, 0.1))
-        entity:addComponent(VelocityRectangleRenderComponent(Colours.PLAYER_RENDER()))
+        entity:addComponent(VelocityRectangleRenderComponent(Colours.PLAYER_RENDER(), 0, Constants.DEFAULT_DEATH_DURATION))
         entity:addComponent(MovementComponent())
         entity:addComponent(WasdComponent())
         return entity
@@ -48,7 +48,7 @@ function EntityCreator.create(type, x, y, ...)
 
         local entity = Entity.new(_idCounter, "bullet", true)
         entity:addComponent(BulletPhysicsComponent(startX, startY, width, height))
-        entity:addComponent(RotatingRectangleRenderComponent(Colours.BULLET_RENDER(), false))
+        entity:addComponent(RotatingRectangleRenderComponent(Colours.BULLET_RENDER(), Constants.BULLET_BIRTH_DURATION, Constants.DEFAULT_DEATH_DURATION))
         entity:addComponent(ConstantMovementComponent(targetDirX, targetDirY))
         return entity
     elseif type == "boxy" then
@@ -97,7 +97,7 @@ function EntityCreator.create(type, x, y, ...)
         local entity = Entity.new(_idCounter, "death wall", true)
         entity:addComponent(DeathWallPhysicsComponent(startX, startY, width, height))
         entity:addComponent(ConstantMovementComponent(x, y, Constants.DEFAULT_TERMINAL_VELOCITY * maxVelFactor))
-        entity:addComponent(RenderComponent(Colours.DEATH_WALL_RENDER(), true, true))
+        entity:addComponent(RenderComponent(Colours.DEATH_WALL_RENDER(), Constants.DEATH_WALL_BIRTH_DURATION, Constants.DEFAULT_DEATH_DURATION, true))
         return entity
     end
 

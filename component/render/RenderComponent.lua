@@ -1,7 +1,7 @@
 RenderComponent = Class{}
 RenderComponent:include(Component)
 
-function RenderComponent:init(colour, fadeIn, border)
+function RenderComponent:init(colour, birthDuration, deathDuration, border)
     Component.init(self)
 
     self.type = "render"
@@ -9,7 +9,8 @@ function RenderComponent:init(colour, fadeIn, border)
     self._colour = colour or Colours.DEFAULT_RENDER()
 
     self._border = border
-    self._fadeIn = fadeIn
+    self._birthDuration = birthDuration
+    self._deathDuration = deathDuration
     self._dying = false
 end
 
@@ -22,10 +23,10 @@ function RenderComponent:setOwner(owner)
 end
 
 function RenderComponent:conception()
-    if self._fadeIn then
+    if self._birthDuration > 0 then
         local alpha = self._colour.a
         self._colour.a = 0
-        gameTimer:tween(0.25, self._colour, {a = alpha}, 'in-out-sine', function()
+        gameTimer:tween(self._birthDuration, self._colour, {a = alpha}, 'in-out-sine', function()
             Component.conception(self)
         end)
     else
@@ -35,7 +36,7 @@ end
 
 function RenderComponent:death()
     self._dying = true
-    gameTimer:tween(0.25, self._colour, {a = 0}, 'in-out-sine', function()
+    gameTimer:tween(self._deathDuration, self._colour, {a = 0}, 'in-out-sine', function()
         Component.death(self)
     end)
 end

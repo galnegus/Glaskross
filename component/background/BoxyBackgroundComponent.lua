@@ -22,9 +22,9 @@ function BoxyBackgroundComponent:init()
     self._boxes = {}
 
     -- the first box [1] is the box that is in the back, [2] is in the middle, [3] in front.
-    self._boxes[1] = BoxyBox(32, -32, Colours.BOXY_LAYER_ONE(), hoverLimit * 0.6, hoverLimit * 0.4) -- 6, 4
-    self._boxes[2] = BoxyBox(0, 0, Colours.BOXY_LAYER_TWO(), hoverLimit * 0.8, hoverLimit * 0.2) -- 8. 2
-    self._boxes[3] = BoxyBox(-32, 32, Colours.BOXY_LAYER_THREE(), hoverLimit, 0) -- 10, 0
+    self._boxes[1] = BoxyBox(64, -64, Colours.BOXY_LAYER_ONE(), hoverLimit * 0.6, hoverLimit * 0.4) -- 6, 4
+    self._boxes[2] = BoxyBox(32, -32, Colours.BOXY_LAYER_TWO(), hoverLimit * 0.8, hoverLimit * 0.2) -- 8. 2
+    self._boxes[3] = BoxyBox(0, 0, Colours.BOXY_LAYER_THREE(), hoverLimit, 0) -- 10, 0
 
     self._boxes[#self._boxes].colour.a = 255
     Signal.emit(Signals.COLOUR_MIX, self._boxes[#self._boxes].colour, 0)
@@ -37,6 +37,10 @@ function BoxyBackgroundComponent:init()
         end
         if #self._boxes > 1 then
             gameTimer:tween(Constants.BOXY_PHASE_TRANS_TIME, self._boxes[#self._boxes - 1].colour, {a = 255}, 'in-out-sine')
+            for i = #self._boxes - 1, 1, -1 do
+                local offset = (#self._boxes - 1) * 32 - i * 32
+                gameTimer:tween(Constants.BOXY_PHASE_TRANS_TIME, self._boxes[i], {xOffset = offset, yOffset = -offset}, 'in-out-sine')
+            end
             Signal.emit(Signals.COLOUR_MIX, self._boxes[#self._boxes - 1].colour)
         end
     end)

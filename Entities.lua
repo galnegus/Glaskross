@@ -1,6 +1,7 @@
 Entities = {}
 
 local _entityArray = {}
+local _bulletArray = {}
 local _toKill = {}
 local _toRemove = {}
 
@@ -28,20 +29,27 @@ function Entities.update(dt)
         _toRemove[entityId] = nil
     end
 
+    local bullets = {}
     for _, entity in pairs(_entityArray) do
-        -- bullets get finer granularity (defined in Constants.lua) to avoid "tunneling"
         if entity:bullet() then
-            local dtBullet = dt
-            while dtBullet > Constants.BULLET_TIMESLICE do
-                dtBullet = dtBullet - Constants.BULLET_TIMESLICE
-
-                entity:update(Constants.BULLET_TIMESLICE)
-                Collider:update(Constants.BULLET_TIMESLICE)
-            end
-            entity:update(dtBullet)
+            table.insert(bullets, entity)
         else
             entity:update(dt)
         end
+    end
+
+    -- bullets get finer granularity (defined in Constants.lua) to avoid "tunneling"
+    local dtBullet = dt
+    while dtBullet > Constants.BULLET_TIMESLICE do
+        dtBullet = dtBullet - Constants.BULLET_TIMESLICE
+
+        for _, entity in pairs(bullets) do
+            entity:update(Constants.BULLET_TIMESLICE)
+        end
+        Collider:update(Constants.BULLET_TIMESLICE)
+    end
+    for _, entity in pairs(bullets) do
+        entity:update(dtBullet)
     end
 end
 

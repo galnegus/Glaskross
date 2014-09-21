@@ -15,4 +15,11 @@ Constants.BULLET_TIMESLICE = 1/120
 -- how many seconds are spent on transitions between phases, i.e. colour transitions
 Constants.BOXY_PHASE_TRANS_TIME = 1
 
+-- birth durations
+Constants.BULLET_BIRTH_DURATION = 0
+Constants.DEATH_WALL_BIRTH_DURATION = 0.5
+
+-- death durations
+Constants.DEFAULT_DEATH_DURATION = 0.25
+
 return Constants

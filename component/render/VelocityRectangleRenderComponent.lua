@@ -1,8 +1,8 @@
 VelocityRectangleRenderComponent = Class{}
 VelocityRectangleRenderComponent:include(RenderComponent)
 
-function VelocityRectangleRenderComponent:init(colour)
-    RenderComponent.init(self, colour)
+function VelocityRectangleRenderComponent:init(colour, birthDuration, deathDuration)
+    RenderComponent.init(self, colour, birthDuration, deathDuration, false)
 
     self._width = 32
     self._height = 32
@@ -38,7 +38,9 @@ function VelocityRectangleRenderComponent:update(dt)
         self._rotation = (self._rotation + distanceToTarget * self._rotationSpeed * dt) % (2 * math.pi)
     else
         -- rotate automatically if idle
-        self._rotation = (self._rotation + self._rotationDirection * dt * math.pi) % (2 * math.pi)
+        if not self._dying then
+            self._rotation = (self._rotation + self._rotationDirection * dt * math.pi) % (2 * math.pi)
+        end
     end
 
 end
