@@ -13,5 +13,5 @@ function DeathWallPattern:add(x, y, delay, maxVelFactor)
 end
 
 function DeathWallPattern:boom(entry)
-    Signal.emit(Signals.ADD_ENTITY, EntityCreator.create("death wall", entry.x, entry.y, entry.maxVelFactor))
+    Signal.emit(Signals.ADD_ENTITY, EntityCreator.create(EntityTypes.DEATH_WALL, entry.x, entry.y, entry.maxVelFactor))
 end

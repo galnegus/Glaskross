@@ -3,11 +3,11 @@ Tile:include(Shape)
 
 function Tile:init(x, y, width, height, bgColour, bgColourRand)
     self._body = Collider:addRectangle(x, y, width, height)
-    self._body.type = "tile"
+    self._body.type = BodyTypes.TILE
     self._killer = false
     self._body.parent = self
     Collider:setPassive(self._body)
-    Collider:addToGroup("tileGroup", self._body)
+    --Collider:addToGroup("tileGroup", self._body)
 
     -- flickering background color + rand(30)
     self._bgColour = bgColour
@@ -79,7 +79,7 @@ function Tile:beam(duration)
     end)
 
     -- fade in
-    gameTimer:tween(2, self._bg, {a = 100}, "linear", function()
+    gameTimer:tween(2, self._bg, {a = 100}, 'linear', function()
         self._killer = true
         self._bg.a = 255
 

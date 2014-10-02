@@ -1,25 +1,22 @@
 MovementComponent = Class{}
 MovementComponent:include(Component)
 
-local function terminalVelocity(acceleration, friction)
-    return -acceleration / ((1 / friction) - 1)
-end
-
-local function calcAcceleration(terminalVelocity, friction)
-    return -terminalVelocity / friction + terminalVelocity
-end
-
-function MovementComponent:init(terminalVelocity)
+function MovementComponent:init(terminalVelocity, continuousMovement)
+    assert(terminalVelocity ~= nil and continuousMovement ~= nil, "args missing")
     Component.init(self)
 
-    self.type = "movement"
+    self.type = ComponentTypes.MOVEMENT
 
     self._direction = Vector(0, 0)
     self._velocity = Vector(0, 0)
 
-    self._terminalVelocity = terminalVelocity or Constants.DEFAULT_TERMINAL_VELOCITY
+    -- if true, entity will move on its own.
+    -- if false, self._direction is reset each update, stopping movement until set again
+    self._continuousMovement = continuousMovement
+
+    self._terminalVelocity = terminalVelocity or Constants.TERMINAL_VELOCITY
     self._friction = 100000
-    self._acceleration = calcAcceleration(self._terminalVelocity, self._friction)
+    self._acceleration = self:calcAcceleration(self._terminalVelocity, self._friction)
 end
 
 local function setDirection(self, direction)
@@ -32,6 +29,14 @@ local function setDirection(self, direction)
     elseif direction == "left" then
         self._direction.x = -1
     end
+end
+
+function MovementComponent:terminalVelocity(acceleration, friction)
+    return -acceleration / ((1 / friction) - 1)
+end
+
+function MovementComponent:calcAcceleration(terminalVelocity, friction)
+    return -terminalVelocity / friction + terminalVelocity
 end
 
 function MovementComponent:setOwner(owner)
@@ -81,5 +86,7 @@ function MovementComponent:update(dt)
     local movement = Vector((oldVelocity.x + self._velocity.x) * dt / 2, (oldVelocity.y + self._velocity.y) * dt / 2)
     self.owner.events:emit(Signals.MOVE_SHAPE, movement.x, movement.y)
 
-    resetAcceleration(self)
+    if not self._continuousMovement then
+        resetAcceleration(self)
+    end
 end

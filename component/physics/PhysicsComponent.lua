@@ -4,7 +4,7 @@ PhysicsComponent:include(Component)
 function PhysicsComponent:init(x, y, width, height)
     Component.init(self)
 
-    self.type = "physics"
+    self.type = ComponentTypes.PHYSICS
 
     self._body = Collider:addRectangle(x, y, width, height)
     self._body.parent = self

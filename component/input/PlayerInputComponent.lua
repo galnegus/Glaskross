@@ -1,19 +1,19 @@
-WasdComponent = Class{}
-WasdComponent:include(Component)
+PlayerInputComponent = Class{}
+PlayerInputComponent:include(Component)
 
-function WasdComponent:init()
+function PlayerInputComponent:init()
     Component.init(self)
 
-    self.type = "input"
+    self.type = ComponentTypes.INPUT
 
     self._bullet = true
 end
 
-function WasdComponent:setOwner(owner)
+function PlayerInputComponent:setOwner(owner)
     Component.setOwner(self, owner)
 end
 
-function WasdComponent:update(dt)
+function PlayerInputComponent:update(dt)
     if love.keyboard.isDown("w") then
         self.owner.events:emit(Signals.SET_MOVEMENT_DIRECTION, "up")
     end
@@ -29,34 +29,34 @@ function WasdComponent:update(dt)
     if love.keyboard.isDown("left") then
         if self._bullet then
             local x, y = self.owner.physics._body:center()
-            Signal.emit(Signals.ADD_ENTITY, EntityCreator.create("bullet", x - Constants.TILE_SIZE, y, -1, 0))
+            Signal.emit(Signals.ADD_ENTITY, EntityCreator.create(EntityTypes.BULLET, x - Constants.TILE_SIZE, y, -1, 0))
             self:_bulletCooldown()
         end
     end
     if love.keyboard.isDown("up") then
         if self._bullet then
             local x, y = self.owner.physics._body:center()
-            Signal.emit(Signals.ADD_ENTITY, EntityCreator.create("bullet", x, y - Constants.TILE_SIZE, 0, -1))
+            Signal.emit(Signals.ADD_ENTITY, EntityCreator.create(EntityTypes.BULLET, x, y - Constants.TILE_SIZE, 0, -1))
             self:_bulletCooldown()
         end
     end
     if love.keyboard.isDown("right") then
         if self._bullet then
             local x, y = self.owner.physics._body:center()
-            Signal.emit(Signals.ADD_ENTITY, EntityCreator.create("bullet", x + Constants.TILE_SIZE, y, 1, 0))
+            Signal.emit(Signals.ADD_ENTITY, EntityCreator.create(EntityTypes.BULLET, x + Constants.TILE_SIZE, y, 1, 0))
             self:_bulletCooldown()
         end
     end
     if love.keyboard.isDown("down") then
         if self._bullet then
             local x, y = self.owner.physics._body:center()
-            Signal.emit(Signals.ADD_ENTITY, EntityCreator.create("bullet", x, y + Constants.TILE_SIZE, 0, 1))
+            Signal.emit(Signals.ADD_ENTITY, EntityCreator.create(EntityTypes.BULLET, x, y + Constants.TILE_SIZE, 0, 1))
             self:_bulletCooldown()
         end
     end
 end
 
-function WasdComponent:_bulletCooldown()
+function PlayerInputComponent:_bulletCooldown()
     self._bullet = false
     Timer.add(0.5, function() self._bullet = true end)
 end

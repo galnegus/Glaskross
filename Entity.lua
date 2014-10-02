@@ -38,7 +38,7 @@ end
 
 function Entity:bgDraw()
     for compType, comp in pairs(self._components) do
-        if compType == "background" then
+        if compType == ComponentTypes.BACKGROUND then
             comp:bgDraw()
         end
     end
@@ -46,7 +46,7 @@ end
 
 function Entity:draw()
     for compType, comp in pairs(self._components) do
-        if compType == "render" then
+        if compType == ComponentTypes.RENDER then
             comp:draw()
         end
     end

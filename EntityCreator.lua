@@ -2,30 +2,31 @@ EntityCreator = {}
 
 local _idCounter = 0
 
-function EntityCreator.create(type, x, y, ...)
+function EntityCreator.create(entityType, x, y, ...)
     _idCounter = _idCounter + 1
-    if type == "player" then
-        local entity = Entity.new(_idCounter, "player")
+    if entityType == EntityTypes.PLAYER then
+        local entity = Entity.new(_idCounter, EntityTypes.PLAYER)
         entity:addComponent(PlayerPhysicsComponent(x, y, 0.1, 0.1))
         entity:addComponent(VelocityRectangleRenderComponent(Colours.PLAYER_RENDER(), 0, Constants.DEFAULT_DEATH_DURATION))
-        entity:addComponent(MovementComponent())
-        entity:addComponent(WasdComponent())
+        entity:addComponent(MovementComponent(false, false))
+        entity:addComponent(PlayerInputComponent())
         return entity
-    elseif type == "bullet" then
+    elseif entityType == EntityTypes.BULLET then
         assert(select("#", ...) >= 2, "Arguments missing.")
 
         local targetDirX, targetDirY = select(1, ...)
 
         local x1, y1, x2, y2 = -1, -1, -1, -1
-        for _, shape in pairs(Collider:shapesAt(x,y)) do
-            if shape.type == "tile" then
-                x1, y1, x2, y2 = shape:bbox()
+        for _, body in pairs(Collider:shapesAt(x,y)) do
+            if body.type == BodyTypes.TILE then
+                x1, y1, x2, y2 = body:bbox()
+                break
             end
         end
 
         assert(x1 ~= -1 and x2 ~= -1 and y1 ~= -1 and y2 ~= -1, "Couldn't find any tiles =(")
 
-        -- adjust size and position of bullet's collider shape so that it has the
+        -- adjust size and position of bullet's collider body so that it has the
         -- dimensions of a stick going in a direction perpendicular to its (longer) side
 
         -- adjust height and width
@@ -46,17 +47,17 @@ function EntityCreator.create(type, x, y, ...)
             startY = y2 - 2
         end
 
-        local entity = Entity.new(_idCounter, "bullet", true)
+        local entity = Entity.new(_idCounter, EntityTypes.BULLET, true)
         entity:addComponent(BulletPhysicsComponent(startX, startY, width, height))
         entity:addComponent(RotatingRectangleRenderComponent(Colours.BULLET_RENDER(), Constants.BULLET_BIRTH_DURATION, Constants.DEFAULT_DEATH_DURATION))
-        entity:addComponent(ConstantMovementComponent(targetDirX, targetDirY))
+        entity:addComponent(ConstantMovementComponent(targetDirX, targetDirY, false))
         return entity
-    elseif type == "boxy" then
-        local entity = Entity.new(_idCounter, "boxy")
+    elseif entityType == EntityTypes.BOXY then
+        local entity = Entity.new(_idCounter, EntityTypes.BOXY)
         entity:addComponent(BoxyBackgroundComponent())
         entity:addComponent(BoxyAIComponent())
         return entity
-    elseif type == "death wall" then
+    elseif entityType == EntityTypes.DEATH_WALL then
         x = x or 1
         y = y or 0
         local maxVelFactor = select(1, ...) or 0.5
@@ -94,14 +95,16 @@ function EntityCreator.create(type, x, y, ...)
             end
         end
 
-        local entity = Entity.new(_idCounter, "death wall", true)
+        local entity = Entity.new(_idCounter, EntityTypes.DEATH_WALL, true)
         entity:addComponent(DeathWallPhysicsComponent(startX, startY, width, height))
-        entity:addComponent(ConstantMovementComponent(x, y, Constants.DEFAULT_TERMINAL_VELOCITY * maxVelFactor))
+        entity:addComponent(ConstantMovementComponent(x, y, Constants.TERMINAL_VELOCITY * maxVelFactor))
         entity:addComponent(RenderComponent(Colours.DEATH_WALL_RENDER(), Constants.DEATH_WALL_BIRTH_DURATION, Constants.DEFAULT_DEATH_DURATION, true))
         return entity
+    elseif entityType == EntityTypes.BOUNCER then
+        --
     end
 
     -- function should've returned an entity by this point,
     -- if code reaches this row, the specified type doesn't exist
-    error("Invalid entity type: " .. type)
+    error("Invalid entity entityType: " .. entityType)
 end

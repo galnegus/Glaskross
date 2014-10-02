@@ -4,7 +4,7 @@ BoxyAIComponent:include(Component)
 function BoxyAIComponent:init()
     Component.init(self)
 
-    self.type = "ai"
+    self.type = ComponentTypes.AI
 
 
     self._beams = {}
@@ -40,22 +40,22 @@ function BoxyAIComponent:init()
     chain:start()
 
     death1 = DeathWallPattern()
-    death1:add(1, 0, 0.5, 1)
-    death1:add(0, 1, 0.5, 1)
-    death1:add(-1, 0, 0.5, 1)
-    death1:add(0, -1, 0.5, 1)
-    death1:add(1, 0, 0.5, 1)
-    death1:add(0, 1, 0.5, 1)
-    death1:add(-1, 0, 0.5, 1)
-    death1:add(0, -1, 0.5, 1)
-    death1:add(1, 0, 0.5, 1)
-    death1:add(0, 1, 0.5, 1)
-    death1:add(-1, 0, 0.5, 1)
-    death1:add(0, -1, 0.5, 1)
-    death1:add(1, 0, 0.5, 1)
-    death1:add(0, 1, 0.5, 1)
-    death1:add(-1, 0, 0.5, 1)
-    death1:add(0, -1, 0.5, 1)
+    death1:add(1, 0, 0.5, 0.5)
+    death1:add(0, 1, 0.5, 0.5)
+    death1:add(-1, 0, 0.5, 0.5)
+    death1:add(0, -1, 0.5, 0.5)
+    death1:add(1, 0, 0.5, 0.5)
+    death1:add(0, 1, 0.5, 0.5)
+    death1:add(-1, 0, 0.5, 0.5)
+    death1:add(0, -1, 0.5, 0.5)
+    death1:add(1, 0, 0.5, 0.5)
+    death1:add(0, 1, 0.5, 0.5)
+    death1:add(-1, 0, 0.5, 0.5)
+    death1:add(0, -1, 0.5, 0.5)
+    death1:add(1, 0, 0.5, 0.5)
+    death1:add(0, 1, 0.5, 0.5)
+    death1:add(-1, 0, 0.5, 0.5)
+    death1:add(0, -1, 0.5, 0.5)
 
     deathChain = PatternChainer()
     deathChain:add(death1)
@@ -74,12 +74,6 @@ function BoxyAIComponent:init()
             end)
         end)
     end)
-    
-    
-    
-
-    --Signal.emit("add entity", EntityCreator.create("death wall", 0, 1))
-    --Signal.emit("add entity", EntityCreator.create("death wall", 0, -1))
 
     --beamPattern:start(function() beamPattern:start() end)
 end

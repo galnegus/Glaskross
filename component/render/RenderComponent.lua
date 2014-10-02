@@ -4,7 +4,7 @@ RenderComponent:include(Component)
 function RenderComponent:init(colour, birthDuration, deathDuration, border)
     Component.init(self)
 
-    self.type = "render"
+    self.type = ComponentTypes.RENDER
 
     self._colour = colour or Colours.DEFAULT_RENDER()
 

@@ -12,11 +12,11 @@ end
 function PlayerPhysicsComponent:on_collide(dt, shapeCollidedWith, dx, dy)
     dx = dx or 0
     dy = dy or 0
-    if shapeCollidedWith.type == "wall" then 
+    if shapeCollidedWith.type == BodyTypes.WALL then 
         --print("boom " .. dt .. ", dx: " .. dx .. ", dy: " .. dy)
         self.owner.movement:stopMoving()
         self._body:move(dx, dy)     
-    elseif shapeCollidedWith.type == "tile" then
+    elseif shapeCollidedWith.type == BodyTypes.TILE then
         local tile = shapeCollidedWith.parent
         if tile._killer then
             Signal.emit(Signals.KILL_ENTITY, self.owner.id)

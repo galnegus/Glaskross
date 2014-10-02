@@ -1,3 +1,4 @@
+-- libs
 Class = require "lib.hump.class"
 Signal = require 'lib.hump.signal'
 Timer = require "lib.hump.timer"
@@ -5,9 +6,14 @@ Vector = require "lib.hump.vector"
 HC = require "lib.hardoncollider"
 Gamestate = require "lib.venus.venus"
 
-Constants = require "constants"
-Signals = require "Signals"
-Colours = require "Colours"
+-- constants/enums
+Constants = require "constants.constants"
+Signals = require "constants.Signals"
+Colours = require "constants.Colours"
+EntityTypes = require "constants.EntityTypes"
+BodyTypes = require "constants.BodyTypes"
+ComponentTypes = require "constants.ComponentTypes"
+
 require "Colour"
 require "Entities"
 require "Entity"
@@ -32,7 +38,8 @@ require "component.physics.PlayerPhysicsComponent"
 require "component.physics.BulletPhysicsComponent"
 require "component.movement.MovementComponent"
 require "component.movement.ConstantMovementComponent"
-require "component.WasdComponent"
+require "component.movement.BouncerMovementComponent"
+require "component.input.PlayerInputComponent"
 require "gamestate.Game"
 require "gamestate.Menu"
 

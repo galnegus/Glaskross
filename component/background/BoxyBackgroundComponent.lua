@@ -11,7 +11,7 @@ local minVelFactor = 0.1
 function BoxyBackgroundComponent:init()
     Component.init(self)
 
-    self.type = "background"
+    self.type = ComponentTypes.BACKGROUND
 
     self._boxWidth = 384
     self._boxHeight = 288
@@ -63,8 +63,8 @@ function BoxyBackgroundComponent:update(dt)
 
         -- doing some interpolation thingy, "inverted" square
         -- http://sol.gfxile.net/interpolation/#c5
-        xSmooth = 1 - (1 - xSmooth) ^ 2
-        ySmooth = 1 - (1 - ySmooth) ^ 2
+        xSmooth = 1 - (1 - xSmooth) ^ 3
+        ySmooth = 1 - (1 - ySmooth) ^ 3
 
         box.xHover = box.xHover + box.xHoverDir * hoverVelocity * xSmooth * dt
         box.yHover = box.yHover + box.yHoverDir * hoverVelocity * ySmooth * dt
