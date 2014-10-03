@@ -38,7 +38,7 @@ function BoxyBackgroundComponent:init()
         if #self._boxes > 1 then
             gameTimer:tween(Constants.BOXY_PHASE_TRANS_TIME, self._boxes[#self._boxes - 1].colour, {a = 255}, 'in-out-sine')
             for i = #self._boxes - 1, 1, -1 do
-                local offset = (#self._boxes - 1) * 32 - i * 32
+                local offset = (#self._boxes - 1) * Constants.TILE_SIZE - i * Constants.TILE_SIZE
                 gameTimer:tween(Constants.BOXY_PHASE_TRANS_TIME, self._boxes[i], {xOffset = offset, yOffset = -offset}, 'in-out-sine')
             end
             Signal.emit(Signals.COLOUR_MIX, self._boxes[#self._boxes - 1].colour)
