@@ -7,7 +7,7 @@ function EntityCreator.create(entityType, x, y, ...)
     if entityType == EntityTypes.PLAYER then
         local entity = Entity.new(_idCounter, EntityTypes.PLAYER)
         entity:addComponent(PlayerPhysicsComponent(x, y, 0.1, 0.1))
-        entity:addComponent(VelocityRectangleRenderComponent(Colours.PLAYER_RENDER(), 0, Constants.DEFAULT_DEATH_DURATION))
+        entity:addComponent(VelocityRectangleRenderComponent(Colours.PLAYER_RENDER(), 0, Constants.DEFAULT_DEATH_DURATION, Constants.TILE_SIZE))
         entity:addComponent(MovementComponent(false, false))
         entity:addComponent(PlayerInputComponent())
         return entity
@@ -49,7 +49,7 @@ function EntityCreator.create(entityType, x, y, ...)
 
         local entity = Entity.new(_idCounter, EntityTypes.BULLET, true)
         entity:addComponent(BulletPhysicsComponent(startX, startY, width, height))
-        entity:addComponent(RotatingRectangleRenderComponent(Colours.BULLET_RENDER(), Constants.BULLET_BIRTH_DURATION, Constants.DEFAULT_DEATH_DURATION))
+        entity:addComponent(RotatingRectangleRenderComponent(Colours.BULLET_RENDER(), Constants.BULLET_BIRTH_DURATION, Constants.DEFAULT_DEATH_DURATION, Constants.TILE_SIZE / 2))
         entity:addComponent(ConstantMovementComponent(targetDirX, targetDirY, false))
         return entity
     elseif entityType == EntityTypes.BOXY then
@@ -74,7 +74,7 @@ function EntityCreator.create(entityType, x, y, ...)
         local height = 0
 
         if x ~= 0 then
-            width = 32
+            width = Constants.TILE_SIZE
             height = love.graphics.getHeight() - 2
 
             startY = 1
@@ -85,7 +85,7 @@ function EntityCreator.create(entityType, x, y, ...)
             end
         else
             width = love.graphics.getWidth() - 2
-            height = 32
+            height = Constants.TILE_SIZE
 
             startX = 1
             if y == 1 then

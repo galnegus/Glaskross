@@ -1,8 +1,8 @@
 BoxyBackgroundComponent = Class{}
 BoxyBackgroundComponent:include(Component)
 
-local hoverLimit = 10
-local hoverVelocity = 30
+local hoverLimit = Constants.TILE_SIZE / 3
+local hoverVelocity = Constants.TILE_SIZE
 
 -- at the very lowest possible hover velocity in the interpolation thingy,
 -- the velocity will be this factor of the hoverVelocity variable
@@ -13,8 +13,8 @@ function BoxyBackgroundComponent:init()
 
     self.type = ComponentTypes.BACKGROUND
 
-    self._boxWidth = 384
-    self._boxHeight = 288
+    self._boxWidth = Constants.TILE_SIZE * 12
+    self._boxHeight = Constants.TILE_SIZE * 9
 
     self._x = (love.graphics.getWidth() - self._boxWidth) / 2
     self._y = (love.graphics.getHeight() - self._boxHeight) / 2
@@ -22,8 +22,8 @@ function BoxyBackgroundComponent:init()
     self._boxes = {}
 
     -- the first box [1] is the box that is in the back, [2] is in the middle, [3] in front.
-    self._boxes[1] = BoxyBox(64, -64, Colours.BOXY_LAYER_ONE(), hoverLimit * 0.6, hoverLimit * 0.4) -- 6, 4
-    self._boxes[2] = BoxyBox(32, -32, Colours.BOXY_LAYER_TWO(), hoverLimit * 0.8, hoverLimit * 0.2) -- 8. 2
+    self._boxes[1] = BoxyBox(Constants.TILE_SIZE * 2, -Constants.TILE_SIZE * 2, Colours.BOXY_LAYER_ONE(), hoverLimit * 0.6, hoverLimit * 0.4) -- 6, 4
+    self._boxes[2] = BoxyBox(Constants.TILE_SIZE, -Constants.TILE_SIZE, Colours.BOXY_LAYER_TWO(), hoverLimit * 0.8, hoverLimit * 0.2) -- 8. 2
     self._boxes[3] = BoxyBox(0, 0, Colours.BOXY_LAYER_THREE(), hoverLimit, 0) -- 10, 0
 
     self._boxes[#self._boxes].colour.a = 255

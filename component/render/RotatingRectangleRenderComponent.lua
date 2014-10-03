@@ -1,13 +1,13 @@
 RotatingRectangleRenderComponent = Class{}
 RotatingRectangleRenderComponent:include(RenderComponent)
 
-function RotatingRectangleRenderComponent:init(colour, birthDuration, deathDuration)
+function RotatingRectangleRenderComponent:init(colour, birthDuration, deathDuration, length)
     RenderComponent.init(self, colour, birthDuration, deathDuration, false)
 
     self._x = 0
     self._y = 0
-    self._width = 16
-    self._height = 16
+    self._width = length
+    self._height = length
     self._rotation = 0
 end
 

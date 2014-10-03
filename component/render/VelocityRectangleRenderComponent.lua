@@ -1,11 +1,11 @@
 VelocityRectangleRenderComponent = Class{}
 VelocityRectangleRenderComponent:include(RenderComponent)
 
-function VelocityRectangleRenderComponent:init(colour, birthDuration, deathDuration)
+function VelocityRectangleRenderComponent:init(colour, birthDuration, deathDuration, length)
     RenderComponent.init(self, colour, birthDuration, deathDuration, false)
 
-    self._width = 32
-    self._height = 32
+    self._width = length
+    self._height = length
     self._rotation = 0
     self._rotationDirection = 1
 
