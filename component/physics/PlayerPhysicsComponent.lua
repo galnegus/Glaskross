@@ -15,7 +15,7 @@ function PlayerPhysicsComponent:on_collide(dt, shapeCollidedWith, dx, dy)
     if shapeCollidedWith.type == BodyTypes.WALL then 
         --print("boom " .. dt .. ", dx: " .. dx .. ", dy: " .. dy)
         self.owner.movement:stopMoving()
-        self._body:move(dx, dy)     
+        self._body:move(dx, dy)
     elseif shapeCollidedWith.type == BodyTypes.TILE then
         local tile = shapeCollidedWith.parent
         if tile._killer then

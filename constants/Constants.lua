@@ -1,6 +1,6 @@
 local Constants = {}
 
-Constants.TILE_SIZE = 24
+Constants.TILE_SIZE = 24	
 Constants.BEAM_ROWS = 3
 Constants.BEAM_COLS = 4
 
@@ -18,8 +18,12 @@ Constants.BOXY_PHASE_TRANS_TIME = 1
 -- birth durations
 Constants.BULLET_BIRTH_DURATION = 0
 Constants.DEATH_WALL_BIRTH_DURATION = 0.5
+Constants.BOUNCER_BIRTH_DURATION = 1
 
 -- death durations
 Constants.DEFAULT_DEATH_DURATION = 0.25
+
+-- bouncer hp (hits to death)
+Constants.BOUNCER_HP = 3
 
 return Constants

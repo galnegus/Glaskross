@@ -24,5 +24,7 @@ Signals.MOVE_SHAPE = "move shape"
 Signals.BOXY_NEXT_PHASE = "boxy next phase"
 -- BouncerMovementComponent.lua
 Signals.BOUNCER_BOUNCE = "bouncer bounce"
+-- BouncerHPComponent.lua
+Signals.BOUNCER_HIT = "bouncer hit"
 
 return Signals

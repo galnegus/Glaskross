@@ -18,8 +18,5 @@ function BulletPhysicsComponent:on_collide(dt, shapeCollidedWith, dx, dy)
         end
     elseif shapeCollidedWith.type == BodyTypes.WALL then 
         Signal.emit(Signals.KILL_ENTITY, self.owner.id)
-    elseif shapeCollidedWith.type == EntityTypes.DEATH_WALL then
-        Signal.emit(Signals.KILL_ENTITY, self.owner.id)
-        Signal.emit(Signals.KILL_ENTITY, shapeCollidedWith.parent.owner.id)
     end
 end

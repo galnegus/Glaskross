@@ -19,5 +19,8 @@ function DeathWallPhysicsComponent:on_collide(dt, shapeCollidedWith, dx, dy)
     if shapeCollidedWith.type == EntityTypes.PLAYER then
         Signal.emit(Signals.KILL_ENTITY, self.owner.id)
         Signal.emit(Signals.KILL_ENTITY, shapeCollidedWith.parent.owner.id)
+    elseif shapeCollidedWith.type == EntityTypes.BULLET then
+        Signal.emit(Signals.KILL_ENTITY, self.owner.id)
+        Signal.emit(Signals.KILL_ENTITY, shapeCollidedWith.parent.owner.id)
     end
 end

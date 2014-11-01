@@ -101,10 +101,17 @@ function EntityCreator.create(entityType, x, y, ...)
         entity:addComponent(RenderComponent(Colours.DEATH_WALL_RENDER(), Constants.DEATH_WALL_BIRTH_DURATION, Constants.DEFAULT_DEATH_DURATION, true))
         return entity
     elseif entityType == EntityTypes.BOUNCER then
-        --
+        assert(select("#", ...) >= 2, "Target dir arguments missing.")
+        local targetDirX, targetDirY = select(1, ...)
+        local entity = Entity.new(_idCounter, EntityTypes.BOUNCER, true)
+        entity:addComponent(BouncerMovementComponent(targetDirX, targetDirY, Constants.TERMINAL_VELOCITY / 5, 10))
+        entity:addComponent(BouncerPhysicsComponent(x, y, Constants.TILE_SIZE * 2, Constants.TILE_SIZE * 2))
+        entity:addComponent(BouncerHPComponent())
+        entity:addComponent(RenderComponent(Colours.BOUNCER_RENDER(), Constants.BOUNCER_BIRTH_DURATION, Constants.DEFAULT_DEATH_DURATION, true))
+        return entity
     end
 
     -- function should've returned an entity by this point,
-    -- if code reaches this row, the specified type doesn't exist
+    -- if this row is reached, the specified type doesn't exist
     error("Invalid entity entityType: " .. entityType)
 end

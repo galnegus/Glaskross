@@ -2,7 +2,6 @@ Entities = {}
 
 local _entityArray = {}
 local _bulletArray = {}
-local _toKill = {}
 local _toRemove = {}
 
 Signal.register(Signals.ADD_ENTITY, function(entity)
@@ -11,7 +10,7 @@ Signal.register(Signals.ADD_ENTITY, function(entity)
 end)
 
 Signal.register(Signals.KILL_ENTITY, function(id)
-    _toKill[id] = true
+    _entityArray[id]:death()
 end)
 
 Signal.register(Signals.REMOVE_ENTITY, function(id)
@@ -19,11 +18,6 @@ Signal.register(Signals.REMOVE_ENTITY, function(id)
 end)
 
 function Entities.update(dt)
-    for entityId, _ in pairs(_toKill) do
-        _entityArray[entityId]:death()
-        _toKill[entityId] = nil
-    end
-
     for entityId, _ in pairs(_toRemove) do
         _entityArray[entityId] = nil
         _toRemove[entityId] = nil
