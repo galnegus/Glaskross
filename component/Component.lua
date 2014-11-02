@@ -6,7 +6,7 @@ function Component:init()
 end
 
 function Component:setOwner(owner)
-    --assert(self._type, "component must have self._type defined")
+    assert(self.type, "component must have self.type defined")
     self.owner = owner
 end
 

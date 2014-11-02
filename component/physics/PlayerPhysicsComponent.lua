@@ -1,8 +1,8 @@
 PlayerPhysicsComponent = Class{}
 PlayerPhysicsComponent:include(PhysicsComponent)
 
-function PlayerPhysicsComponent:init(x, y, width, height)
-    PhysicsComponent.init(self, x, y, width, height)
+function PlayerPhysicsComponent:init(x, y)
+    PhysicsComponent.init(self, x, y, 0.1, 0.1)
 
     self._floorColour = Colours.PLAYER_STEP()
 

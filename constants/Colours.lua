@@ -23,6 +23,7 @@ Colours.PLAYER_RENDER = function() return Colour(225, 200, 255, 255) end
 Colours.BULLET_RENDER = function() return Colour(255, 200, 200, 255) end
 Colours.DEATH_WALL_RENDER = function() return Colour(255, 150, 150, 255) end
 Colours.BOUNCER_RENDER = function() return Colour(200, 200, 200, 255) end
+Colours.SHIELD_RENDER = function() return Colour(255, 255, 255, 255) end
 
 -- indicates if colours are affected by some modulating signal, e.g. Signals.COLOR_INVERT
 Colours.state = nil

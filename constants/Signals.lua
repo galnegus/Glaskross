@@ -26,5 +26,8 @@ Signals.BOXY_NEXT_PHASE = "boxy next phase"
 Signals.BOUNCER_BOUNCE = "bouncer bounce"
 -- BouncerHPComponent.lua
 Signals.BOUNCER_HIT = "bouncer hit"
+-- ShieldRenderComponent.lua, ShieldPhysicsComponent.lua
+Signals.SHIELD_ACTIVE = "shield active"
+Signals.SHIELD_INACTIVE = "shield inactive"
 
 return Signals

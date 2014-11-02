@@ -1,31 +1,15 @@
-PlayerInputComponent = Class{}
-PlayerInputComponent:include(Component)
+BulletInputComponent = Class{}
+BulletInputComponent:include(InputComponent)
 
-function PlayerInputComponent:init()
-    Component.init(self)
-
-    self.type = ComponentTypes.INPUT
+function BulletInputComponent:init()
+    InputComponent.init(self)
 
     self._bullet = true
 end
 
-function PlayerInputComponent:setOwner(owner)
-    Component.setOwner(self, owner)
-end
+function BulletInputComponent:update(dt)
+    InputComponent.update(self, dt)
 
-function PlayerInputComponent:update(dt)
-    if love.keyboard.isDown("w") then
-        self.owner.events:emit(Signals.SET_MOVEMENT_DIRECTION, "up")
-    end
-    if love.keyboard.isDown("a") then
-        self.owner.events:emit(Signals.SET_MOVEMENT_DIRECTION, "left")
-    end
-    if love.keyboard.isDown("s") then
-        self.owner.events:emit(Signals.SET_MOVEMENT_DIRECTION, "down")
-    end
-    if love.keyboard.isDown("d") then
-        self.owner.events:emit(Signals.SET_MOVEMENT_DIRECTION, "right")
-    end
     if love.keyboard.isDown("left") then
         if self._bullet then
             local x, y = self.owner.physics._body:center()
@@ -56,7 +40,9 @@ function PlayerInputComponent:update(dt)
     end
 end
 
-function PlayerInputComponent:_bulletCooldown()
+function BulletInputComponent:_bulletCooldown()
     self._bullet = false
-    Timer.add(0.5, function() self._bullet = true end)
+    if Constants.BULLET_COOLDOWN > 0 then
+        Timer.add(Constants.BULLET_COOLDOWN, function() self._bullet = true end)
+    end
 end
