@@ -1,12 +1,12 @@
 PhysicsComponent = Class{}
 PhysicsComponent:include(Component)
 
-function PhysicsComponent:init(x, y, width, height)
+function PhysicsComponent:init(shape)
     Component.init(self)
 
     self.type = ComponentTypes.PHYSICS
 
-    self._body = Collider:addRectangle(x, y, width, height)
+    self._body = shape
     self._body.parent = self
 end
 
@@ -32,6 +32,16 @@ function PhysicsComponent:on_collide(dt, shapeCollidedWith, dx, dy)
     -- override
 end
 
+function PhysicsComponent:conception()
+    Collider:setGhost(self._body)
+    Component.conception(self)
+end
+
+function PhysicsComponent:birth()
+    Collider:setSolid(self._body)
+    Component.birth(self)
+end
+
 function PhysicsComponent:death()
     Collider:remove(self._body)
     Component.death(self)
@@ -42,6 +52,6 @@ function PhysicsComponent:update(dt)
 end
 
 function PhysicsComponent:draw()
-    print("debug drawing in physicsComponent activated")
+    --print("debug drawing in physicsComponent activated")
     self._body:draw('fill')
 end

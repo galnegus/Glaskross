@@ -2,7 +2,7 @@ PlayerPhysicsComponent = Class{}
 PlayerPhysicsComponent:include(PhysicsComponent)
 
 function PlayerPhysicsComponent:init(x, y)
-    PhysicsComponent.init(self, x, y, 0.1, 0.1)
+    PhysicsComponent.init(self, Collider:addRectangle(x, y, 0.1, 0.1))
 
     self._floorColour = Colours.PLAYER_STEP()
 

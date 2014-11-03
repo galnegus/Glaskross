@@ -13,6 +13,7 @@ Colours = require "constants.Colours"
 EntityTypes = require "constants.EntityTypes"
 BodyTypes = require "constants.BodyTypes"
 ComponentTypes = require "constants.ComponentTypes"
+ColliderGroups = require "constants.ColliderGroups"
 
 require "Colour"
 require "Entities"

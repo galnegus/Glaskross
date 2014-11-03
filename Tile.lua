@@ -7,7 +7,7 @@ function Tile:init(x, y, width, height, bgColour, bgColourRand)
     self._killer = false
     self._body.parent = self
     Collider:setPassive(self._body)
-    --Collider:addToGroup("tileGroup", self._body)
+    Collider:addToGroup(ColliderGroups.HOSTILE, self._body)
 
     -- flickering background color + rand(30)
     self._bgColour = bgColour

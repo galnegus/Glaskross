@@ -1,12 +1,12 @@
 local Constants = {}
 
-Constants.TILE_SIZE = 24
+Constants.TILE_SIZE = 32 -- 32
 Constants.BEAM_ROWS = 3
 Constants.BEAM_COLS = 5
 
--- terminal velocity needs to be less than (tile_size * frame_rate / 2) pixels per second to avoid
+-- terminal velocity needs to be less than (tile_size * frame_rate / 2 => tile_size / 30) pixels per second to avoid
 -- collision bugs (walls being tile_sizel pixels) at 60 fps (lower fps breaks game)
-Constants.TERMINAL_VELOCITY = Constants.TILE_SIZE * 30 - 1
+Constants.TERMINAL_VELOCITY = Constants.TILE_SIZE * 20
 
 -- 120 collision updates per second ensures that two entities (one being a bullet) travelling at  
 -- terminal velocity, one of them being at least (tile_size / 2) wide will always collide without any "tunneling"

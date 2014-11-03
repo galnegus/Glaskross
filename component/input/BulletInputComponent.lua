@@ -43,6 +43,6 @@ end
 function BulletInputComponent:_bulletCooldown()
     self._bullet = false
     if Constants.BULLET_COOLDOWN > 0 then
-        Timer.add(Constants.BULLET_COOLDOWN, function() self._bullet = true end)
+        gameTimer:add(Constants.BULLET_COOLDOWN, function() self._bullet = true end)
     end
 end

@@ -16,7 +16,10 @@ end
 function VelocityRectangleRenderComponent:update(dt)
     RenderComponent.update(self, dt)
 
-    local vX, vY = self.owner.movement:getVelocity()
+    local vX, vY = 0, 0
+    if self.owner.movement ~= nil then
+        vX, vY = self.owner.movement:getVelocity()
+    end
 
     local limit = 200
     if math.sqrt(math.abs(vX) ^ 2 + math.abs(vY) ^ 2) > limit then
