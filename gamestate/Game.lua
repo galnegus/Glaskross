@@ -14,6 +14,12 @@ function game:init()
     deathParticleSystem:setSpeed(Constants.TERMINAL_VELOCITY / 10, Constants.TERMINAL_VELOCITY / 5)
     deathParticleSystem:setLinearAcceleration(0, 0, 0, -1000)
     deathParticleSystem:setSpread(2 * math.pi)
+
+    greyscale = gradient {
+        direction = 'horizontal';
+        {0, 0, 0};
+        {10, 10, 10};
+    }
 end
 
 function on_collide(dt, shape_a, shape_b, dx, dy)
@@ -33,10 +39,16 @@ function game:update(dt)
     Collider:update(dt)
 end
 
+function drawinrect(img, x, y, w, h, r, ox, oy, kx, ky)
+    return -- tail call for a little extra bit of efficiency
+    love.graphics.draw(img, x, y, r, w / img:getWidth(), h / img:getHeight(), ox, oy, kx, ky)
+end
+
 function game:draw()
     love.graphics.setCanvas(canvas)
         local r, g, b, a = love.graphics.getColor()
             canvas:clear()
+            drawinrect(greyscale, 0, 0, love.graphics.getWidth(), love.graphics.getHeight())
             Entities.bgDraw()
             world:draw()
             Entities.draw()

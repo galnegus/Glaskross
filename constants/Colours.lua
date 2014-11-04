@@ -9,12 +9,12 @@ Colours.BULLET_STEP = Colour(200, 100, 100, 0) --100
 Colours.DEFAULT_BEAM = Colour(150, 50, 50, 0) --0
 
 -- tile bgColor
-Colours.BG_COLOUR = Colour(30, 30, 30, 60) --100
+Colours.BG_COLOUR = Colour(30, 30, 30, 30) --100
 Colours.BG_COLOUR_RAND = Colour(15, 15, 15, 0) --0
 
 -- boxy bg, NOTE: LAYER_ONE is in the BACK, LAYER_THREE is in the FRONT
-Colours.BOXY_LAYER_ONE = Colour(150, 50, 50, 100, true) --100
-Colours.BOXY_LAYER_TWO = Colour(150, 50, 150, 100, true) --100
+Colours.BOXY_LAYER_ONE = Colour(125, 50, 50, 100, true) --100
+Colours.BOXY_LAYER_TWO = Colour(100, 50, 100, 100, true) --100
 Colours.BOXY_LAYER_THREE = Colour(50, 50, 150, 100, true) --100
 
 -- render

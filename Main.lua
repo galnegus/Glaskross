@@ -5,11 +5,11 @@ Timer = require "lib.hump.timer"
 Vector = require "lib.hump.vector"
 HC = require "lib.hardoncollider"
 Gamestate = require "lib.venus.venus"
+require "lib.gradient"
 
 -- constants/enums
 Constants = require "constants.constants"
 Signals = require "constants.Signals"
-
 EntityTypes = require "constants.EntityTypes"
 BodyTypes = require "constants.BodyTypes"
 ComponentTypes = require "constants.ComponentTypes"
@@ -17,6 +17,7 @@ ColliderGroups = require "constants.ColliderGroups"
 
 require "Colour"
 Colours = require "constants.Colours"
+
 require "Entities"
 require "Entity"
 require "EntityCreator"
