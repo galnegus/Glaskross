@@ -9,6 +9,11 @@ function game:init()
 
     Signal.emit(Signals.ADD_ENTITY, EntityCreator.create("player", Constants.TILE_SIZE * 19 + 2, Constants.TILE_SIZE * 14 + 2))
     Signal.emit(Signals.ADD_ENTITY, EntityCreator.create("boxy"))
+
+    deathParticleSystem = love.graphics.newParticleSystem(love.graphics.newImage("square.png"), 1000)
+    deathParticleSystem:setSpeed(Constants.TERMINAL_VELOCITY / 10, Constants.TERMINAL_VELOCITY / 5)
+    deathParticleSystem:setLinearAcceleration(0, 0, 0, -1000)
+    deathParticleSystem:setSpread(2 * math.pi)
 end
 
 function on_collide(dt, shape_a, shape_b, dx, dy)
@@ -21,6 +26,7 @@ function on_collide(dt, shape_a, shape_b, dx, dy)
 end
 
 function game:update(dt)
+    deathParticleSystem:update(dt)
     Entities.update(dt)
     world:update(dt)
     gameTimer:update(dt)
@@ -34,6 +40,7 @@ function game:draw()
             Entities.bgDraw()
             world:draw()
             Entities.draw()
+            love.graphics.draw(deathParticleSystem)
         love.graphics.setColor(r, g, b, a)
     love.graphics.setCanvas()
 

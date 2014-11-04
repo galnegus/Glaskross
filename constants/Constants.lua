@@ -10,7 +10,7 @@ Constants.TERMINAL_VELOCITY = Constants.TILE_SIZE * 20
 
 -- 120 collision updates per second ensures that two entities (one being a bullet) travelling at  
 -- terminal velocity, one of them being at least (tile_size / 2) wide will always collide without any "tunneling"
-Constants.BULLET_TIMESLICE = 1/120
+Constants.BULLET_TIMESLICE = 1/80
 
 -- how often the player can shoot bullets
 Constants.BULLET_COOLDOWN = 0.2

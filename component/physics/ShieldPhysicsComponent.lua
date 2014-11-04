@@ -21,10 +21,10 @@ function ShieldPhysicsComponent:init(masterEntity)
     self._velRotation = 0
 end
 
-function ShieldPhysicsComponent:setOwner(owner)
-	PhysicsComponent.setOwner(self, owner)
+function ShieldPhysicsComponent:birth()
+	PhysicsComponent.birth(self)
 
-	owner.events:register(Signals.SHIELD_ACTIVE, function(dirX, dirY, duration)
+	self.owner.events:register(Signals.SHIELD_ACTIVE, function(dirX, dirY, duration)
 		assert((dirX == 0 and dirY == -1) or (dirX == 0 and dirY == 1) or 
         	   (dirX == -1 and dirY == 0) or (dirX == 1 and dirY == 0), 
         		"Invalid values of 'dirX' and 'dirY' parameters, must be orthogonal")

@@ -46,10 +46,6 @@ function BoxyBackgroundComponent:init()
     end)
 end
 
-function BoxyBackgroundComponent:setOwner(owner)
-    self.owner = owner
-end
-
 -- make the boxes float around a bit
 function BoxyBackgroundComponent:update(dt)
     for _, box in ipairs(self._boxes) do

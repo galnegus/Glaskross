@@ -106,7 +106,7 @@ local function deathWall(x, y, maxVelFactor)
     entity:addComponent(DeathWallPhysicsComponent(startX, startY, width, height))
     entity:addComponent(ConstantMovementComponent(x, y, Constants.TERMINAL_VELOCITY * maxVelFactor))
     entity:addComponent(RenderComponent(Colours.DEATH_WALL_RENDER(), Constants.DEATH_WALL_BIRTH_DURATION, Constants.DEFAULT_DEATH_DURATION, true))
-    entity:addComponent(ParticleDeathEffect(1))
+    entity:addComponent(ParticleDeathEffectComponent(1))
     return entity
 end
 
@@ -118,7 +118,7 @@ local function bouncer(x, y, targetDirX, targetDirY)
     entity:addComponent(BouncerPhysicsComponent(x, y, Constants.TILE_SIZE * 2, Constants.TILE_SIZE * 2))
     entity:addComponent(HPComponent(Constants.BOUNCER_HP, Signals.BOUNCER_HIT))
     entity:addComponent(RenderComponent(Colours.BOUNCER_RENDER(), Constants.BOUNCER_BIRTH_DURATION, Constants.DEFAULT_DEATH_DURATION, true))
-    entity:addComponent(ParticleDeathEffect(1))
+    entity:addComponent(ParticleDeathEffectComponent(1))
     return entity
 end
 

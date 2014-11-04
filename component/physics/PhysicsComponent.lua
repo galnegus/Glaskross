@@ -10,16 +10,6 @@ function PhysicsComponent:init(shape)
     self._body.parent = self
 end
 
-function PhysicsComponent:setOwner(owner)
-    Component.setOwner(self, owner)
-
-    self._body.type = owner.type
-
-    self.owner.events:register(Signals.MOVE_SHAPE, function(x, y)
-        self._body:move(x, y)
-    end)
-end
-
 function PhysicsComponent:center()
     return self._body:center()
 end
@@ -38,8 +28,13 @@ function PhysicsComponent:conception()
 end
 
 function PhysicsComponent:birth()
-    Collider:setSolid(self._body)
     Component.birth(self)
+    Collider:setSolid(self._body)
+    self._body.type = self.owner.type
+
+    self.owner.events:register(Signals.MOVE_SHAPE, function(x, y)
+        self._body:move(x, y)
+    end)  
 end
 
 function PhysicsComponent:death()

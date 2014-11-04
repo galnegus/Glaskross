@@ -5,4 +5,6 @@ function love.conf(t)
     t.window.height = Constants.BEAM_ROWS * 10 * Constants.TILE_SIZE
 
     t.window.fsaa = 0
+
+    t.window.vsync = false
 end
