@@ -22,7 +22,15 @@ function Entity:bullet()
     return self._bullet
 end
 
+-- string representation of this entity, calling print(thisEntity) will print the following:
+function Entity:__tostring()
+    return "{id: " .. self.id .. ", type: " .. self.type .. "}"
+end
+
 function Entity:addComponent(component)
+    assert(component ~= nil, "component is nil!")
+    assert(component.type ~= nil, "component has no type")
+
     self._components[component.type] = component
     self[component.type] = component
     component:setOwner(self)
@@ -46,7 +54,7 @@ end
 
 function Entity:draw()
     for compType, comp in pairs(self._components) do
-        if compType == ComponentTypes.RENDER then
+        if comp:renderable() then
             comp:draw()
         end
     end

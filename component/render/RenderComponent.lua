@@ -7,12 +7,15 @@ function RenderComponent:init(colour, birthDuration, deathDuration, border)
 
     self.type = ComponentTypes.RENDER
 
+    self._renderable = true
+
     self._colour = colour or Colours.DEFAULT_RENDER()
 
     self._border = border
     self._birthDuration = birthDuration
     self._deathDuration = deathDuration
     self._dying = false
+    self._dead = false
 end
 
 function RenderComponent:setOwner(owner)
@@ -21,6 +24,10 @@ function RenderComponent:setOwner(owner)
     if owner.physics == nil then
         error("Entity: " .. owner.tag .. " requires a physics component.")
     end
+end
+
+function RenderComponent:colour()
+    return self._colour:unpack()
 end
 
 function RenderComponent:conception()
@@ -37,9 +44,10 @@ end
 
 function RenderComponent:death()
     self._dying = true
-    gameTimer:tween(self._deathDuration, self._colour, {a = 0}, 'in-out-sine', function()
-        Component.death(self)
-    end)
+
+    gameTimer:tween(self._deathDuration, self._colour, {a = 0}, 'in-out-sine', function() Component.death(self) end)
+
+    
 end
 
 function RenderComponent:draw()

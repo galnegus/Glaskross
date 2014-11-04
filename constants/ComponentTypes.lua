@@ -7,5 +7,6 @@ ComponentTypes.PHYSICS = "physics"
 ComponentTypes.RENDER = "render"
 ComponentTypes.INPUT = "input"
 ComponentTypes.HP = "hp"
+ComponentTypes.DEATH_EFFECT = "death effect"
 
 return ComponentTypes

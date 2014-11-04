@@ -64,5 +64,5 @@ function Colour:set(r, g, b, a)
 end
 
 function Colour:unpack()
-    return r, g, b, a
+    return self.r, self.g, self.b, self.a
 end
