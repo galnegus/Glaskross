@@ -6,6 +6,7 @@ function BoxyBox:init(xOffset, yOffset, colour, xHover, yHover)
 
     -- color of box
     self.colour = colour
+    self.alpha = colour:alpha()
 
     -- variation in position (hovering effect)
     self.xHover = xHover or 0

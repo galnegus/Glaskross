@@ -9,13 +9,14 @@ Gamestate = require "lib.venus.venus"
 -- constants/enums
 Constants = require "constants.constants"
 Signals = require "constants.Signals"
-Colours = require "constants.Colours"
+
 EntityTypes = require "constants.EntityTypes"
 BodyTypes = require "constants.BodyTypes"
 ComponentTypes = require "constants.ComponentTypes"
 ColliderGroups = require "constants.ColliderGroups"
 
 require "Colour"
+Colours = require "constants.Colours"
 require "Entities"
 require "Entity"
 require "EntityCreator"

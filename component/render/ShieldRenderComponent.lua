@@ -62,7 +62,7 @@ function ShieldRenderComponent:draw()
                               x + self._xOffset, y + self._yOffset, 
                               x + self._yOffset, y + self._xOffset, 
                               x + self._xOffset - 1, y + self._yOffset}
-            love.graphics.setColor(self._colour.r, self._colour.g, self._colour.b, self._colour.a * self._alphaAnimate)
+            love.graphics.setColor(self._colour:r(), self._colour:g(), self._colour:b(), self._alpha * self._alphaAnimate)
             love.graphics.polygon("line", vertices)
 
             for i = 1,2 do
@@ -71,7 +71,7 @@ function ShieldRenderComponent:draw()
                             x + self._xOffset, y + self._yOffset, 
                             x + self._yOffset, y + self._xOffset, 
                             x + self._xOffset - 1, y + self._yOffset}
-                love.graphics.setColor(self._colour.r, self._colour.g, self._colour.b, (self._colour.a - i * 100) * self._alphaAnimate)
+                love.graphics.setColor(self._colour:r(), self._colour:g(), self._colour:b(), (self._alpha - i * 100) * self._alphaAnimate)
                 love.graphics.polygon("line", vertices)
             end
         love.graphics.pop()

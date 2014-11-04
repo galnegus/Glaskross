@@ -22,21 +22,21 @@ function BoxyBackgroundComponent:init()
     self._boxes = {}
 
     -- the first box [1] is the box that is in the back, [2] is in the middle, [3] in front.
-    self._boxes[1] = BoxyBox(Constants.TILE_SIZE * 2, -Constants.TILE_SIZE * 2, Colours.BOXY_LAYER_ONE(), hoverLimit * 0.6, hoverLimit * 0.4) -- 6, 4
-    self._boxes[2] = BoxyBox(Constants.TILE_SIZE, -Constants.TILE_SIZE, Colours.BOXY_LAYER_TWO(), hoverLimit * 0.8, hoverLimit * 0.2) -- 8. 2
-    self._boxes[3] = BoxyBox(0, 0, Colours.BOXY_LAYER_THREE(), hoverLimit, 0) -- 10, 0
+    self._boxes[1] = BoxyBox(Constants.TILE_SIZE * 2, -Constants.TILE_SIZE * 2, Colours.BOXY_LAYER_ONE, hoverLimit * 0.6, hoverLimit * 0.4) -- 6, 4
+    self._boxes[2] = BoxyBox(Constants.TILE_SIZE, -Constants.TILE_SIZE, Colours.BOXY_LAYER_TWO, hoverLimit * 0.8, hoverLimit * 0.2) -- 8. 2
+    self._boxes[3] = BoxyBox(0, 0, Colours.BOXY_LAYER_THREE, hoverLimit, 0) -- 10, 0
 
-    self._boxes[#self._boxes].colour.a = 255
+    self._boxes[#self._boxes].alpha = 255
     Signal.emit(Signals.COLOUR_MIX, self._boxes[#self._boxes].colour, 0)
     
     Signal.register(Signals.BOXY_NEXT_PHASE, function()
         if #self._boxes > 0 then
-            gameTimer:tween(Constants.BOXY_PHASE_TRANS_TIME, self._boxes[#self._boxes].colour, {a = 0}, 'in-out-sine', function()
+            gameTimer:tween(Constants.BOXY_PHASE_TRANS_TIME, self._boxes[#self._boxes], {alpha = 0}, 'in-out-sine', function()
                 table.remove(self._boxes)
             end)
         end
         if #self._boxes > 1 then
-            gameTimer:tween(Constants.BOXY_PHASE_TRANS_TIME, self._boxes[#self._boxes - 1].colour, {a = 255}, 'in-out-sine')
+            gameTimer:tween(Constants.BOXY_PHASE_TRANS_TIME, self._boxes[#self._boxes - 1], {alpha = 255}, 'in-out-sine')
             for i = #self._boxes - 1, 1, -1 do
                 local offset = (#self._boxes - 1) * Constants.TILE_SIZE - i * Constants.TILE_SIZE
                 gameTimer:tween(Constants.BOXY_PHASE_TRANS_TIME, self._boxes[i], {xOffset = offset, yOffset = -offset}, 'in-out-sine')
@@ -85,9 +85,9 @@ function BoxyBackgroundComponent:bgDraw()
     for i, box in ipairs(self._boxes) do
         local x = self._x + box.xOffset + box.xHover
         local y = self._y + box.yOffset + box.yHover
-        love.graphics.setColor(box.colour.r, box.colour.g, box.colour.b, box.colour.a / 10)
+        love.graphics.setColor(box.colour:r(), box.colour:g(), box.colour:b(), box.alpha / 10)
         love.graphics.rectangle("fill", x, y, self._boxWidth, self._boxHeight)
-        love.graphics.setColor(box.colour.r, box.colour.g, box.colour.b, box.colour.a)
+        love.graphics.setColor(box.colour:r(), box.colour:g(), box.colour:b(), box.alpha)
         love.graphics.rectangle("line", x + 0.5, y + 0.5, self._boxWidth, self._boxHeight)
     end
 end

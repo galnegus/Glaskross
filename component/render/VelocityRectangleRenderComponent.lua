@@ -67,7 +67,7 @@ function VelocityRectangleRenderComponent:draw()
         local x, y = self.owner.physics:center()
         love.graphics.translate(x, y)
         love.graphics.rotate(self._rotation)
-        love.graphics.setColor(self._colour.r, self._colour.g, self._colour.b, self._colour.a)
+        love.graphics.setColor(self._colour:r(), self._colour:g(), self._colour:b(), self._alpha)
         love.graphics.rectangle("fill", -self._width / 2, -self._height / 2, self._width, self._height)
     love.graphics.pop()
 end

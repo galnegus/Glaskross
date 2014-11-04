@@ -4,7 +4,7 @@ BulletPhysicsComponent:include(PhysicsComponent)
 function BulletPhysicsComponent:init(x, y, width, height)
     PhysicsComponent.init(self, Collider:addRectangle(x, y, width, height))
 
-    self._floorColour = Colours.BULLET_STEP()
+    self._floorColour = Colours.BULLET_STEP
 end
 
 function BulletPhysicsComponent:on_collide(dt, shapeCollidedWith, dx, dy)

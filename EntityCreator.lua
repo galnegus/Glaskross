@@ -7,7 +7,7 @@ local function player(x, y)
 
     local entity = Entity.new(_idCounter, EntityTypes.PLAYER)
     entity:addComponent(PlayerPhysicsComponent(x, y))
-    entity:addComponent(VelocityRectangleRenderComponent(Colours.PLAYER_RENDER(), 0, Constants.DEFAULT_DEATH_DURATION, Constants.TILE_SIZE))
+    entity:addComponent(VelocityRectangleRenderComponent(Colours.PLAYER_RENDER, 0, Constants.DEFAULT_DEATH_DURATION, Constants.TILE_SIZE))
     entity:addComponent(MovementComponent(false, false))
     entity:addComponent(ShieldInputComponent())
     return entity
@@ -49,14 +49,12 @@ local function bullet(x, y, targetDirX, targetDirY)
 
     local entity = Entity.new(_idCounter, EntityTypes.BULLET, true)
     entity:addComponent(BulletPhysicsComponent(startX, startY, width, height))
-    entity:addComponent(RotatingRectangleRenderComponent(Colours.BULLET_RENDER(), Constants.BULLET_BIRTH_DURATION, Constants.DEFAULT_DEATH_DURATION, Constants.TILE_SIZE / 2))
+    entity:addComponent(RotatingRectangleRenderComponent(Colours.BULLET_RENDER, Constants.BULLET_BIRTH_DURATION, Constants.DEFAULT_DEATH_DURATION, Constants.TILE_SIZE / 2))
     entity:addComponent(ConstantMovementComponent(targetDirX, targetDirY, false))
     return entity
 end
 
 local function boxy()
-    --assert(x and y, "arguments missing.")
-
     local entity = Entity.new(_idCounter, EntityTypes.BOXY)
     entity:addComponent(BoxyBackgroundComponent())
     entity:addComponent(BoxyAIComponent())
@@ -105,7 +103,7 @@ local function deathWall(x, y, maxVelFactor)
     local entity = Entity.new(_idCounter, EntityTypes.DEATH_WALL, true)
     entity:addComponent(DeathWallPhysicsComponent(startX, startY, width, height))
     entity:addComponent(ConstantMovementComponent(x, y, Constants.TERMINAL_VELOCITY * maxVelFactor))
-    entity:addComponent(RenderComponent(Colours.DEATH_WALL_RENDER(), Constants.DEATH_WALL_BIRTH_DURATION, Constants.DEFAULT_DEATH_DURATION, true))
+    entity:addComponent(RenderComponent(Colours.DEATH_WALL_RENDER, Constants.DEATH_WALL_BIRTH_DURATION, Constants.DEFAULT_DEATH_DURATION, true))
     entity:addComponent(ParticleDeathEffectComponent(1))
     return entity
 end
@@ -117,7 +115,7 @@ local function bouncer(x, y, targetDirX, targetDirY)
     entity:addComponent(BouncerMovementComponent(targetDirX, targetDirY, Constants.TERMINAL_VELOCITY / 5, 10))
     entity:addComponent(BouncerPhysicsComponent(x, y, Constants.TILE_SIZE * 2, Constants.TILE_SIZE * 2))
     entity:addComponent(HPComponent(Constants.BOUNCER_HP, Signals.BOUNCER_HIT))
-    entity:addComponent(RenderComponent(Colours.BOUNCER_RENDER(), Constants.BOUNCER_BIRTH_DURATION, Constants.DEFAULT_DEATH_DURATION, true))
+    entity:addComponent(RenderComponent(Colours.BOUNCER_RENDER, Constants.BOUNCER_BIRTH_DURATION, Constants.DEFAULT_DEATH_DURATION, true))
     entity:addComponent(ParticleDeathEffectComponent(1))
     return entity
 end
@@ -128,8 +126,7 @@ local function shield(masterEntity)
     local entity = Entity.new(_idCounter, EntityTypes.SHIELD, true)
 
     entity:addComponent(ShieldPhysicsComponent(masterEntity))
-    entity:addComponent(ShieldRenderComponent(Colours.SHIELD_RENDER(), 0.5, 0.5, Constants.TILE_SIZE))
-    --entity:addComponent(ShieldStateComponent())
+    entity:addComponent(ShieldRenderComponent(Colours.SHIELD_RENDER, 0.5, 0.5, Constants.TILE_SIZE))
 
     return entity
 end
