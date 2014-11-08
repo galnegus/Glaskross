@@ -1,22 +1,14 @@
 BulletPhysicsComponent = Class{}
-BulletPhysicsComponent:include(PhysicsComponent)
+BulletPhysicsComponent:include(RotatingPhysicsComponent)
 
-function BulletPhysicsComponent:init(x, y, width, height)
-    PhysicsComponent.init(self, Collider:addRectangle(x, y, width, height))
-
-    self._floorColour = Colours.BULLET_STEP
+function BulletPhysicsComponent:init(x, y, width, height, rps)
+    RotatingPhysicsComponent.init(self, Collider:addRectangle(x, y, width, height), rps)
 end
 
 function BulletPhysicsComponent:on_collide(dt, shapeCollidedWith, dx, dy)
     dx = dx or 0
     dy = dy or 0
-    if shapeCollidedWith.type == BodyTypes.TILE then
-        local tile = shapeCollidedWith.parent
-        if shapeCollidedWith ~= self._lastCollidedWith then
-            self._lastCollidedWith = shapeCollidedWith
-            tile:step(0.03, 5, self._floorColour)
-        end
-    elseif shapeCollidedWith.type == EntityTypes.BOUNCER then
+    if shapeCollidedWith.type == EntityTypes.BOUNCER then
         Signal.emit(Signals.KILL_ENTITY, self.owner.id)
         shapeCollidedWith.parent.owner.events:emit(Signals.BOUNCER_HIT)
     elseif shapeCollidedWith.type == EntityTypes.DEATH_WALL then

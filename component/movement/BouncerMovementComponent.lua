@@ -18,8 +18,8 @@ function BouncerMovementComponent:init(targetDirX, targetDirY, initialVelocity, 
     self._direction.y = self._targetDirY
 end
 
-function BouncerMovementComponent:birth()
-    MovementComponent.birth(self)
+function BouncerMovementComponent:conception()
+    MovementComponent.conception(self)
 
     self.owner.events:register(Signals.BOUNCER_BOUNCE, function(dx, dy)
         assert(dx and dy, "dx or dy missing")
