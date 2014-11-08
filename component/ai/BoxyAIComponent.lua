@@ -65,7 +65,7 @@ function BoxyAIComponent:init()
     deathChain:add(death1)
     deathChain:add(death1)
     deathChain:add(death1)
-    --deathChain:start()
+    deathChain:start()
 
     Signal.emit(Signals.ADD_ENTITY, EntityCreator.create("bouncer", 500, 500, 1, 0.5))
 

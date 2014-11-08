@@ -10,7 +10,7 @@ Colours.DEFAULT_BEAM = Colour(150, 50, 50, 0) --0
 
 -- tile bgColor
 Colours.BG_COLOUR = Colour(30, 30, 30, 30) --100
-Colours.BG_COLOUR_RAND = Colour(15, 15, 15, 0) --0
+Colours.BG_COLOUR_RAND = Colour(10, 10, 10, 0) --0
 
 -- boxy bg, NOTE: LAYER_ONE is in the BACK, LAYER_THREE is in the FRONT
 Colours.BOXY_LAYER_ONE = Colour(125, 50, 50, 100, true) --100
