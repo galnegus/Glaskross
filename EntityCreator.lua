@@ -7,9 +7,11 @@ local function player(x, y)
 
     local entity = Entity.new(_idCounter, EntityTypes.PLAYER)
     entity:addComponent(PlayerPhysicsComponent(x, y))
-    entity:addComponent(VelocityRectangleRenderComponent(Colours.PLAYER_RENDER, 0, Constants.DEFAULT_DEATH_DURATION, Constants.TILE_SIZE))
+    entity:addComponent(RenderComponent(Colours.PLAYER_RENDER, 0, Constants.DEFAULT_DEATH_DURATION, false))
     entity:addComponent(MovementComponent(false, false))
     entity:addComponent(ShieldInputComponent())
+    entity:addComponent(TrailEffectComponent(Colours.PLAYER_STEP))
+    entity:addComponent(ParticleDeathEffectComponent(1))
     return entity
 end
 
@@ -48,9 +50,10 @@ local function bullet(x, y, targetDirX, targetDirY)
     end
 
     local entity = Entity.new(_idCounter, EntityTypes.BULLET, true)
-    entity:addComponent(BulletPhysicsComponent(startX, startY, width, height))
-    entity:addComponent(RotatingRectangleRenderComponent(Colours.BULLET_RENDER, Constants.BULLET_BIRTH_DURATION, Constants.DEFAULT_DEATH_DURATION, Constants.TILE_SIZE / 2))
+    entity:addComponent(BulletPhysicsComponent(startX, startY, Constants.TILE_SIZE / 2, Constants.TILE_SIZE / 2, 1))
+    entity:addComponent(RenderComponent(Colours.BULLET_RENDER, Constants.BULLET_BIRTH_DURATION, Constants.DEFAULT_DEATH_DURATION, false))
     entity:addComponent(ConstantMovementComponent(targetDirX, targetDirY, false))
+    entity:addComponent(TrailEffectComponent(Colours.BULLET_STEP))
     return entity
 end
 
@@ -111,7 +114,7 @@ end
 local function bouncer(x, y, targetDirX, targetDirY)
     assert(x and y and targetDirX and targetDirY, "arguments missing.")
 
-    local entity = Entity.new(_idCounter, EntityTypes.BOUNCER, true)
+    local entity = Entity.new(_idCounter, EntityTypes.BOUNCER, false)
     entity:addComponent(BouncerMovementComponent(targetDirX, targetDirY, Constants.TERMINAL_VELOCITY / 5, 10))
     entity:addComponent(BouncerPhysicsComponent(x, y, Constants.TILE_SIZE * 2, Constants.TILE_SIZE * 2))
     entity:addComponent(HPComponent(Constants.BOUNCER_HP, Signals.BOUNCER_HIT))
@@ -131,6 +134,17 @@ local function shield(masterEntity)
     return entity
 end
 
+local function bouncerSword(masterEntity)
+    assert(masterEntity, "argument missing.")
+
+    local entity = Entity.new(_idCounter, EntityTypes.BOUNCER_SWORD, false)
+
+    entity:addComponent(BouncerSwordPhysicsComponent(masterEntity))
+    entity:addComponent(BouncerSwordRenderComponent(Colours.BOUNCER_SWORD_RENDER, 0.5, 0.5))
+
+    return entity
+end
+
 function EntityCreator.create(entityType, ...)
     _idCounter = _idCounter + 1
     if entityType == EntityTypes.PLAYER then
@@ -145,6 +159,8 @@ function EntityCreator.create(entityType, ...)
         return bouncer(...)
     elseif entityType == EntityTypes.SHIELD then
         return shield(...)
+    elseif entityType == EntityTypes.BOUNCER_SWORD then
+        return bouncerSword(...)
     end
 
     -- function should've returned an entity by this point,

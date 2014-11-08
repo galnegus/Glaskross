@@ -1,12 +1,10 @@
 PlayerPhysicsComponent = Class{}
-PlayerPhysicsComponent:include(PhysicsComponent)
+PlayerPhysicsComponent:include(VelocityRotatingPhysicsComponent)
 
 function PlayerPhysicsComponent:init(x, y)
-    PhysicsComponent.init(self, Collider:addRectangle(x, y, 0.1, 0.1))
+    VelocityRotatingPhysicsComponent.init(self, Collider:addRectangle(x, y, Constants.TILE_SIZE, Constants.TILE_SIZE))
 
     self._floorColour = Colours.PLAYER_STEP
-
-    self._lastCollidedWith = nil
 end
 
 function PlayerPhysicsComponent:on_collide(dt, shapeCollidedWith, dx, dy)
@@ -17,14 +15,8 @@ function PlayerPhysicsComponent:on_collide(dt, shapeCollidedWith, dx, dy)
         self.owner.movement:stopMoving()
         self._body:move(dx, dy)
     elseif shapeCollidedWith.type == BodyTypes.TILE then
-        local tile = shapeCollidedWith.parent
-        if tile._killer then
+        if shapeCollidedWith.parent._killer then
             Signal.emit(Signals.KILL_ENTITY, self.owner.id)
-        end
-        -- the alpha <= 0 condition makes sure that the tile is relit once it's out
-        if shapeCollidedWith ~= self._lastCollidedWith or tile:getFgAlpha() <= 0 then
-            self._lastCollidedWith = shapeCollidedWith
-            tile:step(0.05, 5, self._floorColour)
         end
     end
 end

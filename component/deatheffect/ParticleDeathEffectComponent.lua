@@ -13,13 +13,13 @@ function ParticleDeathEffectComponent:init(duration)
     self._duration = duration
 end
 
-function ParticleDeathEffectComponent:birth()
+function ParticleDeathEffectComponent:conception()
+    Component.conception(self)
+    
     assert(self.owner.physics ~= nil, "entity " .. tostring(self.owner) .. " must have a physics component.")
     assert(self.owner.render ~= nil, "entity " .. tostring(self.owner) .. " must have a render component.")    
 
     self._deathParticleSystem = deathParticleSystem
-    
-    Component.birth(self)
 end
 
 function ParticleDeathEffectComponent:death()

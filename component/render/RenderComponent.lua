@@ -46,14 +46,10 @@ end
 function RenderComponent:death()
     self._dying = true
 
-    gameTimer:tween(self._deathDuration, self, {_alpha = 0}, 'in-out-sine', function() Component.death(self) end)
-
-    
+    gameTimer:tween(self._deathDuration, self, {_alpha = 0}, 'in-out-sine', function() Component.death(self) end)    
 end
 
 function RenderComponent:draw()
-    local x1, y1, x2, y2 = self.owner.physics:bbox()
-
     local alpha = self._alpha
 
     if self._border then
@@ -61,10 +57,10 @@ function RenderComponent:draw()
     end
 
     love.graphics.setColor(self._colour:r(), self._colour:g(), self._colour:b(), alpha)
-    love.graphics.rectangle("fill", x1, y1, x2 - x1, y2 - y1)
+    self.owner.physics:draw("fill")
 
     if self._border then
         love.graphics.setColor(self._colour:r(), self._colour:g(), self._colour:b(), self._alpha)
-        love.graphics.rectangle("line", x1 + 1.5, y1 + 1.5, x2 - x1 - 2, y2 - y1 - 2)
+        self.owner.physics:draw("line")
     end
 end

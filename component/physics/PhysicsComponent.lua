@@ -18,6 +18,10 @@ function PhysicsComponent:bbox()
     return self._body:bbox()
 end
 
+function PhysicsComponent:rotation()
+    return self._body:rotation()
+end
+
 function PhysicsComponent:on_collide(dt, shapeCollidedWith, dx, dy)
     -- override
 end
@@ -46,7 +50,8 @@ function PhysicsComponent:update(dt)
     -- override
 end
 
-function PhysicsComponent:draw()
+function PhysicsComponent:draw(mode)
+    mode = mode or "fill"
     --print("debug drawing in physicsComponent activated")
-    self._body:draw('fill')
+    self._body:draw(mode)
 end

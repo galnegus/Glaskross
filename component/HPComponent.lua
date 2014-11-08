@@ -11,8 +11,8 @@ function HPComponent:init(hp, hitSignal)
 	self._hitSignal = hitSignal
 end
 
-function HPComponent:setOwner(owner)
-	Component.setOwner(self, owner)
+function HPComponent:conception()
+	Component.conception(self)
 
 	self.owner.events:register(self._hitSignal, function()
 		self._hp = self._hp - 1

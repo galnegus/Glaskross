@@ -21,8 +21,8 @@ function ShieldPhysicsComponent:init(masterEntity)
     self._velRotation = 0
 end
 
-function ShieldPhysicsComponent:birth()
-	PhysicsComponent.birth(self)
+function ShieldPhysicsComponent:conception()
+	PhysicsComponent.conception(self)
 
 	self.owner.events:register(Signals.SHIELD_ACTIVE, function(dirX, dirY, duration)
 		assert((dirX == 0 and dirY == -1) or (dirX == 0 and dirY == 1) or 

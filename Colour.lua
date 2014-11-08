@@ -64,14 +64,7 @@ function Colour:b() return self._b end
 function Colour:alpha()
     return self._alpha
 end
---[[
-function Colour:set(r, g, b)
-    assert(r and g and b, "arguments missing")
-    self.r = r
-    self.g = g
-    self.b = b
-end
-]]
+
 function Colour:unpack()
     return self.r, self.g, self.b
 end
