@@ -40,7 +40,7 @@ function BoxyAIComponent:init()
     chain:add(x5y3l)
     chain:add(x1y2r)
 
-    chain:start()
+    --chain:start()
 
     death1 = DeathWallPattern()
     death1:add(1, 0, 0.5, 0.5)

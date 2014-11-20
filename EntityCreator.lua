@@ -7,7 +7,7 @@ local function player(x, y)
 
     local entity = Entity.new(_idCounter, EntityTypes.PLAYER)
     entity:addComponent(PlayerPhysicsComponent(x, y))
-    entity:addComponent(RenderComponent(Colours.PLAYER_RENDER, 0, Constants.DEFAULT_DEATH_DURATION, false))
+    entity:addComponent(RenderComponent(Colours.PLAYER_RENDER, 0, Constants.DEFAULT_DEATH_DURATION, true))
     entity:addComponent(MovementComponent(false, false))
     entity:addComponent(ShieldInputComponent())
     entity:addComponent(TrailEffectComponent(Colours.PLAYER_STEP))

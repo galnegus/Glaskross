@@ -2,13 +2,15 @@ Tile = Class{}
 Tile:include(Shape)
 
 function Tile:init(x, y, width, height)
+    --[[
     self._body = Collider:addRectangle(x, y, width, height)
     self._body.type = BodyTypes.TILE
     self._killer = false
     self._body.parent = self
     Collider:setPassive(self._body)
     Collider:addToGroup(ColliderGroups.HOSTILE, self._body)
-
+    ]]
+    
     -- _fg is used for entities stepping and stuff and so on (dynamic stuffs)
     self._fg = Colours.DEFAULT_STEP
     self._fgAlpha = Colours.DEFAULT_STEP:alpha()
@@ -109,6 +111,7 @@ function Tile:update(dt)
 end
 
 function Tile:draw()
+    --[[
     local x1, y1, x2, y2 = self._body:bbox()
     love.graphics.setColor(
         Colours.BG_COLOUR:r() + love.math.random(Colours.BG_COLOUR_RAND:r()), 
@@ -130,4 +133,5 @@ function Tile:draw()
         love.graphics.setColor(self._fg:r(), self._fg:g(), self._fg:b(), self._fgAlpha)
         love.graphics.rectangle("line", x1 + 1.5, y1 + 1.5, x2 - x1 - 2, y2 - y1 - 2)
     end
+    ]]
 end
