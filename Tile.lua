@@ -2,6 +2,11 @@ Tile = Class{}
 Tile:include(Shape)
 
 function Tile:init(x, y, width, height)
+    self._x = x
+    self._y = y
+    self._width = width
+    self._height = height
+
     --[[
     self._body = Collider:addRectangle(x, y, width, height)
     self._body.type = BodyTypes.TILE
@@ -9,13 +14,7 @@ function Tile:init(x, y, width, height)
     self._body.parent = self
     Collider:setPassive(self._body)
     Collider:addToGroup(ColliderGroups.HOSTILE, self._body)
-    ]]
     
-    -- _fg is used for entities stepping and stuff and so on (dynamic stuffs)
-    self._fg = Colours.DEFAULT_STEP
-    self._fgAlpha = Colours.DEFAULT_STEP:alpha()
-    self._fgStepHandle = nil
-
     -- _bg is used for environmental effects like the floor being a deathray
     self._bg = Colours.DEFAULT_BEAM
     self._bgAlpha = Colours.DEFAULT_BEAM:alpha()
@@ -28,35 +27,11 @@ function Tile:init(x, y, width, height)
 
     -- true if areabeam is active
     self._beaming = false
+    ]]
 end
-
+--[[
 function Tile:on_collide(dt, shapeCollidedWith, dx, dy)
     --
-end
-
-function Tile:getFgAlpha()
-    return self._fgAlpha
-end
-
-function Tile:step(freq, steps, colour)
-    -- cancel any already running timers so that they don't both tick
-    if self._fgAlpha ~= 0 and self._fgStepHandle ~= nil then
-        gameTimer:cancel(self._fgStepHandle)
-    end
-
-    if self._fg ~= colour then
-        self._fg = colour
-    end
-    self._fgAlpha = 255
-    --self._fg:set(colour.r or self._fg.r, colour.g or self._fg.g, colour.b or self._fg.b, 255)
-
-    self._fgStepHandle = gameTimer:addPeriodic(freq, function()
-        local step = 255 / steps
-        if self._fgAlpha - step < 0 then
-            step = self._fgAlpha
-        end
-        self._fgAlpha = self._fgAlpha - step
-    end, steps)
 end
 
 function Tile:beam(duration)
@@ -105,32 +80,27 @@ function Tile:beam(duration)
         end)
     end)
 end
-
+]]
 function Tile:update(dt)
+    --[[
     self._bgCancellingTimer:update(dt)
+    ]]
 end
 
 function Tile:draw()
-    --[[
-    local x1, y1, x2, y2 = self._body:bbox()
     love.graphics.setColor(
         Colours.BG_COLOUR:r() + love.math.random(Colours.BG_COLOUR_RAND:r()), 
         Colours.BG_COLOUR:g() + love.math.random(Colours.BG_COLOUR_RAND:g()), 
         Colours.BG_COLOUR:b() + love.math.random(Colours.BG_COLOUR_RAND:b()), 
         Colours.BG_COLOUR:alpha())
-
-    self._body:draw("fill")
+    love.graphics.rectangle("fill", self._x, self._y, self._width, self._height)
     
+    --[[
+    local x1, y1, x2, y2 = self._body:bbox()
     if self._bgAlpha ~= 0 then
         love.graphics.setColor(self._bgRand.r, self._bgRand.g, self._bgRand.b, self._bgAlpha / 10)
         love.graphics.rectangle("fill", x1 + 1, y1 + 1, x2 - x1 - 2, y2 - y1 - 2)
         love.graphics.setColor(self._bgRand.r, self._bgRand.g, self._bgRand.b, self._bgAlpha)
-        love.graphics.rectangle("line", x1 + 1.5, y1 + 1.5, x2 - x1 - 2, y2 - y1 - 2)
-    end
-    if self._fgAlpha ~= 0 then
-        love.graphics.setColor(self._fg:r(), self._fg:g(), self._fg:b(), self._fgAlpha / 10)
-        love.graphics.rectangle("fill", x1 + 1, y1 + 1, x2 - x1 - 2, y2 - y1 - 2)
-        love.graphics.setColor(self._fg:r(), self._fg:g(), self._fg:b(), self._fgAlpha)
         love.graphics.rectangle("line", x1 + 1.5, y1 + 1.5, x2 - x1 - 2, y2 - y1 - 2)
     end
     ]]

@@ -53,6 +53,7 @@ require "component.input.ShieldInputComponent"
 require "component.deatheffect.ParticleDeathEffectComponent"
 require "component.HPComponent"
 require "component.TrailEffectComponent"
+require "component.OptimizedTrailEffectComponent"
 require "gamestate.Game"
 require "gamestate.Menu"
 

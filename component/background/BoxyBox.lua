@@ -13,6 +13,6 @@ function BoxyBox:init(xOffset, yOffset, colour, xHover, yHover)
     self.yHover = yHover or 0
 
     -- must be either 1 or -1 (because it's a fucking direction)
-    self.xHoverDir = 1
-    self.yHoverDir = -1
+    self.xHoverDir = -1
+    self.yHoverDir = 1
 end

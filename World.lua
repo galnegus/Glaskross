@@ -3,7 +3,7 @@ World = Class{}
 function World:init(width, height, tileSize)
 
     -- init walls
-    local wallSize = 32
+    local wallSize = Constants.TILE_SIZE;
     self._walls = {}
     self._walls.top = Collider:addRectangle(-wallSize, -wallSize, width + 2 * wallSize, wallSize)
     self._walls.top.type = "wall"
@@ -30,9 +30,24 @@ function World:init(width, height, tileSize)
     Signal.register(Signals.AREA_BEAM, function(x, y, duration)
         tiles = self:getFloorSection(x, y)
         for _, tile in pairs(tiles) do
-            tile:beam(duration)
+            error("AREA BEAM ARE CANCELLED ASSHOLE, maybe bring them back later?")
         end
     end)
+end
+
+function World:rows()
+    return self._floor.rows;
+end
+
+function World:columns()
+    return self._floor.columns;
+end
+
+-- returns the center coordinates of the tile enclosing (x, y)
+function World:closestTileCenter(x, y)
+    local tileSize = Constants.TILE_SIZE
+    local tilePos = Vector(math.floor(x / tileSize), math.floor(y / tileSize))
+    return tilePos.x * tileSize + tileSize / 2, tilePos.y * tileSize + tileSize / 2
 end
 
 function World:getFloorSection(x, y)

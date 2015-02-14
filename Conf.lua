@@ -6,5 +6,5 @@ function love.conf(t)
 
     t.window.fsaa = 0
 
-    t.window.vsync = true
+    t.window.vsync = false
 end

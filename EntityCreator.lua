@@ -9,8 +9,8 @@ local function player(x, y)
     entity:addComponent(PlayerPhysicsComponent(x, y))
     entity:addComponent(RenderComponent(Colours.PLAYER_RENDER, 0, Constants.DEFAULT_DEATH_DURATION, true))
     entity:addComponent(MovementComponent(false, false))
-    entity:addComponent(ShieldInputComponent())
-    entity:addComponent(TrailEffectComponent(Colours.PLAYER_STEP))
+    entity:addComponent(BulletInputComponent())
+    entity:addComponent(OptimizedTrailEffectComponent(Colours.PLAYER_STEP))
     entity:addComponent(ParticleDeathEffectComponent(1))
     return entity
 end
@@ -18,42 +18,32 @@ end
 local function bullet(x, y, targetDirX, targetDirY)
     assert(x and y and targetDirX and targetDirY, "arguments missing.")
 
-    local x1, y1, x2, y2 = -1, -1, -1, -1
-    for _, body in pairs(Collider:shapesAt(x,y)) do
-        if body.type == BodyTypes.TILE then
-            x1, y1, x2, y2 = body:bbox()
-            break
-        end
-    end
-
-    assert(x1 ~= -1 and x2 ~= -1 and y1 ~= -1 and y2 ~= -1, "Couldn't find any tiles =(")
+    local xTile, yTile = world:closestTileCenter(x, y)
+    assert(xTile >= 0 and yTile >= 0, "Couldn't find any tiles =(")
 
     -- adjust size and position of bullet's collider body so that it has the
     -- dimensions of a stick going in a direction perpendicular to its (longer) side
 
     -- adjust height and width
-    local width = x2 - x1 - 2
-    local height = y2 - y1 - 2
-    if targetDirX ~= 0 then
-        width = 1
-    elseif targetDirY ~= 0 then
-        height = 1
-    end
+    local tileSize = Constants.TILE_SIZE
+    local width = tileSize
+    local height = tileSize
 
     -- adjust starting position
-    local startX = x1 + 1
-    local startY = y1 + 1
-    if targetDirX == -1 then
-        startX = x2 - 2
-    elseif targetDirY == -1 then
-        startY = y2 - 2
+    local startX = xTile - tileSize / 4 * math.abs(targetDirY) + tileSize / 4 * targetDirX
+    local startY = yTile - tileSize / 4 * math.abs(targetDirX) + tileSize / 4 * targetDirY
+
+    if targetDirX == 1 then
+        startX = startX - tileSize / 2
+    elseif targetDirY == 1 then
+        startY = startY - tileSize / 2
     end
 
     local entity = Entity.new(_idCounter, EntityTypes.BULLET, true)
     entity:addComponent(BulletPhysicsComponent(startX, startY, Constants.TILE_SIZE / 2, Constants.TILE_SIZE / 2, 1))
     entity:addComponent(RenderComponent(Colours.BULLET_RENDER, Constants.BULLET_BIRTH_DURATION, Constants.DEFAULT_DEATH_DURATION, false))
     entity:addComponent(ConstantMovementComponent(targetDirX, targetDirY, false))
-    entity:addComponent(TrailEffectComponent(Colours.BULLET_STEP))
+    entity:addComponent(OptimizedTrailEffectComponent(Colours.BULLET_STEP))
     return entity
 end
 

@@ -18,10 +18,8 @@ function game:init()
     greyscale = gradient {
         direction = 'horizontal';
         {0, 0, 0};
-        {10, 10, 10};
+        {5, 5, 5};
     }
-    print("width: " .. greyscale:getWidth())
-    print("height: " .. greyscale:getHeight())
 end
 
 function on_collide(dt, shape_a, shape_b, dx, dy)

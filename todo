@@ -1,4 +1,9 @@
 TODO:
 
  - Make bouncer move slighly towards player
- - Cool grafix for bouncer sword, + make bouncer rotate?
+ - Cool grafix for bouncer sword, + make bouncer rotate one side towards next wall
+ - Make floor performance good, maybe using newImage (see lib/gradient.lua)
+ - Sword has 3 layers, each hit removes one layer, when all layers removed, cooldown is removed
+ - Remove "hold down to attack"
+ - Make an enemy that moves according to a mathematical function, taking the parameters (playerPos, enemyPos, ...)
+ - Make an enemy that moves x pixels, briefly stops and then splits in two clones, each moving in a slightly different direction, one clone is an "original" which also splits after x pixels, the other self-destructs are the same distance. So to kill the enemy you'd have to target the "original", killing the "fake" does nothing to stop the chain.

@@ -5,7 +5,7 @@ function ShieldPhysicsComponent:init(masterEntity)
 	assert(masterEntity.physics ~= nil, "master entity must have physics component.")
 	self._x, self._y = masterEntity.physics:center()
 
-    -- create triangle body which reflects the appearance of the shield
+    -- create triangle body in the appearance of a shield
     PhysicsComponent.init(self, Collider:addPolygon(self._x - Constants.TILE_SIZE*1.5, self._y, 
                                                     self._x, self._y - Constants.TILE_SIZE*1.5, 
                                                     self._x + Constants.TILE_SIZE*1.5, self._y))
