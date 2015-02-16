@@ -1,7 +1,7 @@
 BoxyBackgroundComponent = Class{}
 BoxyBackgroundComponent:include(Component)
 
-local hoverLimit = Constants.TILE_SIZE / 3
+local hoverLimit = Constants.TILE_SIZE / 2
 local hoverVelocity = Constants.TILE_SIZE
 
 -- at the very lowest possible hover velocity in the interpolation thingy,
@@ -13,8 +13,8 @@ function BoxyBackgroundComponent:init()
 
     self.type = ComponentTypes.BACKGROUND
 
-    self._boxWidth = Constants.TILE_SIZE * 12
-    self._boxHeight = Constants.TILE_SIZE * 9
+    self._boxWidth = Constants.TILE_SIZE * 24
+    self._boxHeight = Constants.TILE_SIZE * 18
 
     self._x = (love.graphics.getWidth() - self._boxWidth) / 2
     self._y = (love.graphics.getHeight() - self._boxHeight) / 2
@@ -38,7 +38,7 @@ function BoxyBackgroundComponent:init()
         if #self._boxes > 1 then
             gameTimer:tween(Constants.BOXY_PHASE_TRANS_TIME, self._boxes[#self._boxes - 1], {alpha = 255}, 'in-out-sine')
             for i = #self._boxes - 1, 1, -1 do
-                local offset = (#self._boxes - 1) * Constants.TILE_SIZE - i * Constants.TILE_SIZE
+                local offset = (#self._boxes - 1 - i) * Constants.TILE_SIZE
                 gameTimer:tween(Constants.BOXY_PHASE_TRANS_TIME, self._boxes[i], {xOffset = offset, yOffset = -offset}, 'in-out-sine')
             end
             Signal.emit(Signals.COLOUR_MIX, self._boxes[#self._boxes - 1].colour)
@@ -87,7 +87,7 @@ function BoxyBackgroundComponent:bgDraw()
         local y = self._y + box.yOffset + box.yHover
         love.graphics.setColor(box.colour:r(), box.colour:g(), box.colour:b(), box.alpha / 10)
         love.graphics.rectangle("fill", x, y, self._boxWidth, self._boxHeight)
-        love.graphics.setColor(box.colour:r(), box.colour:g(), box.colour:b(), box.alpha)
+        love.graphics.setColor(box.colour:r(), box.colour:g(), box.colour:b(), box.alpha / 3)
         love.graphics.rectangle("line", x + 0.5, y + 0.5, self._boxWidth, self._boxHeight)
     end
 end

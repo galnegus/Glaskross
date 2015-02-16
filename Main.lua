@@ -13,7 +13,8 @@ Signals = require "constants.Signals"
 EntityTypes = require "constants.EntityTypes"
 BodyTypes = require "constants.BodyTypes"
 ComponentTypes = require "constants.ComponentTypes"
-ColliderGroups = require "constants.ColliderGroups"
+CollisionGroups = require "constants.CollisionGroups"
+CollisionRules = require "constants.CollisionRules"
 
 require "Colour"
 Colours = require "constants.Colours"
@@ -56,6 +57,8 @@ require "component.TrailEffectComponent"
 require "component.OptimizedTrailEffectComponent"
 require "gamestate.Game"
 require "gamestate.Menu"
+require "gui.GameGUI"
+require "gui.HealthBar"
 
 function love.load()
     io.stdout:setvbuf("no")

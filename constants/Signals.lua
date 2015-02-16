@@ -23,7 +23,7 @@ Signals.MOVE_SHAPE = "move shape"
 -- BoxyBackgroundComponent.lua, + others potentially
 Signals.BOXY_NEXT_PHASE = "boxy next phase"
 -- BouncerMovementComponent.lua
-Signals.BOUNCER_BOUNCE = "bouncer bounce"
+Signals.BOUNCE = "bounce"
 -- BouncerHPComponent.lua
 Signals.BOUNCER_HIT = "bouncer hit"
 -- ShieldRenderComponent.lua, ShieldPhysicsComponent.lua

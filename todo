@@ -1,5 +1,6 @@
-TODO:
+!!! TODO !!!
 
+OLD LIST:
  - Make bouncer move slighly towards player
  - Cool grafix for bouncer sword, + make bouncer rotate one side towards next wall
  - Make floor performance good, maybe using newImage (see lib/gradient.lua)
@@ -7,3 +8,16 @@ TODO:
  - Remove "hold down to attack"
  - Make an enemy that moves according to a mathematical function, taking the parameters (playerPos, enemyPos, ...)
  - Make an enemy that moves x pixels, briefly stops and then splits in two clones, each moving in a slightly different direction, one clone is an "original" which also splits after x pixels, the other self-destructs are the same distance. So to kill the enemy you'd have to target the "original", killing the "fake" does nothing to stop the chain.
+ - Fix BoxyBackgroundComponent so that it is size-agnostic
+
+16/2 -15
+ - Add new enemy "seeker", a suicide bomber who moves at a somewhat slow speed, towards the player, turns slowly, small in size, big in numbers
+ - Write a spawner for the seeker, preferably using PatternChainer.lua, it should be randomized, spawning a seeker at a pseudo-random position away from teh player
+ - HEALTH BAR FEATURES:
+ 	- Lose a chunk of hp when taking damage
+ 	- Gain a chunk of hp when killing an enemy
+ - Integrate health into the main game somehow, use the HPComponent! Lots of signals and shit.
+ 	- Make Entities:getAll(entityType) to enable retrieving player in HealthBar.lua which then stores that locally
+ + Add a CollisionRules.lua containing static methods that are reused by all physics components.
+ 	+ Consider replacing the ".type" of collision bodies from EntityTypes to BodyTypes, i.e. adding new BodyTypes like "player", "playerweapon", "enemy", "enemyweapon"
+ 	+ Possibly by having each physics component receive a list of rules to consider in its contructor.

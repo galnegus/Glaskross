@@ -7,20 +7,20 @@ function OptimizedTrailEffectComponent:init(colour)
 	self.type = ComponentTypes.TRAIL_EFFECT
 
     
-    local rows = world:rows()
-    local columns = world:columns()
+    self._rows = world:rows()
+    self._columns = world:columns()
     self._alpha = {}
     self._timerHandlers = {}
-    for i = 1, columns do
+    for i = 1, self._columns do
         self._alpha[i] = {}
         self._timerHandlers[i] = {}
-        for j = 1, rows do
+        for j = 1, self._rows do
             self._alpha[i][j] = 0 -- matrices in lua are naturally sparse c:
             self._timerHandlers[i][j] = 0
         end
     end
     
-    self._toRender = {}
+    self._toRender = {} -- also a matrix but with the two indices composed into one ([x][y] -> [x * rows + y]) for iteration with for-in-pairs()
 
 	self._colour = colour
 	self._lastCollidedWith = nil
@@ -45,11 +45,11 @@ function OptimizedTrailEffectComponent:update(dt)
 
     local pos = worldToMatrix(x, y)
     if pos ~= self._lastPosition or self._alpha[pos.x][pos.y] == 0 then
-        if self._timerHandlers[pos.x][pos.y] ~= nil then
+        if self._timerHandlers[pos.x][pos.y] ~= 0 then
             gameTimer:cancel(self._timerHandlers[pos.x][pos.y])
         end
         self._alpha[pos.x][pos.y] = 255
-        table.insert(self._toRender, pos)
+        self._toRender[pos.x * self._rows + pos.y] = pos
         self._timerHandlers[pos.x][pos.y] = gameTimer:do_for(self._duration, function()
             self._alpha[pos.x][pos.y] = self._alpha[pos.x][pos.y] - dt * 255 / self._duration
             if self._alpha[pos.x][pos.y] < 0 then
@@ -58,7 +58,8 @@ function OptimizedTrailEffectComponent:update(dt)
         end, function()
             self._timerHandlers[pos.x][pos.y] = 0
             self._alpha[pos.x][pos.y] = 0
-            table.remove(self._toRender, 1)
+            self._toRender[pos.x * self._rows + pos.y] = nil
+            
         end)
     end
 
@@ -67,7 +68,7 @@ end
 
 function OptimizedTrailEffectComponent:draw()
     local tileSize = Constants.TILE_SIZE / 2
-    for _, pos in ipairs(self._toRender) do
+    for _, pos in pairs(self._toRender) do
         local x, y = matrixToWorld(pos)
         local x1, y1, x2, y2 = x - tileSize, y - tileSize, x + tileSize, y + tileSize
         love.graphics.setColor(self._colour:r(), self._colour:g(), self._colour:b(), self._alpha[pos.x][pos.y] / 10)

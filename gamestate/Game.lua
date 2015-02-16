@@ -20,6 +20,8 @@ function game:init()
         {0, 0, 0};
         {5, 5, 5};
     }
+
+    gui = GameGUI()
 end
 
 function on_collide(dt, shape_a, shape_b, dx, dy)
@@ -27,7 +29,7 @@ function on_collide(dt, shape_a, shape_b, dx, dy)
         shape_a.parent:on_collide(dt, shape_b, dx, dy)
     end
     if shape_b.parent ~= nil then
-        shape_b.parent:on_collide(dt, shape_a)
+        shape_b.parent:on_collide(dt, shape_a, -dx, -dy)
     end
 end
 
@@ -37,6 +39,8 @@ function game:update(dt)
     world:update(dt)
     gameTimer:update(dt)
     Collider:update(dt)
+
+    gui:update(dt)
 end
 
 function drawinrect(img, x, y, w, h, r, ox, oy, kx, ky)
@@ -45,6 +49,7 @@ function drawinrect(img, x, y, w, h, r, ox, oy, kx, ky)
 end
 
 function game:draw()
+    love.graphics.reset()
     love.graphics.setCanvas(canvas)
         local r, g, b, a = love.graphics.getColor()
             canvas:clear()
@@ -52,7 +57,9 @@ function game:draw()
             Entities.bgDraw()
             world:draw()
             Entities.draw()
+
             love.graphics.draw(deathParticleSystem)
+           
         love.graphics.setColor(r, g, b, a)
     love.graphics.setCanvas()
 
@@ -60,8 +67,7 @@ function game:draw()
         love.graphics.draw(canvas)
     love.graphics.setShader()
 
-
-    love.graphics.print("Current FPS: " .. tostring(love.timer.getFPS( )), 10, 10)
+     gui:draw()
 end
 
 function game:keyreleased(key)

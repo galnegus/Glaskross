@@ -1,14 +1,15 @@
 ShieldPhysicsComponent = Class{}
 ShieldPhysicsComponent:include(PhysicsComponent)
 
-function ShieldPhysicsComponent:init(masterEntity)
+function ShieldPhysicsComponent:init(masterEntity, bodyType, collisionRules)
 	assert(masterEntity.physics ~= nil, "master entity must have physics component.")
 	self._x, self._y = masterEntity.physics:center()
 
     -- create triangle body in the appearance of a shield
     PhysicsComponent.init(self, Collider:addPolygon(self._x - Constants.TILE_SIZE*1.5, self._y, 
                                                     self._x, self._y - Constants.TILE_SIZE*1.5, 
-                                                    self._x + Constants.TILE_SIZE*1.5, self._y))
+                                                    self._x + Constants.TILE_SIZE*1.5, self._y), bodyType, collisionRules)
+    Collider:addToGroup(CollisionGroups.FRIENDLY, self._body)
 
     self._masterEntity = masterEntity
     self._active = false
@@ -21,13 +22,14 @@ function ShieldPhysicsComponent:init(masterEntity)
     self._velRotation = 0
 end
 
-function ShieldPhysicsComponent:conception()
-	PhysicsComponent.conception(self)
+function ShieldPhysicsComponent:birth()
+    PhysicsComponent.birth(self)
+    Collider:setGhost(self._body)
 
-	self.owner.events:register(Signals.SHIELD_ACTIVE, function(dirX, dirY, duration)
-		assert((dirX == 0 and dirY == -1) or (dirX == 0 and dirY == 1) or 
-        	   (dirX == -1 and dirY == 0) or (dirX == 1 and dirY == 0), 
-        		"Invalid values of 'dirX' and 'dirY' parameters, must be orthogonal")
+    self.owner.events:register(Signals.SHIELD_ACTIVE, function(dirX, dirY, duration)
+        assert((dirX == 0 and dirY == -1) or (dirX == 0 and dirY == 1) or 
+               (dirX == -1 and dirY == 0) or (dirX == 1 and dirY == 0), 
+                "Invalid values of 'dirX' and 'dirY' parameters, must be orthogonal")
 
         -- rotate the triangle body to face the correct side, also tilt it slightly according to master velocity
         local vx, vy = 0, 0
@@ -53,11 +55,15 @@ function ShieldPhysicsComponent:conception()
         gameTimer:tween(duration, self, {_xAnimateOffset = self._xAnimateOffset + dirX * Constants.TILE_SIZE, _yAnimateOffset = self._yAnimateOffset + dirY * Constants.TILE_SIZE}, 'out-sine')
 
         self._active = true
-	end)
+        Collider:setSolid(self._body)
+    end)
 
-	self.owner.events:register(Signals.SHIELD_INACTIVE, function()
-		self._active = false
-	end)
+    self.owner.events:register(Signals.SHIELD_INACTIVE, function()
+        if self._alive then
+            self._active = false
+            Collider:setGhost(self._body)
+        end
+    end)
 end
 
 function ShieldPhysicsComponent:getVelRotation()
@@ -72,16 +78,4 @@ function ShieldPhysicsComponent:update(dt)
 
 		self._body:moveTo(self._x + self._xOffset + self._xAnimateOffset, self._y + self._yOffset + self._yAnimateOffset)
 	end
-end
-
-function ShieldPhysicsComponent:on_collide(dt, shapeCollidedWith, dx, dy)
-    if self._active then
-    dx = dx or 0
-    dy = dy or 0
-        if shapeCollidedWith.type == EntityTypes.BOUNCER then
-            shapeCollidedWith.parent.owner.events:emit(Signals.BOUNCER_HIT)
-        elseif shapeCollidedWith.type == EntityTypes.DEATH_WALL then
-            Signal.emit(Signals.KILL_ENTITY, shapeCollidedWith.parent.owner.id)
-        end
-    end
 end

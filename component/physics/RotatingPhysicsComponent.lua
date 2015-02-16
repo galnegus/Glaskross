@@ -1,8 +1,8 @@
 RotatingPhysicsComponent = Class{}
 RotatingPhysicsComponent:include(PhysicsComponent)
 
-function RotatingPhysicsComponent:init(shape, rps)
-	PhysicsComponent.init(self, shape)
+function RotatingPhysicsComponent:init(shape, rps, bodyType, collisionRules)
+	PhysicsComponent.init(self, shape, bodyType, collisionRules)
 
 	self._rps = rps -- rotations per second
 end
