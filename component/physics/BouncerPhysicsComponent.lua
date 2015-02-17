@@ -1,9 +1,8 @@
 BouncerPhysicsComponent = Class{}
 BouncerPhysicsComponent:include(PhysicsComponent)
 
-function BouncerPhysicsComponent:init(x, y, width, height, bodyType, collisionRules)
-    PhysicsComponent.init(self, Collider:addRectangle(x, y, width, height), bodyType, collisionRules)
-    Collider:addToGroup(CollisionGroups.HOSTILE, self._body)
+function BouncerPhysicsComponent:init(options)
+    PhysicsComponent.init(self, options)
 end
 
 function BouncerPhysicsComponent:conception()

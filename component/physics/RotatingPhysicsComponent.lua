@@ -1,10 +1,11 @@
 RotatingPhysicsComponent = Class{}
 RotatingPhysicsComponent:include(PhysicsComponent)
 
-function RotatingPhysicsComponent:init(shape, rps, bodyType, collisionRules)
-	PhysicsComponent.init(self, shape, bodyType, collisionRules)
+function RotatingPhysicsComponent:init(options)
+	assert(options.rps ~= nil, "options.rps is required.")
+	PhysicsComponent.init(self, options)
 
-	self._rps = rps -- rotations per second
+	self._rps = options.rps -- rotations per second
 end
 
 function RotatingPhysicsComponent:setOwner(owner)

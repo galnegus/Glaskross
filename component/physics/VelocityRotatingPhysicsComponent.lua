@@ -1,8 +1,8 @@
 VelocityRotatingPhysicsComponent = Class{}
 VelocityRotatingPhysicsComponent:include(PhysicsComponent)
 
-function VelocityRotatingPhysicsComponent:init(shape, bodyType, collisionRules)
-	PhysicsComponent.init(self, shape, bodyType, collisionRules)
+function VelocityRotatingPhysicsComponent:init(options)
+	PhysicsComponent.init(self, options)
 
 	self._rotationDirection = 1
 

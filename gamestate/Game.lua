@@ -17,8 +17,8 @@ function game:init()
 
     greyscale = gradient {
         direction = 'horizontal';
-        {0, 0, 0};
         {5, 5, 5};
+        {10, 10, 10};
     }
 
     gui = GameGUI()

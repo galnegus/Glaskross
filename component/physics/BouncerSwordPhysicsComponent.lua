@@ -1,13 +1,11 @@
 BouncerSwordPhysicsComponent = Class{}
 BouncerSwordPhysicsComponent:include(RotatingPhysicsComponent)
 
-function BouncerSwordPhysicsComponent:init(master, bodyType, collisionRules)
-	local x, y = master.physics:center()
-	RotatingPhysicsComponent.init(self, Collider:addRectangle(x, y, 5, Constants.TILE_SIZE * 10), 1, bodyType, collisionRules)
-	Collider:addToGroup(CollisionGroups.HOSTILE, self._body)
-	Collider:addToGroup(CollisionGroups.IGNORE_WALLS, self._body)
+function BouncerSwordPhysicsComponent:init(options)
+	assert(options.masterEntity ~= nil, "options.masterEntity is required.")
+	RotatingPhysicsComponent.init(self, options)
 
-	self._masterEntity = master
+	self._masterEntity = options.masterEntity
 end
 
 function BouncerSwordPhysicsComponent:update(dt)

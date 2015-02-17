@@ -1,9 +1,8 @@
 DeathWallPhysicsComponent = Class{}
 DeathWallPhysicsComponent:include(PhysicsComponent)
 
-function DeathWallPhysicsComponent:init(x, y, width, height, bodyType, collisionRules)
-    PhysicsComponent.init(self, Collider:addRectangle(x, y, width, height), bodyType, collisionRules)
-    Collider:addToGroup(CollisionGroups.HOSTILE, self._body)
+function DeathWallPhysicsComponent:init(options)
+    PhysicsComponent.init(self, options)
     Collider:setPassive(self._body)
 end
 

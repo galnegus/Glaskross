@@ -1,17 +1,15 @@
 ShieldPhysicsComponent = Class{}
 ShieldPhysicsComponent:include(PhysicsComponent)
 
-function ShieldPhysicsComponent:init(masterEntity, bodyType, collisionRules)
-	assert(masterEntity.physics ~= nil, "master entity must have physics component.")
-	self._x, self._y = masterEntity.physics:center()
+function ShieldPhysicsComponent:init(options)
+    assert(options.masterEntity ~= nil, "options.masterEntity is required.")
+	assert(options.masterEntity.physics ~= nil, "master entity must have physics component.")
+	self._x, self._y = options.masterEntity.physics:center()
 
     -- create triangle body in the appearance of a shield
-    PhysicsComponent.init(self, Collider:addPolygon(self._x - Constants.TILE_SIZE*1.5, self._y, 
-                                                    self._x, self._y - Constants.TILE_SIZE*1.5, 
-                                                    self._x + Constants.TILE_SIZE*1.5, self._y), bodyType, collisionRules)
-    Collider:addToGroup(CollisionGroups.FRIENDLY, self._body)
+    PhysicsComponent.init(self, options)
 
-    self._masterEntity = masterEntity
+    self._masterEntity = options.masterEntity
     self._active = false
 
     self._xOffset = 0

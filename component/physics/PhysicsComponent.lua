@@ -1,12 +1,14 @@
 PhysicsComponent = Class{}
 PhysicsComponent:include(Component)
 
-function PhysicsComponent:init(shape, bodyType, collisionRules)
-    assert(bodyType ~= nil, "bodyType is required.")
-    assert(collisionRules ~= nil, "collisionRules are required.")
+function PhysicsComponent:init(options)
+    assert(options.shape ~= nil, "options.shape is required.")
+    assert(options.bodyType ~= nil, "options.bodyType is required.")
+    assert(options.collisionGroups ~= nil, "options.collisionGroups is required.")
+    assert(options.collisionRules ~= nil, "options.collisionRules is required.")
 
     -- assert that the format on the collisionRules table is okay
-    for bodyType, rules in pairs(collisionRules) do
+    for bodyType, rules in pairs(options.collisionRules) do
         local bodyTypeExists = false
         for _, existingBodyType in pairs(BodyTypes) do
             if bodyType == existingBodyType then
@@ -25,10 +27,14 @@ function PhysicsComponent:init(shape, bodyType, collisionRules)
     Component.init(self)
 
     self.type = ComponentTypes.PHYSICS
-    self._body = shape
+    self._body = options.shape
     self._body.parent = self
-    self._body.type = bodyType
-    self._collisionRules = collisionRules
+    self._body.type = options.bodyType
+    self._collisionRules = options.collisionRules
+
+    for _, group in pairs(options.collisionGroups) do
+        Collider:addToGroup(group, self._body)
+    end
 end
 
 function PhysicsComponent:center()

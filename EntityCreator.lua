@@ -5,14 +5,25 @@ local _idCounter = 0
 local function player(x, y)
     assert(x and y, "arguments missing.")
 
+    local collisionGroups = {
+        CollisionGroups.FRIENDLY
+    }
+
     local collisionRules = {
         [BodyTypes.WALL] = {
             CollisionRules.StopMovement()
         }
     }
 
+    local bodyOptions = {
+        shape = Collider:addRectangle(x, y, Constants.TILE_SIZE, Constants.TILE_SIZE),
+        bodyType = BodyTypes.PLAYER,
+        collisionGroups = collisionGroups,
+        collisionRules = collisionRules
+    }
+
     local entity = Entity.new(_idCounter, EntityTypes.PLAYER)
-    entity:addComponent(PlayerPhysicsComponent(x, y, BodyTypes.PLAYER, collisionRules))
+    entity:addComponent(VelocityRotatingPhysicsComponent(bodyOptions))
     entity:addComponent(RenderComponent(Colours.PLAYER_RENDER, 0, Constants.DEFAULT_DEATH_DURATION, true))
     entity:addComponent(MovementComponent(false, false))
     entity:addComponent(ShieldInputComponent())
@@ -41,6 +52,10 @@ local function bullet(x, y, targetDirX, targetDirY)
         startY = startY - tileSize / 2
     end
 
+    local collisionGroups = {
+        CollisionGroups.FRIENDLY
+    }
+
     local collisionRules = {
         [BodyTypes.WALL] = {
             CollisionRules.SelfDestruct()
@@ -51,8 +66,16 @@ local function bullet(x, y, targetDirX, targetDirY)
         }
     }
 
+    local bodyOptions = {
+        shape = Collider:addRectangle(startX, startY, width, height),
+        bodyType = BodyTypes.PLAYER_WEAPON,
+        collisionGroups = collisionGroups,
+        collisionRules = collisionRules,
+        rps = 1
+    }
+
     local entity = Entity.new(_idCounter, EntityTypes.BULLET, true)
-    entity:addComponent(BulletPhysicsComponent(startX, startY, width, height, 1, BodyTypes.PLAYER_WEAPON, collisionRules))
+    entity:addComponent(RotatingPhysicsComponent(bodyOptions))
     entity:addComponent(RenderComponent(Colours.BULLET_RENDER, Constants.BULLET_BIRTH_DURATION, Constants.DEFAULT_DEATH_DURATION, false))
     entity:addComponent(ConstantMovementComponent(targetDirX, targetDirY, false))
     entity:addComponent(OptimizedTrailEffectComponent(Colours.BULLET_STEP))
@@ -105,6 +128,10 @@ local function deathWall(x, y, maxVelFactor)
         end
     end
 
+    local collisionGroups = {
+        CollisionGroups.HOSTILE
+    }
+
     local collisionRules = {
         [BodyTypes.PLAYER] = {
             CollisionRules.Destroy(),
@@ -112,8 +139,15 @@ local function deathWall(x, y, maxVelFactor)
         }
     }
 
+    local bodyOptions = {
+        shape = Collider:addRectangle(startX, startY, width, height),
+        bodyType = BodyTypes.ENEMY,
+        collisionGroups = collisionGroups,
+        collisionRules = collisionRules
+    }
+
     local entity = Entity.new(_idCounter, EntityTypes.DEATH_WALL, true)
-    entity:addComponent(DeathWallPhysicsComponent(startX, startY, width, height, BodyTypes.ENEMY, collisionRules))
+    entity:addComponent(DeathWallPhysicsComponent(bodyOptions))
     entity:addComponent(ConstantMovementComponent(x, y, Constants.TERMINAL_VELOCITY * maxVelFactor))
     entity:addComponent(RenderComponent(Colours.DEATH_WALL_RENDER, Constants.DEATH_WALL_BIRTH_DURATION, Constants.DEFAULT_DEATH_DURATION, true))
     entity:addComponent(ParticleDeathEffectComponent(1))
@@ -122,6 +156,10 @@ end
 
 local function bouncer(x, y, targetDirX, targetDirY)
     assert(x and y and targetDirX and targetDirY, "arguments missing.")
+
+    local collisionGroups = {
+        CollisionGroups.HOSTILE
+    }
 
     local collisionRules = {
         [BodyTypes.WALL] = {
@@ -133,9 +171,16 @@ local function bouncer(x, y, targetDirX, targetDirY)
         }
     }
 
+    local bodyOptions = {
+        shape = Collider:addRectangle(x, y, Constants.TILE_SIZE * 2, Constants.TILE_SIZE * 2),
+        bodyType = BodyTypes.ENEMY,
+        collisionGroups = collisionGroups,
+        collisionRules = collisionRules
+    }
+
     local entity = Entity.new(_idCounter, EntityTypes.BOUNCER, false)
     entity:addComponent(BouncerMovementComponent(targetDirX, targetDirY, Constants.TERMINAL_VELOCITY / 5, 10))
-    entity:addComponent(BouncerPhysicsComponent(x, y, Constants.TILE_SIZE * 2, Constants.TILE_SIZE * 2, BodyTypes.ENEMY, collisionRules))
+    entity:addComponent(BouncerPhysicsComponent(bodyOptions))
     entity:addComponent(HPComponent(Constants.BOUNCER_HP, Signals.BOUNCER_HIT))
     entity:addComponent(RenderComponent(Colours.BOUNCER_RENDER, Constants.BOUNCER_BIRTH_DURATION, Constants.DEFAULT_DEATH_DURATION, true))
     entity:addComponent(ParticleDeathEffectComponent(1))
@@ -145,14 +190,29 @@ end
 local function shield(masterEntity)
     assert(masterEntity, "arguments missing.")
 
+    local collisionGroups = {
+        CollisionGroups.FRIENDLY
+    }
+
     local collisionRules = {
         [BodyTypes.ENEMY] = {
             CollisionRules.Destroy()
         }
     }
 
+    local x, y = masterEntity.physics:center()
+    local bodyOptions = {
+        shape = Collider:addPolygon(x - Constants.TILE_SIZE * 1.5, y, 
+                                    x, y - Constants.TILE_SIZE * 1.5, 
+                                    x + Constants.TILE_SIZE * 1.5, y),
+        bodyType = BodyTypes.PLAYER_WEAPON,
+        collisionGroups = collisionGroups,
+        collisionRules = collisionRules,
+        masterEntity = masterEntity
+    }
+
     local entity = Entity.new(_idCounter, EntityTypes.SHIELD, true)
-    entity:addComponent(ShieldPhysicsComponent(masterEntity, BodyTypes.PLAYER_WEAPON, collisionRules))
+    entity:addComponent(ShieldPhysicsComponent(bodyOptions))
     entity:addComponent(ShieldRenderComponent(Colours.SHIELD_RENDER, 0.5, 0.5, Constants.TILE_SIZE))
 
     return entity
@@ -161,14 +221,29 @@ end
 local function bouncerSword(masterEntity)
     assert(masterEntity, "argument missing.")
 
+    local collisionGroups = {
+        CollisionGroups.HOSTILE,
+        CollisionGroups.IGNORE_WALLS
+    }
+
     local collisionRules = {
         [BodyTypes.PLAYER] = {
             CollisionRules.Destroy()
         }
     }
 
+    local x, y = masterEntity.physics:center()
+    local bodyOptions = {
+        shape = Collider:addRectangle(x, y, 5, Constants.TILE_SIZE * 10),
+        bodyType = BodyTypes.ENEMY_WEAPON,
+        collisionGroups = collisionGroups,
+        collisionRules = collisionRules,
+        masterEntity = masterEntity,
+        rps = 1
+    }
+
     local entity = Entity.new(_idCounter, EntityTypes.BOUNCER_SWORD, false)
-    entity:addComponent(BouncerSwordPhysicsComponent(masterEntity, BodyTypes.ENEMY_WEAPON, collisionRules))
+    entity:addComponent(BouncerSwordPhysicsComponent(bodyOptions))
     entity:addComponent(BouncerSwordRenderComponent(Colours.BOUNCER_SWORD_RENDER, 0.5, 0.5))
 
     return entity
