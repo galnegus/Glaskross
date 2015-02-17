@@ -234,7 +234,10 @@ local function bouncerSword(masterEntity)
 
     local x, y = masterEntity.body:center()
     local bodyOptions = {
-        shape = Collider:addRectangle(x, y, 5, Constants.TILE_SIZE * 10),
+        shape = Collider:addPolygon(x - Constants.TILE_SIZE * 5, y, 
+                                    x, y - Constants.TILE_SIZE * 0.1, 
+                                    x + Constants.TILE_SIZE * 5, y,
+                                    x, y + Constants.TILE_SIZE * 0.1),
         bodyType = BodyTypes.ENEMY_WEAPON,
         collisionGroups = collisionGroups,
         collisionRules = collisionRules,
