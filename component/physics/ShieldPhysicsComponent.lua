@@ -22,9 +22,8 @@ function ShieldPhysicsComponent:init(masterEntity, bodyType, collisionRules)
     self._velRotation = 0
 end
 
-function ShieldPhysicsComponent:birth()
-    PhysicsComponent.birth(self)
-    Collider:setGhost(self._body)
+function ShieldPhysicsComponent:conception()
+    PhysicsComponent.conception(self)
 
     self.owner.events:register(Signals.SHIELD_ACTIVE, function(dirX, dirY, duration)
         assert((dirX == 0 and dirY == -1) or (dirX == 0 and dirY == 1) or 
@@ -64,6 +63,11 @@ function ShieldPhysicsComponent:birth()
             Collider:setGhost(self._body)
         end
     end)
+end
+
+function ShieldPhysicsComponent:birth()
+    PhysicsComponent.birth(self)
+    Collider:setGhost(self._body)
 end
 
 function ShieldPhysicsComponent:getVelRotation()

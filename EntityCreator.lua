@@ -6,7 +6,9 @@ local function player(x, y)
     assert(x and y, "arguments missing.")
 
     local collisionRules = {
-        CollisionRules.StopMovement(BodyTypes.WALL)
+        [BodyTypes.WALL] = {
+            CollisionRules.StopMovement()
+        }
     }
 
     local entity = Entity.new(_idCounter, EntityTypes.PLAYER)
@@ -40,9 +42,13 @@ local function bullet(x, y, targetDirX, targetDirY)
     end
 
     local collisionRules = {
-        CollisionRules.SelfDestruct(BodyTypes.WALL),
-        CollisionRules.SelfDestruct(BodyTypes.ENEMY),
-        CollisionRules.Destroy(BodyTypes.ENEMY)
+        [BodyTypes.WALL] = {
+            CollisionRules.SelfDestruct()
+        }, 
+        [BodyTypes.ENEMY] = {
+            CollisionRules.SelfDestruct(),
+            CollisionRules.Destroy()
+        }
     }
 
     local entity = Entity.new(_idCounter, EntityTypes.BULLET, true)
@@ -100,8 +106,10 @@ local function deathWall(x, y, maxVelFactor)
     end
 
     local collisionRules = {
-        CollisionRules.Destroy(BodyTypes.PLAYER),
-        CollisionRules.SelfDestruct(BodyTypes.PLAYER)
+        [BodyTypes.PLAYER] = {
+            CollisionRules.Destroy(),
+            CollisionRules.SelfDestruct()
+        }
     }
 
     local entity = Entity.new(_idCounter, EntityTypes.DEATH_WALL, true)
@@ -116,9 +124,13 @@ local function bouncer(x, y, targetDirX, targetDirY)
     assert(x and y and targetDirX and targetDirY, "arguments missing.")
 
     local collisionRules = {
-        CollisionRules.Bounce(BodyTypes.WALL),
-        CollisionRules.Destroy(BodyTypes.PLAYER),
-        CollisionRules.SelfDestruct(BodyTypes.PLAYER)
+        [BodyTypes.WALL] = {
+            CollisionRules.Bounce()
+        },
+        [BodyTypes.PLAYER] = {
+            CollisionRules.Destroy(),
+            CollisionRules.SelfDestruct()
+        }
     }
 
     local entity = Entity.new(_idCounter, EntityTypes.BOUNCER, false)
@@ -134,7 +146,9 @@ local function shield(masterEntity)
     assert(masterEntity, "arguments missing.")
 
     local collisionRules = {
-        CollisionRules.Destroy(BodyTypes.ENEMY)
+        [BodyTypes.ENEMY] = {
+            CollisionRules.Destroy()
+        }
     }
 
     local entity = Entity.new(_idCounter, EntityTypes.SHIELD, true)
@@ -148,7 +162,9 @@ local function bouncerSword(masterEntity)
     assert(masterEntity, "argument missing.")
 
     local collisionRules = {
-        CollisionRules.Destroy(BodyTypes.PLAYER)
+        [BodyTypes.PLAYER] = {
+            CollisionRules.Destroy()
+        }
     }
 
     local entity = Entity.new(_idCounter, EntityTypes.BOUNCER_SWORD, false)
