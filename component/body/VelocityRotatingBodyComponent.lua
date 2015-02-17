@@ -1,8 +1,8 @@
-VelocityRotatingPhysicsComponent = Class{}
-VelocityRotatingPhysicsComponent:include(PhysicsComponent)
+VelocityRotatingBodyComponent = Class{}
+VelocityRotatingBodyComponent:include(BodyComponent)
 
-function VelocityRotatingPhysicsComponent:init(options)
-	PhysicsComponent.init(self, options)
+function VelocityRotatingBodyComponent:init(options)
+	BodyComponent.init(self, options)
 
 	self._rotationDirection = 1
 
@@ -10,14 +10,14 @@ function VelocityRotatingPhysicsComponent:init(options)
     self._rotationSpeed = 10
 end
 
-function VelocityRotatingPhysicsComponent:conception()
-	PhysicsComponent.conception(self)
+function VelocityRotatingBodyComponent:conception()
+	BodyComponent.conception(self)
 
 	assert(self.owner.movement ~= nil, "owner entity " .. tostring(self.owner) .. " must have movement component!")
 end
 
-function VelocityRotatingPhysicsComponent:update(dt)
-    PhysicsComponent.update(self, dt)
+function VelocityRotatingBodyComponent:update(dt)
+    BodyComponent.update(self, dt)
 
     local vX, vY = 0, 0
     if self.owner.movement ~= nil then
@@ -33,19 +33,19 @@ function VelocityRotatingPhysicsComponent:update(dt)
         end
 
         -- find closest 2 / pi angle to face the velocity angle perpendicularly
-        while math.abs(targetRotation - self._body:rotation()) >= math.pi / 4 and math.abs(targetRotation - self._body:rotation()) <= 7 * math.pi / 4 do
+        while math.abs(targetRotation - self._shape:rotation()) >= math.pi / 4 and math.abs(targetRotation - self._shape:rotation()) <= 7 * math.pi / 4 do
             targetRotation = (targetRotation + math.pi / 2) % (math.pi * 2)
         end
 
         -- update rotation
-        local distanceToTarget = self._distanceToTargetRotation(targetRotation, self._body:rotation())
-        --print(distanceToTarget .. "\t math.abs(..) = " .. math.abs(targetRotation - self._body:rotation()) .. "\t targetRotation: " .. targetRotation .. "\t self._body:rotation(): " .. self._body:rotation())
+        local distanceToTarget = self._distanceToTargetRotation(targetRotation, self._shape:rotation())
+        --print(distanceToTarget .. "\t math.abs(..) = " .. math.abs(targetRotation - self._shape:rotation()) .. "\t targetRotation: " .. targetRotation .. "\t self._shape:rotation(): " .. self._shape:rotation())
         self._rotationDirection = distanceToTarget > 0 and 1 or -1
-        self._body:setRotation((self._body:rotation() + distanceToTarget * self._rotationSpeed * dt) % (2 * math.pi))
+        self._shape:setRotation((self._shape:rotation() + distanceToTarget * self._rotationSpeed * dt) % (2 * math.pi))
     else
         -- rotate automatically if idle
         if not self._dying then
-            self._body:setRotation((self._body:rotation() + self._rotationDirection * dt * math.pi) % (2 * math.pi))
+            self._shape:setRotation((self._shape:rotation() + self._rotationDirection * dt * math.pi) % (2 * math.pi))
         end
     end
 
@@ -54,7 +54,7 @@ end
 -- needed to deal with situations when going crossing the 2 * pi rad mark,
 -- i.e. when numeric difference between current rotation and target rotation is greater than pi, 
 -- but actual rotation difference is less than pi
-function VelocityRotatingPhysicsComponent._distanceToTargetRotation(targetRotation, currRotation)
+function VelocityRotatingBodyComponent._distanceToTargetRotation(targetRotation, currRotation)
     if math.abs(targetRotation - currRotation) > 7 * math.pi / 4 then
         if currRotation > math.pi then
             currRotation = currRotation - 2 * math.pi

@@ -41,7 +41,7 @@ local function matrixToWorld(vector)
 end
 
 function OptimizedTrailEffectComponent:update(dt)
-	local x, y = self.owner.physics:center()
+	local x, y = self.owner.body:center()
 
     local pos = worldToMatrix(x, y)
     if pos ~= self._lastPosition or self._alpha[pos.x][pos.y] == 0 then

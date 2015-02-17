@@ -64,7 +64,7 @@ end
 
 function VelocityRectangleRenderComponent:draw()
     love.graphics.push()
-        local x, y = self.owner.physics:center()
+        local x, y = self.owner.body:center()
         love.graphics.translate(x, y)
         love.graphics.rotate(self._rotation)
         love.graphics.setColor(self._colour:r(), self._colour:g(), self._colour:b(), self._alpha)

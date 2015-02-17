@@ -36,7 +36,7 @@ function BouncerMovementComponent:conception()
         self._acceleration = self:calcAcceleration(self._bouncerVelocity, self._friction)
 
         if self._bouncerVelocity > self._splittingVelocity then
-            local x, y = self.owner.physics:bbox()
+            local x, y = self.owner.body:bbox()
 
             local xDir1, yDir1 = self._direction.x, self._direction.y
             local xDir2 = dx ~= 0 and self._direction.x or -self._direction.x

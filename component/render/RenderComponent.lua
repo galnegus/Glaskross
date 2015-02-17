@@ -22,8 +22,8 @@ end
 function RenderComponent:setOwner(owner)
     self.owner = owner
 
-    if owner.physics == nil then
-        error("Entity: " .. owner.tag .. " requires a physics component.")
+    if owner.body == nil then
+        error("Entity: " .. owner.tag .. " requires a body component.")
     end
 end
 
@@ -57,10 +57,10 @@ function RenderComponent:draw()
     end
 
     love.graphics.setColor(self._colour:r(), self._colour:g(), self._colour:b(), alpha)
-    self.owner.physics:draw("fill")
+    self.owner.body:draw("fill")
 
     if self._border then
         love.graphics.setColor(self._colour:r(), self._colour:g(), self._colour:b(), self._alpha)
-        self.owner.physics:draw("line")
+        self.owner.body:draw("line")
     end
 end

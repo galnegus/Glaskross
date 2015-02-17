@@ -6,5 +6,5 @@ function BouncerSwordRenderComponent:init(colour, birthDuration, deathDuration)
 end
 
 function BouncerSwordRenderComponent:draw()
-	self.owner.physics:draw()
+	self.owner.body:draw()
 end

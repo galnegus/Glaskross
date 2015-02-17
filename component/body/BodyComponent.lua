@@ -1,7 +1,7 @@
-PhysicsComponent = Class{}
-PhysicsComponent:include(Component)
+BodyComponent = Class{}
+BodyComponent:include(Component)
 
-function PhysicsComponent:init(options)
+function BodyComponent:init(options)
     assert(options.shape ~= nil, "options.shape is required.")
     assert(options.bodyType ~= nil, "options.bodyType is required.")
     assert(options.collisionGroups ~= nil, "options.collisionGroups is required.")
@@ -26,30 +26,30 @@ function PhysicsComponent:init(options)
 
     Component.init(self)
 
-    self.type = ComponentTypes.PHYSICS
-    self._body = options.shape
-    self._body.parent = self
-    self._body.type = options.bodyType
+    self.type = ComponentTypes.BODY
+    self._shape = options.shape
+    self._shape.parent = self
+    self._shape.type = options.bodyType
     self._collisionRules = options.collisionRules
 
     for _, group in pairs(options.collisionGroups) do
-        Collider:addToGroup(group, self._body)
+        Collider:addToGroup(group, self._shape)
     end
 end
 
-function PhysicsComponent:center()
-    return self._body:center()
+function BodyComponent:center()
+    return self._shape:center()
 end
 
-function PhysicsComponent:bbox()
-    return self._body:bbox()
+function BodyComponent:bbox()
+    return self._shape:bbox()
 end
 
-function PhysicsComponent:rotation()
-    return self._body:rotation()
+function BodyComponent:rotation()
+    return self._shape:rotation()
 end
 
-function PhysicsComponent:on_collide(dt, shapeCollidedWith, dx, dy)
+function BodyComponent:on_collide(dt, shapeCollidedWith, dx, dy)
     if self._collisionRules[shapeCollidedWith.type] ~= nil then
         for _, rule in pairs(self._collisionRules[shapeCollidedWith.type]) do
             rule(self, dt, shapeCollidedWith, dx, dy)
@@ -57,31 +57,30 @@ function PhysicsComponent:on_collide(dt, shapeCollidedWith, dx, dy)
     end
 end
 
-function PhysicsComponent:conception()
-    Collider:setGhost(self._body)
+function BodyComponent:conception()
+    Collider:setGhost(self._shape)
     Component.conception(self)
 end
 
-function PhysicsComponent:birth()
+function BodyComponent:birth()
     Component.birth(self)
-    Collider:setSolid(self._body)
+    Collider:setSolid(self._shape)
 
     self.owner.events:register(Signals.MOVE_SHAPE, function(x, y)
-        self._body:move(x, y)
+        self._shape:move(x, y)
     end)  
 end
 
-function PhysicsComponent:death()
-    Collider:remove(self._body)
+function BodyComponent:death()
+    Collider:remove(self._shape)
     Component.death(self)
 end
 
-function PhysicsComponent:update(dt)
+function BodyComponent:update(dt)
     -- override
 end
 
-function PhysicsComponent:draw(mode)
+function BodyComponent:draw(mode)
     mode = mode or "fill"
-    --print("debug drawing in physicsComponent activated")
-    self._body:draw(mode)
+    self._shape:draw(mode)
 end

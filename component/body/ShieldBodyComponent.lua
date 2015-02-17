@@ -1,13 +1,13 @@
-ShieldPhysicsComponent = Class{}
-ShieldPhysicsComponent:include(PhysicsComponent)
+ShieldBodyComponent = Class{}
+ShieldBodyComponent:include(BodyComponent)
 
-function ShieldPhysicsComponent:init(options)
+function ShieldBodyComponent:init(options)
     assert(options.masterEntity ~= nil, "options.masterEntity is required.")
-	assert(options.masterEntity.physics ~= nil, "master entity must have physics component.")
-	self._x, self._y = options.masterEntity.physics:center()
+	assert(options.masterEntity.body ~= nil, "master entity must have body component.")
+	self._x, self._y = options.masterEntity.body:center()
 
     -- create triangle body in the appearance of a shield
-    PhysicsComponent.init(self, options)
+    BodyComponent.init(self, options)
 
     self._masterEntity = options.masterEntity
     self._active = false
@@ -20,8 +20,8 @@ function ShieldPhysicsComponent:init(options)
     self._velRotation = 0
 end
 
-function ShieldPhysicsComponent:conception()
-    PhysicsComponent.conception(self)
+function ShieldBodyComponent:conception()
+    BodyComponent.conception(self)
 
     self.owner.events:register(Signals.SHIELD_ACTIVE, function(dirX, dirY, duration)
         assert((dirX == 0 and dirY == -1) or (dirX == 0 and dirY == 1) or 
@@ -42,42 +42,42 @@ function ShieldPhysicsComponent:conception()
         self._yOffset = dirY * Constants.TILE_SIZE + vy * 100
 
         -- rotate collision shape
-        self._body:setRotation(math.atan2(dirX + vx, -dirY - vy))
+        self._shape:setRotation(math.atan2(dirX + vx, -dirY - vy))
 
         -- difference between default rotation and the velocity rotation, needed for ShieldRenderComponent to also rotate the rendering stuff
-        self._velRotation = self._body:rotation() - math.atan2(dirX, -dirY)
+        self._velRotation = self._shape:rotation() - math.atan2(dirX, -dirY)
 
         self._xAnimateOffset = -self._xOffset / 2
         self._yAnimateOffset = -self._yOffset / 2
         gameTimer:tween(duration, self, {_xAnimateOffset = self._xAnimateOffset + dirX * Constants.TILE_SIZE, _yAnimateOffset = self._yAnimateOffset + dirY * Constants.TILE_SIZE}, 'out-sine')
 
         self._active = true
-        Collider:setSolid(self._body)
+        Collider:setSolid(self._shape)
     end)
 
     self.owner.events:register(Signals.SHIELD_INACTIVE, function()
         if self._alive then
             self._active = false
-            Collider:setGhost(self._body)
+            Collider:setGhost(self._shape)
         end
     end)
 end
 
-function ShieldPhysicsComponent:birth()
-    PhysicsComponent.birth(self)
-    Collider:setGhost(self._body)
+function ShieldBodyComponent:birth()
+    BodyComponent.birth(self)
+    Collider:setGhost(self._shape)
 end
 
-function ShieldPhysicsComponent:getVelRotation()
+function ShieldBodyComponent:getVelRotation()
     return self._velRotation
 end
 
-function ShieldPhysicsComponent:update(dt)
-	PhysicsComponent.update(self, dt)
+function ShieldBodyComponent:update(dt)
+	BodyComponent.update(self, dt)
 
 	if self._active then
-		self._x, self._y = self._masterEntity.physics:center()
+		self._x, self._y = self._masterEntity.body:center()
 
-		self._body:moveTo(self._x + self._xOffset + self._xAnimateOffset, self._y + self._yOffset + self._yAnimateOffset)
+		self._shape:moveTo(self._x + self._xOffset + self._xAnimateOffset, self._y + self._yOffset + self._yAnimateOffset)
 	end
 end

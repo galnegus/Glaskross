@@ -29,7 +29,7 @@ end
 
 function Entity:addComponent(component)
     assert(component ~= nil, "component is nil!")
-    assert(component.type ~= nil, "component has no type")
+    assert(component.type ~= nil, "component has no type.")
 
     self._components[component.type] = component
     self[component.type] = component

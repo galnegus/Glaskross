@@ -1,10 +1,10 @@
 CollisionRules = {}
 
--- CollisionRules (when sent to physicscomponent are tables where the key is the body type, and the value is a list of rules from the functions below)
+-- CollisionRules (when sent to BodyComponent they are tables where the key is the body type, and the value is a list of rules from the functions below)
 
 CollisionRules.Bounce = function()
 	return function(self, dt, shapeCollidedWith, dx, dy)
-        self._body:move(dx, dy) -- move out the way
+        self._shape:move(dx, dy) -- move out the way
         self.owner.events:emit(Signals.BOUNCE, dx, dy)
     end
 end
@@ -24,7 +24,7 @@ end
 CollisionRules.StopMovement = function()
 	return function(self, dt, shapeCollidedWith, dx, dy)
         self.owner.movement:stopMoving()
-        self._body:move(dx, dy)
+        self._shape:move(dx, dy)
 	end
 end
 

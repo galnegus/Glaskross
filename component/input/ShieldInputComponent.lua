@@ -13,7 +13,7 @@ end
 function ShieldInputComponent:setOwner(owner)
     InputComponent.setOwner(self, owner)
 
-    assert(owner.physics ~= nil, "entity must have physics component before adding shield input component, fix!")
+    assert(owner.body ~= nil, "entity must have body component before adding shield input component, fix!")
 
     self._shield = EntityCreator.create(EntityTypes.SHIELD, self.owner)
     Signal.emit(Signals.ADD_ENTITY, self._shield)

@@ -40,7 +40,7 @@ end
 function ShieldRenderComponent:update(dt)
     RenderComponent.update(self, dt)
 
-    local x, y = self.owner.physics:center()
+    local x, y = self.owner.body:center()
 
     self._x = x
     self._y = y
@@ -49,12 +49,12 @@ end
 function ShieldRenderComponent:draw()
     if self._active then
         love.graphics.setColor(255, 0, 0, 50)
-        --self.owner.physics:draw()
+        --self.owner.body:draw()
 
         love.graphics.push()
             -- set origin of coordinate system to center of rectangle
             love.graphics.translate(self._x, self._y)
-            love.graphics.rotate(self.owner.physics:getVelRotation())
+            love.graphics.rotate(self.owner.body:getVelRotation())
 
             local x, y = 0, 0
             -- fuck this is annoying
