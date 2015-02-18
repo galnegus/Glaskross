@@ -34,7 +34,7 @@ end
 
 local function bullet(x, y, targetDirX, targetDirY)
     assert(x and y and targetDirX and targetDirY, "arguments missing.")
-    local xTile, yTile = world:closestTileCenter(x, y)
+    local xTile, yTile = game.world:closestTileCenter(x, y)
     assert(xTile >= 0 and yTile >= 0, "Couldn't find any tiles =(") -- TODO: ADD LESS THAN HEIGHT / WIDTH
 
     -- adjust height and width

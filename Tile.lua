@@ -43,7 +43,7 @@ function Tile:beam(duration)
     duration = duration or 1
 
     -- color scramble
-    local scramble = gameTimer:addPeriodic(0.1, function()
+    local scramble = game.timer:addPeriodic(0.1, function()
         local rMin, rMax = self._bg:r() > 50 and -50 or -1 * self._bg:r(), self._bg:r() < 205 and 50 or (255 - self._bg:r())
         local gMin, gMax = self._bg:g() > 50 and -50 or -1 * self._bg:g(), self._bg:g() < 205 and 50 or (255 - self._bg:g())
         local bMin, bMax = self._bg:b() > 50 and -50 or -1 * self._bg:b(), self._bg:b() < 205 and 50 or (255 - self._bg:b())
@@ -54,12 +54,12 @@ function Tile:beam(duration)
     end)
 
     -- fade in
-    gameTimer:tween(2, self, {_bgAlpha = 100}, 'linear', function()
+    game.timer:tween(2, self, {_bgAlpha = 100}, 'linear', function()
         self._killer = true
         self._bgAlpha = 255
 
         -- flashing effect
-        local flasher = gameTimer:addPeriodic(0.1, function()
+        local flasher = game.timer:addPeriodic(0.1, function()
             if self._bgAlpha == 255 then
                 self._bgAlpha = 60
                 self._killer = false
@@ -71,8 +71,8 @@ function Tile:beam(duration)
         
         -- turn it off when its done
         self._bgCancellingTimer:add(duration, function()
-            gameTimer:cancel(scramble)
-            gameTimer:cancel(flasher)
+            game.timer:cancel(scramble)
+            game.timer:cancel(flasher)
             
             self._beaming = false
             self._killer = false

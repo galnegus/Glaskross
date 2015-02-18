@@ -28,7 +28,7 @@ function ShieldRenderComponent:setOwner(owner)
         self._active = true
 
         self._alphaAnimate = 1
-        gameTimer:tween(duration, self, {_alphaAnimate = 0}, 'out-bounce')
+        game.timer:tween(duration, self, {_alphaAnimate = 0}, 'out-bounce')
     end)
 
     self.owner.events:register(Signals.SHIELD_INACTIVE, function()

@@ -49,7 +49,7 @@ function ShieldBodyComponent:conception()
 
         self._xAnimateOffset = -self._xOffset / 2
         self._yAnimateOffset = -self._yOffset / 2
-        gameTimer:tween(duration, self, {_xAnimateOffset = self._xAnimateOffset + dirX * Constants.TILE_SIZE, _yAnimateOffset = self._yAnimateOffset + dirY * Constants.TILE_SIZE}, 'out-sine')
+        game.timer:tween(duration, self, {_xAnimateOffset = self._xAnimateOffset + dirX * Constants.TILE_SIZE, _yAnimateOffset = self._yAnimateOffset + dirY * Constants.TILE_SIZE}, 'out-sine')
 
         self._active = true
         Collider:setSolid(self._shape)

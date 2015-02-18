@@ -8,7 +8,7 @@ local function colorFunc(self, r, g, b, duration)
         self._g = g
         self._b = b
     else
-        gameTimer:tween(duration, self, {_r = r, _g = g, _b = b}, 'in-out-sine')
+        game.timer:tween(duration, self, {_r = r, _g = g, _b = b}, 'in-out-sine')
     end
 end
 

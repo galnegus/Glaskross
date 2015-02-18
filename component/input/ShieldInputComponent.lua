@@ -27,10 +27,10 @@ end
 
 local function cooldown(self)
     self._bullet = false
-    gameTimer:add(self._shieldDuration, function() 
+    game.timer:add(self._shieldDuration, function() 
         self._shield.events:emit(Signals.SHIELD_INACTIVE)
         if Constants.BULLET_COOLDOWN > 0 then
-            gameTimer:add(self._shieldCooldown, function()
+            game.timer:add(self._shieldCooldown, function()
                 self._bullet = true
             end)
         else

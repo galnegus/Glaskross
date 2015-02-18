@@ -19,7 +19,7 @@ function ParticleDeathEffectComponent:conception()
     assert(self.owner.body ~= nil, "entity " .. tostring(self.owner) .. " must have a body component.")
     assert(self.owner.render ~= nil, "entity " .. tostring(self.owner) .. " must have a render component.")    
 
-    self._deathParticleSystem = deathParticleSystem
+    self._deathParticleSystem = game.deathParticleSystem
 end
 
 function ParticleDeathEffectComponent:death()
@@ -35,5 +35,5 @@ function ParticleDeathEffectComponent:death()
     self._deathParticleSystem:setPosition(self.owner.body:center())
     self._deathParticleSystem:start()
     self._deathParticleSystem:emit(25)
-    gameTimer:add(self._duration, function() Component.death(self) end)
+    game.timer:add(self._duration, function() Component.death(self) end)
 end

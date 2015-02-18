@@ -4,7 +4,7 @@ Signal = require 'lib.hump.signal'
 Timer = require "lib.hump.timer"
 Vector = require "lib.hump.vector"
 HC = require "lib.hardoncollider"
-Gamestate = require "lib.venus.venus"
+Gamestate = require "lib.hump.gamestate"
 require "lib.gradient"
 
 -- constants/enums

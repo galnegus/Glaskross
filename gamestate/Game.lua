@@ -3,25 +3,25 @@ game = {}
 function game:init()
     Collider = HC(100, on_collide)
 
-    world = World(love.graphics.getWidth(), love.graphics.getHeight(), Constants.TILE_SIZE)
+    self.world = World(love.graphics.getWidth(), love.graphics.getHeight(), Constants.TILE_SIZE)
 
-    gameTimer = Timer.new()
+    self.timer = Timer.new()
 
-    deathParticleSystem = love.graphics.newParticleSystem(love.graphics.newImage("square.png"), 1000)
-    deathParticleSystem:setSpeed(Constants.TERMINAL_VELOCITY / 10, Constants.TERMINAL_VELOCITY / 5)
-    deathParticleSystem:setLinearAcceleration(0, 0, 0, -1000)
-    deathParticleSystem:setSpread(2 * math.pi)
+    self.deathParticleSystem = love.graphics.newParticleSystem(love.graphics.newImage("square.png"), 1000)
+    self.deathParticleSystem:setSpeed(Constants.TERMINAL_VELOCITY / 10, Constants.TERMINAL_VELOCITY / 5)
+    self.deathParticleSystem:setLinearAcceleration(0, 0, 0, -1000)
+    self.deathParticleSystem:setSpread(2 * math.pi)
 
     Signal.emit(Signals.ADD_ENTITY, EntityCreator.create("player", Constants.TILE_SIZE * 19 + 2, Constants.TILE_SIZE * 14 + 2))
     Signal.emit(Signals.ADD_ENTITY, EntityCreator.create("boxy"))
 
-    greyscale = gradient {
+    self.greyscale = gradient {
         direction = 'horizontal';
         {5, 5, 5};
         {10, 10, 10};
     }
 
-    gui = GameGUI()
+    self.gui = GameGUI()
 end
 
 function on_collide(dt, shape_a, shape_b, dx, dy)
@@ -34,13 +34,13 @@ function on_collide(dt, shape_a, shape_b, dx, dy)
 end
 
 function game:update(dt)
-    deathParticleSystem:update(dt)
+    self.deathParticleSystem:update(dt)
     Entities.update(dt)
-    world:update(dt)
-    gameTimer:update(dt)
+    self.world:update(dt)
+    self.timer:update(dt)
     Collider:update(dt)
 
-    gui:update(dt)
+    self.gui:update(dt)
 end
 
 function drawinrect(img, x, y, w, h, r, ox, oy, kx, ky)
@@ -53,12 +53,12 @@ function game:draw()
     love.graphics.setCanvas(canvas)
         local r, g, b, a = love.graphics.getColor()
             canvas:clear()
-            drawinrect(greyscale, 0, 0, love.graphics.getWidth(), love.graphics.getHeight())
+            drawinrect(self.greyscale, 0, 0, love.graphics.getWidth(), love.graphics.getHeight())
             Entities.bgDraw()
-            world:draw()
+            self.world:draw()
             Entities.draw()
 
-            love.graphics.draw(deathParticleSystem)
+            love.graphics.draw(self.deathParticleSystem)
            
         love.graphics.setColor(r, g, b, a)
     love.graphics.setCanvas()
@@ -67,15 +67,15 @@ function game:draw()
         love.graphics.draw(canvas)
     love.graphics.setShader()
 
-     gui:draw()
+     self.gui:draw()
 end
 
 function game:keyreleased(key)
     if key == " " then
-        tiles1 = world:getFloorSection(1, 1)
-        tiles2 = world:getFloorSection(2, 2)
-        tiles3 = world:getFloorSection(3, 1)
-        tiles4 = world:getFloorSection(4, 2)
+        tiles1 = self.world:getFloorSection(1, 1)
+        tiles2 = self.world:getFloorSection(2, 2)
+        tiles3 = self.world:getFloorSection(3, 1)
+        tiles4 = self.world:getFloorSection(4, 2)
 
         for _, tile in pairs(tiles1) do
             tile:beam()
