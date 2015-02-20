@@ -4,8 +4,6 @@ ShieldRenderComponent:include(RenderComponent)
 function ShieldRenderComponent:init(colour, birthDuration, deathDuration, radius)
     RenderComponent.init(self, colour, 0, deathDuration, false)
 
-    self._x = 0
-    self._y = 0
     self._radius = radius
 
     self._active = false
@@ -37,23 +35,16 @@ function ShieldRenderComponent:setOwner(owner)
     end)
 end
 
-function ShieldRenderComponent:update(dt)
-    RenderComponent.update(self, dt)
-
-    local x, y = self.owner.body:center()
-
-    self._x = x
-    self._y = y
-end
-
 function ShieldRenderComponent:draw()
     if self._active then
+        local x, y = self.owner.body:center()
+
         love.graphics.setColor(255, 0, 0, 50)
         --self.owner.body:draw()
 
         love.graphics.push()
             -- set origin of coordinate system to center of rectangle
-            love.graphics.translate(self._x, self._y)
+            love.graphics.translate(x, y)
             love.graphics.rotate(self.owner.body:getVelRotation())
 
             local x, y = 0, 0
