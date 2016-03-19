@@ -62,7 +62,7 @@ function ShieldRenderComponent:draw()
                             x + self._xOffset, y + self._yOffset, 
                             x + self._yOffset, y + self._xOffset, 
                             x + self._xOffset - 1, y + self._yOffset}
-                love.graphics.setColor(self._colour:r(), self._colour:g(), self._colour:b(), (self._alpha / (i + 1 - i * 100)) * self._alphaAnimate)
+                love.graphics.setColor(self._colour:r(), self._colour:g(), self._colour:b(), (self._alpha * (1 - i * 0.33)) * self._alphaAnimate)
                 love.graphics.polygon("line", vertices)
             end
         love.graphics.pop()
