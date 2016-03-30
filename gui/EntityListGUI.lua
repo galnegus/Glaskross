@@ -11,7 +11,7 @@ end
 function EntityListGUI:draw()
 	love.graphics.setColor(255, 255, 255, 255)
 	local rowHeight = 20;
-	local y = 100;
+	local y = 50;
 	local x = 20;
 	love.graphics.print("ENTITIES", x, y)
 	love.graphics.print("ID\tName", x, y + rowHeight)

@@ -15,7 +15,7 @@ function MovementComponent:init(terminalVelocity, continuousMovement)
     self._continuousMovement = continuousMovement
 
     self._terminalVelocity = terminalVelocity or Constants.TERMINAL_VELOCITY
-    self._friction = 10000
+    self._friction = 1000
     self._acceleration = self:calcAcceleration(self._terminalVelocity, self._friction)
 end
 
@@ -49,6 +49,10 @@ end
 
 function MovementComponent:getVelocity()
     return self._velocity:unpack()
+end
+
+function MovementComponent:getTerminalVelocity()
+    return self._terminalVelocity
 end
 
 function MovementComponent:stopMoving()
