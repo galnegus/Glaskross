@@ -4,6 +4,7 @@ function GameGUI:init()
 	self._elements = {}
 
 	self:addElement(HealthBar())
+	self:addElement(EntityListGUI())
 end
 
 function GameGUI:addElement(element)

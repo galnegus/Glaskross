@@ -31,9 +31,9 @@ function ParticleDeathEffectComponent:death()
 
     self._deathParticleSystem:setAreaSpread("uniform", xSpread, ySpread)
     self._deathParticleSystem:setParticleLifetime(self._duration)
-    self._deathParticleSystem:setColors(r, g, b, 100, 255, 255, 255, 0)
+    self._deathParticleSystem:setColors(r, g, b, 150, 255, 255, 255, 0)
     self._deathParticleSystem:setPosition(self.owner.body:center())
-    self._deathParticleSystem:start()
+    --self._deathParticleSystem:start()
     self._deathParticleSystem:emit(25)
     game.timer:add(self._duration, function() Component.death(self) end)
 end

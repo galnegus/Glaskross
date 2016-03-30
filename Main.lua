@@ -35,7 +35,6 @@ require "component.background.BoxyBackgroundComponent"
 require "component.background.BoxyBox"
 require "component.render.RenderComponent"
 require "component.render.ShieldRenderComponent"
-require "component.render.BouncerSwordRenderComponent"
 require "component.body.BodyComponent"
 require "component.body.RotatingBodyComponent"
 require "component.body.VelocityRotatingBodyComponent"
@@ -56,6 +55,7 @@ require "gamestate.Game"
 require "gamestate.Menu"
 require "gui.GameGUI"
 require "gui.HealthBar"
+require "gui.EntityListGUI"
 
 function love.load()
     io.stdout:setvbuf("no")

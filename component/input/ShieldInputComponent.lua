@@ -42,6 +42,8 @@ end
 function ShieldInputComponent:update(dt)
     InputComponent.update(self, dt)
 
+    
+
     if love.keyboard.isDown("left") then
         if self._bullet then
             self._shield.events:emit(Signals.SHIELD_ACTIVE, -1, 0, self._shieldDuration)

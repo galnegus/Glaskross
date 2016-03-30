@@ -179,7 +179,7 @@ local function bouncer(x, y, targetDirX, targetDirY)
     }
 
     local entity = Entity.new(_idCounter, EntityTypes.BOUNCER, false)
-    entity:addComponent(BouncerMovementComponent(targetDirX, targetDirY, Constants.TERMINAL_VELOCITY / 5, 10))
+    entity:addComponent(BouncerMovementComponent(targetDirX, targetDirY, Constants.TERMINAL_VELOCITY / 2, 10))
     entity:addComponent(BouncerBodyComponent(bodyOptions))
     entity:addComponent(HPComponent(Constants.BOUNCER_HP, Signals.BOUNCER_HIT))
     entity:addComponent(RenderComponent(Colours.BOUNCER_RENDER, Constants.BOUNCER_BIRTH_DURATION, Constants.DEFAULT_DEATH_DURATION, true))
@@ -247,7 +247,7 @@ local function bouncerSword(masterEntity)
 
     local entity = Entity.new(_idCounter, EntityTypes.BOUNCER_SWORD, false)
     entity:addComponent(BouncerSwordBodyComponent(bodyOptions))
-    entity:addComponent(BouncerSwordRenderComponent(Colours.BOUNCER_SWORD_RENDER, 0.5, 0.5))
+    entity:addComponent(RenderComponent(Colours.BOUNCER_SWORD_RENDER, 0.5, 0.5, false))
 
     return entity
 end

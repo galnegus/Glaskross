@@ -57,7 +57,8 @@ function game:draw()
             Entities.bgDraw()
             self.world:draw()
             Entities.draw()
-
+            
+            love.graphics.setColor(r, g, b, a)
             love.graphics.draw(self.deathParticleSystem)
            
         love.graphics.setColor(r, g, b, a)

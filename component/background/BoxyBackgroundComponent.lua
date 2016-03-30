@@ -6,15 +6,15 @@ local hoverVelocity = Constants.TILE_SIZE
 
 -- at the very lowest possible hover velocity in the interpolation thingy,
 -- the velocity will be this factor of the hoverVelocity variable
-local minVelFactor = 0.1
+local minVelFactor = 0.01
 
 function BoxyBackgroundComponent:init()
     Component.init(self)
 
     self.type = ComponentTypes.BACKGROUND
 
-    self._boxWidth = Constants.TILE_SIZE * 24
-    self._boxHeight = Constants.TILE_SIZE * 18
+    self._boxWidth = Constants.TILE_SIZE * 5
+    self._boxHeight = Constants.TILE_SIZE * 5
 
     self._x = (love.graphics.getWidth() - self._boxWidth) / 2
     self._y = (love.graphics.getHeight() - self._boxHeight) / 2

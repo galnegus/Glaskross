@@ -57,3 +57,7 @@ function Entities.draw()
         entity:draw()
     end
 end
+
+function Entities.list()
+    return _entityArray
+end
