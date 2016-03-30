@@ -1,7 +1,6 @@
 !!! TODO !!!
 
 OLD LIST:
- - Make bouncer move slighly towards player
  - Cool grafix for bouncer sword, + make bouncer rotate one side towards next wall
  - Make floor performance good, maybe using newImage (see lib/gradient.lua)
  - Sword has 3 layers, each hit removes one layer, when all layers removed, cooldown is removed
@@ -18,6 +17,10 @@ OLD LIST:
  	- Gain a chunk of hp when killing an enemy
  - Integrate health into the main game somehow, use the HPComponent! Lots of signals and shit.
  	- Make Entities:getAll(entityType) to enable retrieving player in HealthBar.lua which then stores that locally
+
+DONE:
+
+ - Make bouncer move slighly towards player
  + Add a CollisionRules.lua containing static methods that are reused by all physics components.
  	+ Consider replacing the ".type" of collision bodies from EntityTypes to BodyTypes, i.e. adding new BodyTypes like "player", "playerweapon", "enemy", "enemyweapon"
  	+ Possibly by having each physics component receive a list of rules to consider in its contructor.

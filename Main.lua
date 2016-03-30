@@ -24,6 +24,7 @@ require "Entity"
 require "EntityCreator"
 require "Tile"
 require "World"
+require "Helpers"
 
 require "component.Component"
 require "component.ai.Pattern"

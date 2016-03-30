@@ -58,6 +58,16 @@ function Entities.draw()
     end
 end
 
+function Entities.find(entityType)
+    local res = {}
+    for _, entity in pairs(_entityArray) do
+        if entity.type == entityType then
+            table.insert(res, entity)
+        end
+    end
+    return res
+end
+
 function Entities.list()
     return _entityArray
 end

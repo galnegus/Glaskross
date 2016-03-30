@@ -38,7 +38,7 @@ function VelocityRotatingBodyComponent:update(dt)
         end
 
         -- update rotation
-        local distanceToTarget = self._distanceToTargetRotation(targetRotation, self._shape:rotation())
+        local distanceToTarget = Helpers.distanceToTargetRotation(self._shape:rotation(), targetRotation)
         --print(distanceToTarget .. "\t math.abs(..) = " .. math.abs(targetRotation - self._shape:rotation()) .. "\t targetRotation: " .. targetRotation .. "\t self._shape:rotation(): " .. self._shape:rotation())
         self._rotationDirection = distanceToTarget > 0 and 1 or -1
         self._shape:setRotation((self._shape:rotation() + distanceToTarget * self._rotationSpeed * dt) % (2 * math.pi))
@@ -49,18 +49,4 @@ function VelocityRotatingBodyComponent:update(dt)
         end
     end
 
-end
-
--- needed to deal with situations when going crossing the 2 * pi rad mark,
--- i.e. when numeric difference between current rotation and target rotation is greater than pi, 
--- but actual rotation difference is less than pi
-function VelocityRotatingBodyComponent._distanceToTargetRotation(targetRotation, currRotation)
-    if math.abs(targetRotation - currRotation) > 7 * math.pi / 4 then
-        if currRotation > math.pi then
-            currRotation = currRotation - 2 * math.pi
-        elseif targetRotation > math.pi then
-            targetRotation = targetRotation - 2 * math.pi
-        end
-    end
-    return targetRotation - currRotation
 end

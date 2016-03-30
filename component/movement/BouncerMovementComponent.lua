@@ -21,6 +21,8 @@ end
 function BouncerMovementComponent:conception()
     MovementComponent.conception(self)
 
+    self._player = Entities.find(EntityTypes.PLAYER)[1]
+
     self.owner.events:register(Signals.BOUNCE, function(dx, dy)
         assert(dx and dy, "dx or dy missing")
         if dx ~= 0 then
@@ -48,4 +50,25 @@ function BouncerMovementComponent:conception()
             Signal.emit(Signals.KILL_ENTITY, self.owner.id)
         end
     end)
+end
+
+function BouncerMovementComponent:update(dt)
+    if self._player ~= nil and self._player:isAlive() then
+        local selfX, selfY = self.owner.body:center()
+        local playerX, playerY = self._player.body:center()
+
+        local currentRotation = math.atan2(self._direction.y, self._direction.x)
+        local target = math.atan2(playerY - selfY, playerX - selfX)
+
+        local dx = selfX - playerX
+        local dy = selfY - playerY
+        local distance = math.sqrt(dx * dx + dy * dy) - 200
+        distance = distance > 2 and distance or 2
+        local orbit = math.log(distance) / math.log(1.3) -- is this slow?
+
+        local phi = Helpers.distanceToTargetRotation(currentRotation, target) * dt * 10 / orbit
+        self._direction:rotate_inplace(phi)
+    end
+
+    MovementComponent.update(self, dt)
 end

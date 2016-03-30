@@ -15,6 +15,8 @@ function Entity.new(id, type, bullet)
     -- used for update() and draw()
     e._components = {}
 
+    e._isAlive = false
+
     return setmetatable(e, Entity)
 end
 
@@ -78,6 +80,7 @@ function Entity:birthAttempt()
     if allComponentsReady then
         for _, comp in pairs(self._components) do
             comp:birth()
+            self._isAlive = true
         end
     end
 end
@@ -99,5 +102,10 @@ function Entity:burialAttempt()
     end
     if allComponentsDead then
         Signal.emit(Signals.REMOVE_ENTITY, self.id)
+        self._isAlive = false
     end
+end
+
+function Entity:isAlive()
+    return self._isAlive
 end

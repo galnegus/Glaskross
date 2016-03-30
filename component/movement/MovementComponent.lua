@@ -15,7 +15,7 @@ function MovementComponent:init(terminalVelocity, continuousMovement)
     self._continuousMovement = continuousMovement
 
     self._terminalVelocity = terminalVelocity or Constants.TERMINAL_VELOCITY
-    self._friction = 1000
+    self._friction = 10000
     self._acceleration = self:calcAcceleration(self._terminalVelocity, self._friction)
 end
 
