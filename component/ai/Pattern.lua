@@ -40,7 +40,7 @@ function Pattern:_nextBeam(callback)
         if beam.delay == 0 then
             self:_nextBeam(callback)
         else
-            game.timer:add(beam.delay, function() self:_nextBeam(callback) end)
+            game.timer.after(beam.delay, function() self:_nextBeam(callback) end)
         end
     end
 end
@@ -52,6 +52,6 @@ function Pattern:start(callback)
     if beam.delay == 0 then
         self:_nextBeam(callback)
     else
-        game.timer:add(beam.delay, function() self:_nextBeam(callback) end)
+        game.timer.after(beam.delay, function() self:_nextBeam(callback) end)
     end
 end

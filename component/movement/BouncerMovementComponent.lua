@@ -23,7 +23,7 @@ function BouncerMovementComponent:conception()
 
     self._player = Entities.find(EntityTypes.PLAYER)[1]
 
-    self.owner.events:register(Signals.BOUNCE, function(dx, dy)
+    self.owner.events.register(Signals.BOUNCE, function(dx, dy)
         assert(dx and dy, "dx or dy missing")
         if dx ~= 0 then
             self._direction.x = self._direction.x * -1
@@ -67,7 +67,7 @@ function BouncerMovementComponent:update(dt)
         local orbit = math.log(distance) / math.log(1.3) -- is this slow?
 
         local phi = Helpers.distanceToTargetRotation(currentRotation, target) * dt * 10 / orbit
-        self._direction:rotate_inplace(phi)
+        self._direction:rotateInplace(phi)
     end
 
     MovementComponent.update(self, dt)

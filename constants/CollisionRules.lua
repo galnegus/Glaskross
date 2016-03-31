@@ -5,7 +5,7 @@ CollisionRules = {}
 CollisionRules.Bounce = function()
 	return function(self, dt, shapeCollidedWith, dx, dy)
         self._shape:move(dx, dy) -- move out the way
-        self.owner.events:emit(Signals.BOUNCE, dx, dy)
+        self.owner.events.emit(Signals.BOUNCE, dx, dy)
     end
 end
 

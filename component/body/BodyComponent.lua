@@ -66,7 +66,7 @@ function BodyComponent:birth()
     Component.birth(self)
     Collider:setSolid(self._shape)
 
-    self.owner.events:register(Signals.MOVE_SHAPE, function(x, y)
+    self.owner.events.register(Signals.MOVE_SHAPE, function(x, y)
         self._shape:move(x, y)
     end)  
 end

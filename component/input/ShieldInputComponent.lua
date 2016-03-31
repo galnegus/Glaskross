@@ -27,10 +27,10 @@ end
 
 local function cooldown(self)
     self._bullet = false
-    game.timer:add(self._shieldDuration, function() 
-        self._shield.events:emit(Signals.SHIELD_INACTIVE)
+    game.timer.after(self._shieldDuration, function() 
+        self._shield.events.emit(Signals.SHIELD_INACTIVE)
         if Constants.BULLET_COOLDOWN > 0 then
-            game.timer:add(self._shieldCooldown, function()
+            game.timer.after(self._shieldCooldown, function()
                 self._bullet = true
             end)
         else
@@ -46,25 +46,25 @@ function ShieldInputComponent:update(dt)
 
     if love.keyboard.isDown("left") then
         if self._bullet then
-            self._shield.events:emit(Signals.SHIELD_ACTIVE, -1, 0, self._shieldDuration)
+            self._shield.events.emit(Signals.SHIELD_ACTIVE, -1, 0, self._shieldDuration)
             cooldown(self)
         end
     end
     if love.keyboard.isDown("up") then
         if self._bullet then
-            self._shield.events:emit(Signals.SHIELD_ACTIVE, 0, -1, self._shieldDuration)
+            self._shield.events.emit(Signals.SHIELD_ACTIVE, 0, -1, self._shieldDuration)
             cooldown(self)
         end
     end
     if love.keyboard.isDown("right") then
         if self._bullet then
-            self._shield.events:emit(Signals.SHIELD_ACTIVE, 1, 0, self._shieldDuration)
+            self._shield.events.emit(Signals.SHIELD_ACTIVE, 1, 0, self._shieldDuration)
             cooldown(self)
         end
     end
     if love.keyboard.isDown("down") then
         if self._bullet then
-            self._shield.events:emit(Signals.SHIELD_ACTIVE, 0, 1, self._shieldDuration)
+            self._shield.events.emit(Signals.SHIELD_ACTIVE, 0, 1, self._shieldDuration)
             cooldown(self)
         end
     end

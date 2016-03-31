@@ -37,7 +37,7 @@ function game:update(dt)
     self.deathParticleSystem:update(dt)
     Entities.update(dt)
     self.world:update(dt)
-    self.timer:update(dt)
+    self.timer.update(dt)
     Collider:update(dt)
 
     self.gui:update(dt)

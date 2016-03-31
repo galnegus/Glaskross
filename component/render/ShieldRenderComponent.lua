@@ -16,7 +16,7 @@ end
 function ShieldRenderComponent:setOwner(owner)
     RenderComponent.setOwner(self, owner)
 
-    self.owner.events:register(Signals.SHIELD_ACTIVE, function(dirX, dirY, duration)
+    self.owner.events.register(Signals.SHIELD_ACTIVE, function(dirX, dirY, duration)
         assert((dirX == 0 and dirY == -1) or (dirX == 0 and dirY == 1) or 
                (dirX == -1 and dirY == 0) or (dirX == 1 and dirY == 0), 
                 "Invalid values of 'dirX' and 'dirY' parameters, must be orthogonal")
@@ -26,10 +26,10 @@ function ShieldRenderComponent:setOwner(owner)
         self._active = true
 
         self._alphaAnimate = 1
-        game.timer:tween(duration, self, {_alphaAnimate = 0}, 'out-bounce')
+        game.timer.tween(duration, self, {_alphaAnimate = 0}, 'out-bounce')
     end)
 
-    self.owner.events:register(Signals.SHIELD_INACTIVE, function()
+    self.owner.events.register(Signals.SHIELD_INACTIVE, function()
         self._active = false
         --print("Då")
     end)

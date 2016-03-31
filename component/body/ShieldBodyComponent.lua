@@ -23,7 +23,7 @@ end
 function ShieldBodyComponent:conception()
     BodyComponent.conception(self)
 
-    self.owner.events:register(Signals.SHIELD_ACTIVE, function(dirX, dirY, duration)
+    self.owner.events.register(Signals.SHIELD_ACTIVE, function(dirX, dirY, duration)
         assert((dirX == 0 and dirY == -1) or (dirX == 0 and dirY == 1) or 
                (dirX == -1 and dirY == 0) or (dirX == 1 and dirY == 0), 
                 "Invalid values of 'dirX' and 'dirY' parameters, must be orthogonal")
@@ -49,13 +49,13 @@ function ShieldBodyComponent:conception()
 
         self._xAnimateOffset = -self._xOffset / 2
         self._yAnimateOffset = -self._yOffset / 2
-        game.timer:tween(duration, self, {_xAnimateOffset = self._xAnimateOffset + dirX * Constants.TILE_SIZE, _yAnimateOffset = self._yAnimateOffset + dirY * Constants.TILE_SIZE}, 'out-sine')
+        game.timer.tween(duration, self, {_xAnimateOffset = self._xAnimateOffset + dirX * Constants.TILE_SIZE, _yAnimateOffset = self._yAnimateOffset + dirY * Constants.TILE_SIZE}, 'out-sine')
 
         self._active = true
         Collider:setSolid(self._shape)
     end)
 
-    self.owner.events:register(Signals.SHIELD_INACTIVE, function()
+    self.owner.events.register(Signals.SHIELD_INACTIVE, function()
         if self._alive then
             self._active = false
             Collider:setGhost(self._shape)

@@ -42,7 +42,7 @@ end
 function MovementComponent:conception()
     Component.conception(self)
 
-    self.owner.events:register(Signals.SET_MOVEMENT_DIRECTION, function(direction)
+    self.owner.events.register(Signals.SET_MOVEMENT_DIRECTION, function(direction)
         setDirection(self, direction)
     end)    
 end
@@ -88,7 +88,7 @@ function MovementComponent:update(dt)
 
     -- heun's method
     local movement = Vector((oldVelocity.x + self._velocity.x) * dt / 2, (oldVelocity.y + self._velocity.y) * dt / 2)
-    self.owner.events:emit(Signals.MOVE_SHAPE, movement.x, movement.y)
+    self.owner.events.emit(Signals.MOVE_SHAPE, movement.x, movement.y)
 
     if not self._continuousMovement then
         resetAcceleration(self)

@@ -35,7 +35,7 @@ function RenderComponent:conception()
     if self._birthDuration > 0 then
         local alpha = self._alpha
         self._alpha = 0
-        game.timer:tween(self._birthDuration, self, {_alpha = alpha}, 'in-out-sine', function()
+        game.timer.tween(self._birthDuration, self, {_alpha = alpha}, 'in-out-sine', function()
             Component.conception(self)
         end)
     else
@@ -46,7 +46,7 @@ end
 function RenderComponent:death()
     self._dying = true
 
-    game.timer:tween(self._deathDuration, self, {_alpha = 0}, 'in-out-sine', function() Component.death(self) end)    
+    game.timer.tween(self._deathDuration, self, {_alpha = 0}, 'in-out-sine', function() Component.death(self) end)    
 end
 
 function RenderComponent:draw()

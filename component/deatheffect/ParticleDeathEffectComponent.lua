@@ -35,5 +35,5 @@ function ParticleDeathEffectComponent:death()
     self._deathParticleSystem:setPosition(self.owner.body:center())
     --self._deathParticleSystem:start()
     self._deathParticleSystem:emit(25)
-    game.timer:add(self._duration, function() Component.death(self) end)
+    game.timer.after(self._duration, function() Component.death(self) end)
 end
