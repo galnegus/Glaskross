@@ -17,8 +17,8 @@ function game:init()
 
     self.greyscale = gradient {
         direction = 'horizontal';
-        {5, 5, 5};
-        {10, 10, 10};
+        {5, 4, 8};
+        {8, 4, 2};
     }
 
     self.gui = GameGUI()

@@ -1,12 +1,12 @@
 BouncerBodyComponent = Class{}
-BouncerBodyComponent:include(BodyComponent)
+BouncerBodyComponent:include(VelocityRotatingBodyComponent)
 
 function BouncerBodyComponent:init(options)
-    BodyComponent.init(self, options)
+    VelocityRotatingBodyComponent.init(self, options, 5)
 end
 
 function BouncerBodyComponent:conception()
-    BodyComponent.conception(self)
+    VelocityRotatingBodyComponent.conception(self)
     
     -- create sword
     self._sword = EntityCreator.create(EntityTypes.BOUNCER_SWORD, self.owner)
@@ -16,5 +16,5 @@ end
 function BouncerBodyComponent:death()
     Signal.emit(Signals.KILL_ENTITY, self._sword.id)
 
-    BodyComponent.death(self)
+    VelocityRotatingBodyComponent.death(self)
 end

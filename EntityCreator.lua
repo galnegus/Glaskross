@@ -233,11 +233,29 @@ local function bouncerSword(masterEntity)
     }
 
     local x, y = masterEntity.body:center()
+    local tileSize = Constants.TILE_SIZE
+    local swordLength = tileSize * 5
+    local swordWidth = 2
+    local centerHeight = tileSize / 5
+    local centerWidth = tileSize
+
+    --[[ it looks like this:
+            ___ _ ___
+            ___|_|___
+    ]]
     local bodyOptions = {
-        shape = Collider:addPolygon(x - Constants.TILE_SIZE * 5, y, 
-                                    x, y - Constants.TILE_SIZE * 0.1, 
-                                    x + Constants.TILE_SIZE * 5, y,
-                                    x, y + Constants.TILE_SIZE * 0.1),
+        shape = Collider:addPolygon(x - swordLength, y + centerHeight,
+                                    x - swordLength, y + centerHeight - swordWidth,
+                                    x - centerWidth, y + centerHeight - swordWidth, 
+                                    x - centerWidth, y - centerHeight + swordWidth, 
+                                    x - swordLength, y - centerHeight + swordWidth, 
+                                    x - swordLength, y - centerHeight, 
+                                    x + swordLength, y - centerHeight, 
+                                    x + swordLength, y - centerHeight + swordWidth, 
+                                    x + centerWidth, y - centerHeight + swordWidth, 
+                                    x + centerWidth, y + centerHeight - swordWidth, 
+                                    x + swordLength, y + centerHeight - swordWidth, 
+                                    x + swordLength, y + centerHeight),
         bodyType = BodyTypes.ENEMY_WEAPON,
         collisionGroups = collisionGroups,
         collisionRules = collisionRules,
@@ -247,7 +265,7 @@ local function bouncerSword(masterEntity)
 
     local entity = Entity.new(_idCounter, EntityTypes.BOUNCER_SWORD, false)
     entity:addComponent(BouncerSwordBodyComponent(bodyOptions))
-    entity:addComponent(RenderComponent(Colours.BOUNCER_SWORD_RENDER, 0.5, 0.5, false))
+    entity:addComponent(RenderComponent(Colours.BOUNCER_SWORD_RENDER, 0.5, 0.5, true))
 
     return entity
 end

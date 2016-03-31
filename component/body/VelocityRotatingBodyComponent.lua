@@ -1,13 +1,13 @@
 VelocityRotatingBodyComponent = Class{}
 VelocityRotatingBodyComponent:include(BodyComponent)
 
-function VelocityRotatingBodyComponent:init(options)
+function VelocityRotatingBodyComponent:init(options, rotationSpeed)
 	BodyComponent.init(self, options)
 
 	self._rotationDirection = 1
 
     -- not sure what unit, since rotation is exponential
-    self._rotationSpeed = 10
+    self._rotationSpeed = rotationSpeed or 10
 end
 
 function VelocityRotatingBodyComponent:conception()
@@ -45,7 +45,7 @@ function VelocityRotatingBodyComponent:update(dt)
     else
         -- rotate automatically if idle
         if not self._dying then
-            self._shape:setRotation((self._shape:rotation() + self._rotationDirection * dt * math.pi) % (2 * math.pi))
+            self._shape:setRotation((self._shape:rotation() + self._rotationDirection * self._rotationSpeed / math.pi * dt) % (2 * math.pi))
         end
     end
 

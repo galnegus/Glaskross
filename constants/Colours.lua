@@ -9,7 +9,7 @@ Colours.BULLET_STEP = Colour(200, 100, 100, 0) --100
 Colours.DEFAULT_BEAM = Colour(150, 50, 50, 0) --0
 
 -- tile bgColor
-Colours.BG_COLOUR = Colour(30, 30, 30, 30) --100
+Colours.BG_COLOUR = Colour(20, 20, 20, 20) --100
 Colours.BG_COLOUR_RAND = Colour(10, 10, 10, 0) --0
 
 -- boxy bg, NOTE: LAYER_ONE is in the BACK, LAYER_THREE is in the FRONT
@@ -22,9 +22,9 @@ Colours.DEFAULT_RENDER = Colour(255, 255, 255, 100) --100
 Colours.PLAYER_RENDER = Colour(225, 200, 255, 255) --255
 Colours.BULLET_RENDER = Colour(255, 200, 200, 255) --255
 Colours.DEATH_WALL_RENDER = Colour(255, 150, 150, 255) --255
-Colours.BOUNCER_RENDER = Colour(200, 200, 200, 255) --255
+Colours.BOUNCER_RENDER = Colour(200, 150, 150, 255) --255
 Colours.SHIELD_RENDER = Colour(255, 255, 255, 255) --255
-Colours.BOUNCER_SWORD_RENDER = Colour(255, 255, 255, 255) --255
+Colours.BOUNCER_SWORD_RENDER = Colour(255, 150, 150, 255) --255
 
 -- indicates if colours are affected by some modulating signal, e.g. Signals.COLOR_INVERT
 Colours.state = nil
