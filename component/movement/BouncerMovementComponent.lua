@@ -62,7 +62,7 @@ function BouncerMovementComponent:update(dt)
 
         local dx = selfX - playerX
         local dy = selfY - playerY
-        local distance = math.sqrt(dx * dx + dy * dy) - 200
+        local distance = math.sqrt(dx * dx + dy * dy) - Constants.TILE_SIZE * 6
         distance = distance > 2 and distance or 2
         local orbit = math.log(distance) / math.log(1.3) -- is this slow?
 
