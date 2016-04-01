@@ -12,12 +12,12 @@ function HPComponent:init(hp, hitSignal)
 end
 
 function HPComponent:conception()
-	Component.conception(self)
-
 	self.owner.events.register(self._hitSignal, function()
 		self._hp = self._hp - 1
 		if self._hp <= 0 then
-			Signal.emit(Signals.KILL_ENTITY, self.owner.id)
+			Signal.emit(Signals.KILL_ENTITY, self.owner)
 		end
 	end)
+	
+	Component.conception(self)
 end

@@ -2,9 +2,9 @@ InputComponent = Class{}
 InputComponent:include(Component)
 
 function InputComponent:init()
-    Component.init(self)
-
     self.type = ComponentTypes.INPUT
+    
+    Component.init(self)
 end
 
 function InputComponent:update(dt)

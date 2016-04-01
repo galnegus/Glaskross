@@ -3,7 +3,7 @@ Class = require "lib.hump.class"
 Signal = require 'lib.hump.signal'
 Timer = require "lib.hump.timer"
 Vector = require "lib.hump.vector"
-HC = require "lib.hardoncollider"
+HC = require "lib.HC"
 Gamestate = require "lib.hump.gamestate"
 require "lib.gradient"
 

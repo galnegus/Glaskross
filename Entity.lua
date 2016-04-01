@@ -101,7 +101,7 @@ function Entity:burialAttempt()
         end
     end
     if allComponentsDead then
-        Signal.emit(Signals.REMOVE_ENTITY, self.id)
+        Signal.emit(Signals.REMOVE_ENTITY, self)
         self._isAlive = false
     end
 end

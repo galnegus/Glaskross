@@ -7,7 +7,6 @@ function ShieldBodyComponent:init(options)
 	self._x, self._y = options.masterEntity.body:center()
 
     -- create triangle body in the appearance of a shield
-    BodyComponent.init(self, options)
 
     self._masterEntity = options.masterEntity
     self._active = false
@@ -18,11 +17,11 @@ function ShieldBodyComponent:init(options)
     self._yAnimateOffset = 0
 
     self._velRotation = 0
+
+    BodyComponent.init(self, options)
 end
 
 function ShieldBodyComponent:conception()
-    BodyComponent.conception(self)
-
     self.owner.events.register(Signals.SHIELD_ACTIVE, function(dirX, dirY, duration)
         assert((dirX == 0 and dirY == -1) or (dirX == 0 and dirY == 1) or 
                (dirX == -1 and dirY == 0) or (dirX == 1 and dirY == 0), 
@@ -52,20 +51,22 @@ function ShieldBodyComponent:conception()
         game.timer.tween(duration, self, {_xAnimateOffset = self._xAnimateOffset + dirX * Constants.TILE_SIZE, _yAnimateOffset = self._yAnimateOffset + dirY * Constants.TILE_SIZE}, 'out-sine')
 
         self._active = true
-        Collider:setSolid(self._shape)
+        --Collider:setSolid(self._shape)
     end)
 
     self.owner.events.register(Signals.SHIELD_INACTIVE, function()
         if self._alive then
             self._active = false
-            Collider:setGhost(self._shape)
+            --Collider:setGhost(self._shape)
         end
     end)
+
+    BodyComponent.conception(self)
 end
 
 function ShieldBodyComponent:birth()
     BodyComponent.birth(self)
-    Collider:setGhost(self._shape)
+    --Collider:setGhost(self._shape)
 end
 
 function ShieldBodyComponent:getVelRotation()
@@ -73,11 +74,11 @@ function ShieldBodyComponent:getVelRotation()
 end
 
 function ShieldBodyComponent:update(dt)
-	BodyComponent.update(self, dt)
-
 	if self._active then
 		self._x, self._y = self._masterEntity.body:center()
 
 		self._shape:moveTo(self._x + self._xOffset + self._xAnimateOffset, self._y + self._yOffset + self._yAnimateOffset)
 	end
+
+    BodyComponent.update(self, dt)
 end

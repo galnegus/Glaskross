@@ -9,12 +9,12 @@ Signal.register(Signals.ADD_ENTITY, function(entity)
     entity:conception()
 end)
 
-Signal.register(Signals.KILL_ENTITY, function(id)
-    _entityArray[id]:death()
+Signal.register(Signals.KILL_ENTITY, function(entity)
+    _entityArray[entity.id]:death()
 end)
 
-Signal.register(Signals.REMOVE_ENTITY, function(id)
-    _toRemove[id] = true
+Signal.register(Signals.REMOVE_ENTITY, function(entity)
+    _toRemove[entity.id] = true
 end)
 
 function Entities.update(dt)
@@ -40,7 +40,7 @@ function Entities.update(dt)
         for _, entity in pairs(bullets) do
             entity:update(Constants.BULLET_TIMESLICE)
         end
-        Collider:update(Constants.BULLET_TIMESLICE)
+        --Collider:update(Constants.BULLET_TIMESLICE)
     end
     for _, entity in pairs(bullets) do
         entity:update(dtBullet)

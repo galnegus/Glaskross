@@ -2,23 +2,21 @@ VelocityRotatingBodyComponent = Class{}
 VelocityRotatingBodyComponent:include(BodyComponent)
 
 function VelocityRotatingBodyComponent:init(options, rotationSpeed)
-	BodyComponent.init(self, options)
-
 	self._rotationDirection = 1
 
     -- not sure what unit, since rotation is exponential
     self._rotationSpeed = rotationSpeed or 10
+
+    BodyComponent.init(self, options)
 end
 
 function VelocityRotatingBodyComponent:conception()
-	BodyComponent.conception(self)
-
 	assert(self.owner.movement ~= nil, "owner entity " .. tostring(self.owner) .. " must have movement component!")
+
+    BodyComponent.conception(self)
 end
 
 function VelocityRotatingBodyComponent:update(dt)
-    BodyComponent.update(self, dt)
-
     local vX, vY = 0, 0
     if self.owner.movement ~= nil then
         vX, vY = self.owner.movement:getVelocity()
@@ -49,4 +47,5 @@ function VelocityRotatingBodyComponent:update(dt)
         end
     end
 
+    BodyComponent.update(self, dt)
 end

@@ -4,7 +4,7 @@ BodyComponent:include(Component)
 function BodyComponent:init(options)
     assert(options.shape ~= nil, "options.shape is required.")
     assert(options.bodyType ~= nil, "options.bodyType is required.")
-    assert(options.collisionGroups ~= nil, "options.collisionGroups is required.")
+    --assert(options.collisionGroups ~= nil, "options.collisionGroups is required.")
     assert(options.collisionRules ~= nil, "options.collisionRules is required.")
 
     -- assert that the format on the collisionRules table is okay
@@ -32,9 +32,9 @@ function BodyComponent:init(options)
     self._shape.type = options.bodyType
     self._collisionRules = options.collisionRules
 
-    for _, group in pairs(options.collisionGroups) do
-        Collider:addToGroup(group, self._shape)
-    end
+    --[[for _, group in pairs(options.collisionGroups) do
+        Colider:addToGrup(group, self._shape)
+    end]]
 end
 
 function BodyComponent:center()
@@ -49,22 +49,22 @@ function BodyComponent:rotation()
     return self._shape:rotation()
 end
 
-function BodyComponent:on_collide(dt, shapeCollidedWith, dx, dy)
+--[[function BodyComponent:on_collide(dt, shapeCollidedWith, dx, dy)
     if self._collisionRules[shapeCollidedWith.type] ~= nil then
         for _, rule in pairs(self._collisionRules[shapeCollidedWith.type]) do
             rule(self, dt, shapeCollidedWith, dx, dy)
         end
     end
-end
+end]]
 
 function BodyComponent:conception()
-    Collider:setGhost(self._shape)
+    --Collider:setGhost(self._shape)
     Component.conception(self)
 end
 
 function BodyComponent:birth()
     Component.birth(self)
-    Collider:setSolid(self._shape)
+    --Collider:setSolid(self._shape)
 
     self.owner.events.register(Signals.MOVE_SHAPE, function(x, y)
         self._shape:move(x, y)
@@ -72,11 +72,18 @@ function BodyComponent:birth()
 end
 
 function BodyComponent:death()
-    Collider:remove(self._shape)
+    HC.remove(self._shape)
     Component.death(self)
 end
 
 function BodyComponent:update(dt)
+    for shapeCollidedWith, delta in pairs(HC.collisions(self._shape)) do
+        if self._collisionRules[shapeCollidedWith.type] ~= nil then
+            for _, rule in pairs(self._collisionRules[shapeCollidedWith.type]) do
+                rule(self, dt, shapeCollidedWith, delta.x, delta.y)
+            end
+        end
+    end
     -- override
 end
 

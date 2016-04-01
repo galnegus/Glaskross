@@ -13,8 +13,6 @@ function ChaserMovementComponent:init(targetEntity, terminalVelocity)
 end
 
 function ChaserMovementComponent:conception()
-    MovementComponent.conception(self)
-
     self.owner.events.register(Signals.BOUNCE, function(dx, dy)
         assert(dx and dy, "dx or dy missing")
         if dx ~= 0 then
@@ -39,7 +37,9 @@ function ChaserMovementComponent:conception()
             -- add xDir/yDir to starting position to avoid bouncer getting stuck inside wall (nasty memory crash)
             Signal.emit(Signals.ADD_ENTITY, EntityCreator.create(EntityTypes.BOUNCER, x + xDir1, y + yDir1, xDir1, yDir1))
             Signal.emit(Signals.ADD_ENTITY, EntityCreator.create(EntityTypes.BOUNCER, x + xDir2, y + yDir2, xDir2, yDir2))
-            Signal.emit(Signals.KILL_ENTITY, self.owner.id)
+            Signal.emit(Signals.KILL_ENTITY, self.owner)
         end
     end)
+    
+    MovementComponent.conception(self)
 end

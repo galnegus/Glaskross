@@ -1,7 +1,7 @@
 game = {}
 
 function game:init()
-    Collider = HC(100, on_collide)
+    --Collider = HC(100, on_collide)
 
     self.world = World(love.graphics.getWidth(), love.graphics.getHeight(), Constants.TILE_SIZE)
 
@@ -38,7 +38,7 @@ function game:update(dt)
     Entities.update(dt)
     self.world:update(dt)
     self.timer.update(dt)
-    Collider:update(dt)
+    --Collider:update(dt)
 
     self.gui:update(dt)
 end

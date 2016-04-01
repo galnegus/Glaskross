@@ -3,7 +3,6 @@ ParticleDeathEffectComponent:include(Component)
 
 function ParticleDeathEffectComponent:init(duration)
     assert(duration, "argument 'duration' missing.")
-    Component.init(self)
 
     self.type = ComponentTypes.DEATH_EFFECT
 
@@ -11,15 +10,17 @@ function ParticleDeathEffectComponent:init(duration)
 
     self._dying = false
     self._duration = duration
+
+    Component.init(self)
 end
 
 function ParticleDeathEffectComponent:conception()
-    Component.conception(self)
-    
     assert(self.owner.body ~= nil, "entity " .. tostring(self.owner) .. " must have a body component.")
     assert(self.owner.render ~= nil, "entity " .. tostring(self.owner) .. " must have a render component.")    
 
     self._deathParticleSystem = game.deathParticleSystem
+
+    Component.conception(self)
 end
 
 function ParticleDeathEffectComponent:death()
@@ -35,5 +36,6 @@ function ParticleDeathEffectComponent:death()
     self._deathParticleSystem:setPosition(self.owner.body:center())
     --self._deathParticleSystem:start()
     self._deathParticleSystem:emit(25)
+    
     game.timer.after(self._duration, function() Component.death(self) end)
 end

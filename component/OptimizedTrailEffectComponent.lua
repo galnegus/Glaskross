@@ -6,7 +6,6 @@ function OptimizedTrailEffectComponent:init(colour)
 
 	self.type = ComponentTypes.TRAIL_EFFECT
 
-    
     self._rows = game.world:rows()
     self._columns = game.world:columns()
     self._alpha = {}

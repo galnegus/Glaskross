@@ -40,11 +40,11 @@ function MovementComponent:calcAcceleration(terminalVelocity, friction)
 end
 
 function MovementComponent:conception()
-    Component.conception(self)
-
     self.owner.events.register(Signals.SET_MOVEMENT_DIRECTION, function(direction)
         setDirection(self, direction)
-    end)    
+    end)   
+     
+    Component.conception(self)
 end
 
 function MovementComponent:getVelocity()

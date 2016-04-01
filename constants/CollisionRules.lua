@@ -11,13 +11,13 @@ end
 
 CollisionRules.Destroy = function()
 	return function(self, dt, shapeCollidedWith, dx, dy)
-	    Signal.emit(Signals.KILL_ENTITY, shapeCollidedWith.parent.owner.id)
+	    Signal.emit(Signals.KILL_ENTITY, shapeCollidedWith.parent.owner)
 	end
 end
 
 CollisionRules.SelfDestruct = function()
 	return function(self, dt, shapeCollidedWith, dx, dy)
-        Signal.emit(Signals.KILL_ENTITY, self.owner.id)
+        Signal.emit(Signals.KILL_ENTITY, self.owner)
 	end
 end
 

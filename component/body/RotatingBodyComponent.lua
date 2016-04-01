@@ -3,9 +3,9 @@ RotatingBodyComponent:include(BodyComponent)
 
 function RotatingBodyComponent:init(options)
 	assert(options.rps ~= nil, "options.rps is required.")
-	BodyComponent.init(self, options)
-
 	self._rps = options.rps -- rotations per second
+	
+	BodyComponent.init(self, options)
 end
 
 function RotatingBodyComponent:setOwner(owner)
@@ -13,7 +13,7 @@ function RotatingBodyComponent:setOwner(owner)
 end
 
 function RotatingBodyComponent:update(dt)
-	BodyComponent.update(self, dt)
+	self._shape:setRotation((self._shape:rotation() + dt * self._rps * 2 * math.pi) % (2 * math.pi))
 
-    self._shape:setRotation((self._shape:rotation() + dt * self._rps * 2 * math.pi) % (2 * math.pi))
+	BodyComponent.update(self, dt)
 end

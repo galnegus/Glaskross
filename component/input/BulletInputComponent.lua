@@ -2,20 +2,18 @@ BulletInputComponent = Class{}
 BulletInputComponent:include(InputComponent)
 
 function BulletInputComponent:init()
-    InputComponent.init(self)
-
     self._bullet = true
+
+    InputComponent.init(self)
 end
 
 function BulletInputComponent:conception()
-    InputComponent.conception(self)
-
     self._velNormDenominator = self.owner.movement:getTerminalVelocity() * 2
+
+    InputComponent.conception(self)
 end
 
 function BulletInputComponent:update(dt)
-    InputComponent.update(self, dt)
-
     -- Slight movement in the owner's direction, normalized to be a number between 0 and 1, (but really way less than 1, at 1 it will move diagonally when owner is moving at max speed orthogonally to the shoot direction)
     local xVel, yVel = self.owner.movement:getVelocity()
     xVel = xVel / self._velNormDenominator
@@ -49,6 +47,8 @@ function BulletInputComponent:update(dt)
             self:_bulletCooldown()
         end
     end
+    
+    InputComponent.update(self, dt)
 end
 
 function BulletInputComponent:_bulletCooldown()

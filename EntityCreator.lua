@@ -16,7 +16,7 @@ local function player(x, y)
     }
 
     local bodyOptions = {
-        shape = Collider:addRectangle(x, y, Constants.TILE_SIZE, Constants.TILE_SIZE),
+        shape = HC.rectangle(x, y, Constants.TILE_SIZE, Constants.TILE_SIZE),
         bodyType = BodyTypes.PLAYER,
         collisionGroups = collisionGroups,
         collisionRules = collisionRules
@@ -67,7 +67,7 @@ local function bullet(x, y, targetDirX, targetDirY)
     }
 
     local bodyOptions = {
-        shape = Collider:addRectangle(startX, startY, width, height),
+        shape = HC.rectangle(startX, startY, width, height),
         bodyType = BodyTypes.PLAYER_WEAPON,
         collisionGroups = collisionGroups,
         collisionRules = collisionRules,
@@ -140,7 +140,7 @@ local function deathWall(x, y, maxVelFactor)
     }
 
     local bodyOptions = {
-        shape = Collider:addRectangle(startX, startY, width, height),
+        shape = HC.rectangle(startX, startY, width, height),
         bodyType = BodyTypes.ENEMY,
         collisionGroups = collisionGroups,
         collisionRules = collisionRules
@@ -172,7 +172,7 @@ local function bouncer(x, y, targetDirX, targetDirY)
     }
 
     local bodyOptions = {
-        shape = Collider:addRectangle(x, y, Constants.TILE_SIZE * 2, Constants.TILE_SIZE * 2),
+        shape = HC.rectangle(x, y, Constants.TILE_SIZE * 2, Constants.TILE_SIZE * 2),
         bodyType = BodyTypes.ENEMY,
         collisionGroups = collisionGroups,
         collisionRules = collisionRules
@@ -202,7 +202,7 @@ local function shield(masterEntity)
 
     local x, y = masterEntity.body:center()
     local bodyOptions = {
-        shape = Collider:addPolygon(x - Constants.TILE_SIZE * 1.5, y, 
+        shape = HC.polygon(x - Constants.TILE_SIZE * 1.5, y, 
                                     x, y - Constants.TILE_SIZE * 1.5, 
                                     x + Constants.TILE_SIZE * 1.5, y),
         bodyType = BodyTypes.PLAYER_WEAPON,
@@ -244,7 +244,7 @@ local function bouncerSword(masterEntity)
             ___|_|___
     ]]
     local bodyOptions = {
-        shape = Collider:addPolygon(x - swordLength, y + centerHeight,
+        shape = HC.polygon(x - swordLength, y + centerHeight,
                                     x - swordLength, y + centerHeight - swordWidth,
                                     x - centerWidth, y + centerHeight - swordWidth, 
                                     x - centerWidth, y - centerHeight + swordWidth, 
