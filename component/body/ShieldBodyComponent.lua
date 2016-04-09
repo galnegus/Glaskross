@@ -50,13 +50,13 @@ function ShieldBodyComponent:conception()
         self._yAnimateOffset = -self._yOffset / 2
         game.timer.tween(duration, self, {_xAnimateOffset = self._xAnimateOffset + dirX * Constants.TILE_SIZE, _yAnimateOffset = self._yAnimateOffset + dirY * Constants.TILE_SIZE}, 'out-sine')
 
-        self._active = true
+        self._shape.active = true
         --Collider:setSolid(self._shape)
     end)
 
     self.owner.events.register(Signals.SHIELD_INACTIVE, function()
         if self._alive then
-            self._active = false
+            self._shape.active = false
             --Collider:setGhost(self._shape)
         end
     end)
@@ -66,6 +66,7 @@ end
 
 function ShieldBodyComponent:birth()
     BodyComponent.birth(self)
+    self._shape.active = false
     --Collider:setGhost(self._shape)
 end
 
@@ -74,7 +75,7 @@ function ShieldBodyComponent:getVelRotation()
 end
 
 function ShieldBodyComponent:update(dt)
-	if self._active then
+	if self._shape.active then
 		self._x, self._y = self._masterEntity.body:center()
 
 		self._shape:moveTo(self._x + self._xOffset + self._xAnimateOffset, self._y + self._yOffset + self._yAnimateOffset)

@@ -40,7 +40,6 @@ function Entities.update(dt)
         for _, entity in pairs(bullets) do
             entity:update(Constants.BULLET_TIMESLICE)
         end
-        --Collider:update(Constants.BULLET_TIMESLICE)
     end
     for _, entity in pairs(bullets) do
         entity:update(dtBullet)

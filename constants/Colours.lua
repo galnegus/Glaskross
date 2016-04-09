@@ -23,7 +23,7 @@ Colours.PLAYER_RENDER = Colour(225, 200, 255, 255) --255
 Colours.BULLET_RENDER = Colour(255, 200, 200, 255) --255
 Colours.DEATH_WALL_RENDER = Colour(255, 150, 150, 255) --255
 Colours.BOUNCER_RENDER = Colour(200, 150, 150, 255) --255
-Colours.SHIELD_RENDER = Colour(255, 255, 255, 255) --255
+Colours.SHIELD_RENDER = Colour(255, 200, 200, 255) --255
 Colours.BOUNCER_SWORD_RENDER = Colour(255, 150, 150, 255) --255
 
 -- indicates if colours are affected by some modulating signal, e.g. Signals.COLOR_INVERT

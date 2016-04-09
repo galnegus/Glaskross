@@ -5,10 +5,6 @@ local _idCounter = 0
 local function player(x, y)
     assert(x and y, "arguments missing.")
 
-    local collisionGroups = {
-        CollisionGroups.FRIENDLY
-    }
-
     local collisionRules = {
         [BodyTypes.WALL] = {
             CollisionRules.StopMovement()
@@ -18,7 +14,6 @@ local function player(x, y)
     local bodyOptions = {
         shape = HC.rectangle(x, y, Constants.TILE_SIZE, Constants.TILE_SIZE),
         bodyType = BodyTypes.PLAYER,
-        collisionGroups = collisionGroups,
         collisionRules = collisionRules
     }
 
@@ -52,10 +47,6 @@ local function bullet(x, y, targetDirX, targetDirY)
         startY = startY - tileSize / 2
     end
 
-    local collisionGroups = {
-        CollisionGroups.FRIENDLY
-    }
-
     local collisionRules = {
         [BodyTypes.WALL] = {
             CollisionRules.SelfDestruct()
@@ -69,7 +60,6 @@ local function bullet(x, y, targetDirX, targetDirY)
     local bodyOptions = {
         shape = HC.rectangle(startX, startY, width, height),
         bodyType = BodyTypes.PLAYER_WEAPON,
-        collisionGroups = collisionGroups,
         collisionRules = collisionRules,
         rps = 1
     }
@@ -128,10 +118,6 @@ local function deathWall(x, y, maxVelFactor)
         end
     end
 
-    local collisionGroups = {
-        CollisionGroups.HOSTILE
-    }
-
     local collisionRules = {
         [BodyTypes.PLAYER] = {
             CollisionRules.Destroy(),
@@ -142,7 +128,6 @@ local function deathWall(x, y, maxVelFactor)
     local bodyOptions = {
         shape = HC.rectangle(startX, startY, width, height),
         bodyType = BodyTypes.ENEMY,
-        collisionGroups = collisionGroups,
         collisionRules = collisionRules
     }
 
@@ -157,10 +142,6 @@ end
 local function bouncer(x, y, targetDirX, targetDirY)
     assert(x and y and targetDirX and targetDirY, "arguments missing.")
 
-    local collisionGroups = {
-        CollisionGroups.HOSTILE
-    }
-
     local collisionRules = {
         [BodyTypes.WALL] = {
             CollisionRules.Bounce()
@@ -174,12 +155,11 @@ local function bouncer(x, y, targetDirX, targetDirY)
     local bodyOptions = {
         shape = HC.rectangle(x, y, Constants.TILE_SIZE * 2, Constants.TILE_SIZE * 2),
         bodyType = BodyTypes.ENEMY,
-        collisionGroups = collisionGroups,
         collisionRules = collisionRules
     }
 
     local entity = Entity.new(_idCounter, EntityTypes.BOUNCER, false)
-    entity:addComponent(BouncerMovementComponent(targetDirX, targetDirY, Constants.TERMINAL_VELOCITY / 2, 10))
+    entity:addComponent(BouncerMovementComponent(targetDirX, targetDirY, Constants.TERMINAL_VELOCITY / 3, 10))
     entity:addComponent(BouncerBodyComponent(bodyOptions))
     entity:addComponent(HPComponent(Constants.BOUNCER_HP, Signals.BOUNCER_HIT))
     entity:addComponent(RenderComponent(Colours.BOUNCER_RENDER, Constants.BOUNCER_BIRTH_DURATION, Constants.DEFAULT_DEATH_DURATION, true))
@@ -189,10 +169,6 @@ end
 
 local function shield(masterEntity)
     assert(masterEntity, "arguments missing.")
-
-    local collisionGroups = {
-        CollisionGroups.FRIENDLY
-    }
 
     local collisionRules = {
         [BodyTypes.ENEMY] = {
@@ -206,7 +182,6 @@ local function shield(masterEntity)
                                     x, y - Constants.TILE_SIZE * 1.5, 
                                     x + Constants.TILE_SIZE * 1.5, y),
         bodyType = BodyTypes.PLAYER_WEAPON,
-        collisionGroups = collisionGroups,
         collisionRules = collisionRules,
         masterEntity = masterEntity
     }
@@ -221,11 +196,6 @@ end
 local function bouncerSword(masterEntity)
     assert(masterEntity, "argument missing.")
 
-    local collisionGroups = {
-        CollisionGroups.HOSTILE,
-        CollisionGroups.IGNORE_WALLS
-    }
-
     local collisionRules = {
         [BodyTypes.PLAYER] = {
             CollisionRules.Destroy()
@@ -239,25 +209,25 @@ local function bouncerSword(masterEntity)
     local centerHeight = tileSize / 5
     local centerWidth = tileSize
 
-    --[[ it looks like this:
-            ___ _ ___
-            ___|_|___
+    --[[ 
+    it looks like this:
+        ___ _ ___
+        ___|_|___
     ]]
     local bodyOptions = {
         shape = HC.polygon(x - swordLength, y + centerHeight,
-                                    x - swordLength, y + centerHeight - swordWidth,
-                                    x - centerWidth, y + centerHeight - swordWidth, 
-                                    x - centerWidth, y - centerHeight + swordWidth, 
-                                    x - swordLength, y - centerHeight + swordWidth, 
-                                    x - swordLength, y - centerHeight, 
-                                    x + swordLength, y - centerHeight, 
-                                    x + swordLength, y - centerHeight + swordWidth, 
-                                    x + centerWidth, y - centerHeight + swordWidth, 
-                                    x + centerWidth, y + centerHeight - swordWidth, 
-                                    x + swordLength, y + centerHeight - swordWidth, 
-                                    x + swordLength, y + centerHeight),
+            x - swordLength, y + centerHeight - swordWidth,
+            x - centerWidth, y + centerHeight - swordWidth, 
+            x - centerWidth, y - centerHeight + swordWidth, 
+            x - swordLength, y - centerHeight + swordWidth, 
+            x - swordLength, y - centerHeight, 
+            x + swordLength, y - centerHeight, 
+            x + swordLength, y - centerHeight + swordWidth, 
+            x + centerWidth, y - centerHeight + swordWidth, 
+            x + centerWidth, y + centerHeight - swordWidth, 
+            x + swordLength, y + centerHeight - swordWidth, 
+            x + swordLength, y + centerHeight),
         bodyType = BodyTypes.ENEMY_WEAPON,
-        collisionGroups = collisionGroups,
         collisionRules = collisionRules,
         masterEntity = masterEntity,
         rps = 1

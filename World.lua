@@ -7,14 +7,16 @@ function World:init(width, height, tileSize)
     self._walls = {}
     self._walls.top = HC.rectangle(-wallSize, -wallSize, width + 2 * wallSize, wallSize)
     self._walls.top.type = BodyTypes.WALL
+    self._walls.top.active = true
     self._walls.right = HC.rectangle(width, -wallSize, wallSize, height + 2 * wallSize)
     self._walls.right.type = BodyTypes.WALL
+    self._walls.right.active = true
     self._walls.bottom = HC.rectangle(-wallSize, height, width + 2 * wallSize, wallSize)
     self._walls.bottom.type = BodyTypes.WALL
+    self._walls.bottom.active = true
     self._walls.left = HC.rectangle(-wallSize, -wallSize, wallSize, height + 2 * wallSize)
     self._walls.left.type = BodyTypes.WALL
-    --Colider:setPssive(self._walls.top, self._walls.right, self._walls.bottom, self._walls.left)
-    --Colider:addToGrop(CollisionGroups.IGNORE_WALLS, self._walls.top, self._walls.right, self._walls.bottom, self._walls.left)
+    self._walls.left.active = true
 
     -- init floor
     self._floor = {}

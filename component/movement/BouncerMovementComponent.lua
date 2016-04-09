@@ -66,7 +66,7 @@ function BouncerMovementComponent:update(dt)
         distance = distance > 2 and distance or 2
         local orbit = math.log(distance) / math.log(1.3) -- is this slow?
 
-        local phi = Helpers.distanceToTargetRotation(currentRotation, target) * dt * 10 / orbit
+        local phi = Helpers.distanceToTargetRotation(currentRotation, target) * dt * 5 / orbit
         self._direction:rotateInplace(phi)
     end
 

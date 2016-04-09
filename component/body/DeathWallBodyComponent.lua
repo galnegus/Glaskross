@@ -3,7 +3,8 @@ DeathWallBodyComponent:include(BodyComponent)
 
 function DeathWallBodyComponent:init(options)
     BodyComponent.init(self, options)
-    --Collider:setPassive(self._shape)
+
+    -- todo: passive mode?
 end
 
 function DeathWallBodyComponent:update(dt)
