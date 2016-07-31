@@ -18,6 +18,15 @@ OLD LIST:
  - Integrate health into the main game somehow, use the HPComponent! Lots of signals and shit.
  	- Make Entities:getAll(entityType) to enable retrieving player in HealthBar.lua which then stores that locally
 
+30/7 -16
+ - Change bullet so that it's more like a short range spear that you throw, keep same movement behaviour
+ - Add a blink mechanic, hitting space teleports you a short distance forward. The direction is determined by the velocity vector and the rotation. Find the rotation closest perpendicular side of the square to the velocity vector and use that as the direciton. Very short cooldown, make some cool visual particle effect at the spot you blinked from.
+ - LEVELS:
+  - 1.1 simon says, four squares that lights up one by one, when you hit the one that's lit, the next one goes, but on a timer, you have to hit them in quick succession or else start over from the beginning, impossible without blink.
+  - 1.2 boss made up of blocks, some blocks will light up, specifics unknown. ideas: i. blocks in front and behind alternate for a phase. ii. maybe some bullet hell attacks from boss, but the only way to avoid is to go up close dark souls style.
+  - 2.1 tetris, blocks fall from sky you have to sculpt them to make sure they fall correctly.
+  - 2.2 ---
+
 DONE:
 
  - Make bouncer move slighly towards player

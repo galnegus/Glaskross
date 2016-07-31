@@ -1,8 +1,10 @@
 local Constants = {}
 
 Constants.TILE_SIZE = 32 -- 32
-Constants.BEAM_ROWS = 3
-Constants.BEAM_COLS = 5
+Constants.ROWS = 20
+Constants.COLS = 20
+Constants.WIDTH = Constants.TILE_SIZE * Constants.COLS
+Constants.HEIGHT = Constants.TILE_SIZE * Constants.ROWS
 
 -- terminal velocity needs to be less than (tile_size * frame_rate / 2 => tile_size / 30) pixels per second to avoid
 -- collision bugs (walls being tile_sizel pixels) at 60 fps (lower fps breaks game)

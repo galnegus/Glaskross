@@ -1,6 +1,8 @@
 World = Class{}
 
 function World:init(width, height, tileSize)
+    self.width = width
+    self.height = height
 
     -- init walls
     local wallSize = Constants.TILE_SIZE;

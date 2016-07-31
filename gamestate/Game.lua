@@ -1,8 +1,8 @@
 game = {}
 
 function game:init()
-    self.world = World(love.graphics.getWidth(), love.graphics.getHeight(), Constants.TILE_SIZE)
-
+    self.camera = Camera.new()
+    self.world = World(Constants.TILE_SIZE * Constants.COLS, Constants.TILE_SIZE * Constants.ROWS, Constants.TILE_SIZE)
     self.timer = Timer.new()
 
     self.deathParticleSystem = love.graphics.newParticleSystem(love.graphics.newImage("square.png"), 1000)
@@ -22,20 +22,20 @@ function game:init()
     self.gui = GameGUI()
 end
 
-function on_collide(dt, shape_a, shape_b, dx, dy)
-    if shape_a.parent ~= nil then
-        shape_a.parent:on_collide(dt, shape_b, dx, dy)
-    end
-    if shape_b.parent ~= nil then
-        shape_b.parent:on_collide(dt, shape_a, -dx, -dy)
-    end
-end
-
 function game:update(dt)
     self.deathParticleSystem:update(dt)
     Entities.update(dt)
     self.world:update(dt)
     self.timer.update(dt)
+
+    local heightRatio = love.graphics.getHeight() / self.world.height
+    local widthRatio = love.graphics.getWidth() / self.world.width
+    if heightRatio < widthRatio then
+        self.camera:zoomTo(heightRatio)
+    else
+        self.camera:zoomTo(widthRatio)
+    end
+    self.camera:lookAt(self.world.width / 2, self.world.height / 2)
 
     self.gui:update(dt)
 end
@@ -46,26 +46,28 @@ function drawinrect(img, x, y, w, h, r, ox, oy, kx, ky)
 end
 
 function game:draw()
+    
     love.graphics.reset()
+
     love.graphics.setCanvas(canvas)
+    self.camera:attach()
         local r, g, b, a = love.graphics.getColor()
             love.graphics.clear()
             drawinrect(self.greyscale, 0, 0, love.graphics.getWidth(), love.graphics.getHeight())
             Entities.bgDraw()
             self.world:draw()
             Entities.draw()
-            
             love.graphics.setColor(r, g, b, a)
             love.graphics.draw(self.deathParticleSystem)
-           
         love.graphics.setColor(r, g, b, a)
+    self.camera:detach()
     love.graphics.setCanvas()
 
     love.graphics.setShader(shader)
         love.graphics.draw(canvas)
     love.graphics.setShader()
 
-     self.gui:draw()
+    --self.gui:draw()
 end
 
 function game:keyreleased(key)
@@ -95,6 +97,7 @@ function game:keyreleased(key)
         --Gamestate.switch(menu)
         --Gamestate.switch(menu)
         --Signal.emit(Signals.BACKGROUND_COLOR, 0, 40, 40, 100)
-        Signal.emit(Signals.COLOUR_INVERT)
+        --Signal.emit(Signals.COLOUR_INVERT)
+        love.event.quit()
     end
 end

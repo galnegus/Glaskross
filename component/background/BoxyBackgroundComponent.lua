@@ -16,8 +16,8 @@ function BoxyBackgroundComponent:init()
     self._boxWidth = Constants.TILE_SIZE * 5
     self._boxHeight = Constants.TILE_SIZE * 5
 
-    self._x = (love.graphics.getWidth() - self._boxWidth) / 2
-    self._y = (love.graphics.getHeight() - self._boxHeight) / 2
+    self._x = (Constants.WIDTH - self._boxWidth) / 2
+    self._y = (Constants.HEIGHT - self._boxHeight) / 2
 
     self._boxes = {}
 

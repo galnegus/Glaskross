@@ -21,7 +21,7 @@ local function player(x, y)
     entity:addComponent(VelocityRotatingBodyComponent(bodyOptions))
     entity:addComponent(RenderComponent(Colours.PLAYER_RENDER, 0, Constants.DEFAULT_DEATH_DURATION, true))
     entity:addComponent(MovementComponent(false, false))
-    entity:addComponent(BulletInputComponent())
+    entity:addComponent(ShieldInputComponent())
     entity:addComponent(OptimizedTrailEffectComponent(Colours.PLAYER_STEP))
     entity:addComponent(ParticleDeathEffectComponent(1))
     return entity
