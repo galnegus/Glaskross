@@ -4,3 +4,6 @@
 [submodule "lib/HC"]
 	path = lib/HC
 	url = https://github.com/vrld/HC.git
+[submodule "lib/SUIT"]
+	path = lib/SUIT
+	url = git://github.com/vrld/SUIT.git
