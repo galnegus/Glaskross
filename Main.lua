@@ -59,16 +59,16 @@ require "gui.HealthBar"
 require "gui.EntityListGUI"
 
 function love.load()
-    io.stdout:setvbuf("no")
+  io.stdout:setvbuf("no")
 
-    shader = love.graphics.newShader("shader.fs")
-    canvas = love.graphics.newCanvas()
-    love.graphics.setBackgroundColor(0, 0, 0)
+  shader = love.graphics.newShader("shader.fs")
+  canvas = love.graphics.newCanvas()
+  love.graphics.setBackgroundColor(0, 0, 0)
 
-    Gamestate.registerEvents()
-    Gamestate.switch(game)
+  Gamestate.registerEvents()
+  Gamestate.switch(game)
 end
 
 function love.update(dt)
-    Timer.update(dt)
+  Timer.update(dt)
 end

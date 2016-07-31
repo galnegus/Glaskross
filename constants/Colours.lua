@@ -31,16 +31,16 @@ Colours.state = nil
 Colours.stateColour = nil
 
 local function setState(state, colour)
-    Colours.state = state
-    Colours.stateColour = colour
+  Colours.state = state
+  Colours.stateColour = colour
 end
 
 -- signals
 Signal.register(Signals.COLOUR_INVERT, function()
-    setState(Signals.COLOUR_INVERT)
+  setState(Signals.COLOUR_INVERT)
 end)
 Signal.register(Signals.COLOUR_MIX, function(colour)
-    setState(Signals.COLOUR_MIX, colour)
+  setState(Signals.COLOUR_MIX, colour)
 end)
 
 return Colours
