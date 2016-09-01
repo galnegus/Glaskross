@@ -66,7 +66,7 @@ function love.load()
   love.graphics.setBackgroundColor(0, 0, 0)
 
   Gamestate.registerEvents()
-  Gamestate.switch(game)
+  Gamestate.switch(menu)
 end
 
 function love.update(dt)

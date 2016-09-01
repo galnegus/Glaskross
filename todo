@@ -26,6 +26,11 @@ OLD LIST:
   - 1.2 boss made up of blocks, some blocks will light up, specifics unknown. ideas: i. blocks in front and behind alternate for a phase. ii. maybe some bullet hell attacks from boss, but the only way to avoid is to go up close dark souls style.
   - 2.1 tetris, blocks fall from sky you have to sculpt them to make sure they fall correctly.
   - 2.2 ---
+  - x. instead of the player rotating, the world rotates
+
+  30/8 -16
+  - CHANGE OF PLANS:
+  - Game is now a game where you avoid enemies that one-shot you. YOu have a short teleport "spacebar" which moves you across the screen in the direction your moving side is rotated (or random side if not moving). Enemies spawn according to some musical cues, AND an explosion (expanding circle from center of player) emits at other musical cues, killing enemies. Survive until the end of the song!
 
 DONE:
 
