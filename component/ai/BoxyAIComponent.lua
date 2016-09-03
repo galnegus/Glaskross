@@ -4,7 +4,7 @@ BoxyAIComponent:include(Component)
 function BoxyAIComponent:init()
   Component.init(self)
 
-  self.type = ComponentTypes.AI
+  self.type = "ai"
 
 
   self._beams = {}
@@ -67,7 +67,7 @@ function BoxyAIComponent:init()
   deathChain:add(death1)
   --deathChain:start()
 
-  --Signal.emit(Signals.ADD_ENTITY, EntityCreator.create("bouncer", Constants.TILE_SIZE * 10, Constants.TILE_SIZE * 10, 1, 0.5))
+  Signal.emit(Signals.ADD_ENTITY, EntityCreator.create("bouncer", Constants.TILE_SIZE * 10, Constants.TILE_SIZE * 10, 1, 0.5))
 
   game.timer:after(15, function() 
     Signal.emit(Signals.BOXY_NEXT_PHASE)

@@ -48,7 +48,7 @@ end
 
 function Entity:bgDraw()
   for compType, comp in pairs(self._components) do
-    if compType == ComponentTypes.BACKGROUND then
+    if compType == "background" then
       comp:bgDraw()
     end
   end

@@ -25,7 +25,7 @@ function BodyComponent:init(options)
     end
   end
 
-  self.type = ComponentTypes.BODY
+  self.type = "body"
   self._shape = options.shape
   self._shape.parent = self
   self._shape.type = options.bodyType

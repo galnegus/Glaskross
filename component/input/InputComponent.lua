@@ -2,7 +2,7 @@ InputComponent = Class{}
 InputComponent:include(Component)
 
 function InputComponent:init()
-  self.type = ComponentTypes.INPUT
+  self.type = "input"
   
   Component.init(self)
 end

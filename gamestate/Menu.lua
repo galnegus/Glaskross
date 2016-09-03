@@ -1,13 +1,11 @@
 menu = {}
 
 function menu:init()
-  local vt323 = love.graphics.newFont("assets/fonts/VT323/VT323-Regular.ttf", 60)
-
   self._menuList = MenuList()
-  self._menuList:add("START", function() Gamestate.switch(game) end)
-  self._menuList:add("HIGH SCORE", function() print("not yet") end)
-  self._menuList:add("OPTIONS", function() print("wip") end)
-  self._menuList:add("EXIT", function() love.event.quit() end)
+  self._menuList:add("start", function() Gamestate.switch(game) end)
+  self._menuList:add("highscore", function() print("not yet") end)
+  self._menuList:add("options", function() print("wip") end)
+  self._menuList:add("exit", function() love.event.quit() end)
   self._menuList:select(1)
 
   self.world = World(love.graphics.getWidth() + Constants.TILE_SIZE, love.graphics.getHeight() + Constants.TILE_SIZE, Constants.TILE_SIZE)
@@ -40,7 +38,7 @@ function menu:keypressed(key, scancode, isrepeat)
     self._menuList:down()
   elseif key == "up" then
     self._menuList:up()
-  elseif key == "return" then
+  elseif key == "return" or key == "space" then
     self._menuList:press()
   end
 end

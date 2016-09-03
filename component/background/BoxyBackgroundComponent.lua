@@ -11,7 +11,7 @@ local minVelFactor = 0.01
 function BoxyBackgroundComponent:init()
   Component.init(self)
 
-  self.type = ComponentTypes.BACKGROUND
+  self.type = "background"
 
   self._boxWidth = Constants.TILE_SIZE * 5
   self._boxHeight = Constants.TILE_SIZE * 5

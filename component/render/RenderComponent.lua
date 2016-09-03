@@ -5,7 +5,7 @@ function RenderComponent:init(colour, birthDuration, deathDuration, border)
   assert(colour and birthDuration and deathDuration and border ~= nil, "arguments missing")
   Component.init(self)
 
-  self.type = ComponentTypes.RENDER
+  self.type = "render"
 
   self._renderable = true
 

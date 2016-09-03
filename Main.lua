@@ -13,7 +13,6 @@ Constants = require "constants.constants"
 Signals = require "constants.Signals"
 EntityTypes = require "constants.EntityTypes"
 BodyTypes = require "constants.BodyTypes"
-ComponentTypes = require "constants.ComponentTypes"
 CollisionRules = require "constants.CollisionRules"
 
 require "Colour"

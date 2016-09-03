@@ -5,7 +5,7 @@ function HPComponent:init(hp, hitSignal)
   assert(hp and hitSignal, "arguments missing")
   Component.init(self)
 
-  self.type = ComponentTypes.HP
+  self.type = "hp"
 
   self._hp = hp
   self._hitSignal = hitSignal

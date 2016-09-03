@@ -4,7 +4,7 @@ ParticleDeathEffectComponent:include(Component)
 function ParticleDeathEffectComponent:init(duration)
   assert(duration, "argument 'duration' missing.")
 
-  self.type = ComponentTypes.DEATH_EFFECT
+  self.type = "death effect"
 
   --self._renderable = true
 

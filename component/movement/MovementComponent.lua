@@ -5,7 +5,7 @@ function MovementComponent:init(terminalVelocity, continuousMovement)
   assert(terminalVelocity ~= nil and continuousMovement ~= nil, "args missing")
   Component.init(self)
 
-  self.type = ComponentTypes.MOVEMENT
+  self.type = "movement"
 
   self._direction = Vector(0, 0)
   self._velocity = Vector(0, 0)

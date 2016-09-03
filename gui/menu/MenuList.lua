@@ -74,19 +74,6 @@ function MenuList:height()
 end
 
 function MenuList:draw(x, y)
-  --[[
-  local listHeight = FONT:getHeight() * self._size + OFFSET * (self._size - 1)
-  for i, menuItem in ipairs(self._menuItems) do
-    if i == self._selected then 
-      love.graphics.setColor(SELECTED_COLOUR) 
-    else 
-      love.graphics.setColor(COLOUR) 
-    end
-    
-    menuItem:draw(200, (love.graphics.getHeight() / 3 - listHeight / 3) + OFFSET * (i - 1))
-  end
-  ]]
-
   for i, menuItem in ipairs(self._menuItems) do   
     menuItem:draw(x, y + OFFSET * (i - 1))
   end

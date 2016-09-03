@@ -4,7 +4,7 @@ OptimizedTrailEffectComponent:include(Component)
 function OptimizedTrailEffectComponent:init(colour)
   Component.init(self)
 
-  self.type = ComponentTypes.TRAIL_EFFECT
+  self.type = "trail effect"
 
   self._rows = Constants.ROWS
   self._columns = Constants.COLS
