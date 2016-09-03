@@ -1,19 +1,15 @@
 MenuItem = Class{}
 
-function MenuItem:init(text, font)
+function MenuItem:init(text, callback)
+  local font = love.graphics.newFont("assets/fonts/Share/Share-Regular.ttf", 60)
+  
   self._text = text or "placeholder"
-  self._font = font or love.graphics.newFont(20)
-  self._graphic = love.graphics.newText(self._font, self._text);
-
-  self._onPress = function() end
-end
-
-function MenuItem:onPress(callback)
-  self._onPress = callback
+  self._graphic = love.graphics.newText(font, self._text);
+  self._callback = callback
 end
 
 function MenuItem:press()
-  self._onPress()
+  self._callback()
 end
 
 function MenuItem:draw(x, y)

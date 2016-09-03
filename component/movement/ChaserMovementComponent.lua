@@ -13,7 +13,7 @@ function ChaserMovementComponent:init(targetEntity, terminalVelocity)
 end
 
 function ChaserMovementComponent:conception()
-  self.owner.events.register(Signals.BOUNCE, function(dx, dy)
+  self.owner.events:register(Signals.BOUNCE, function(dx, dy)
     assert(dx and dy, "dx or dy missing")
     if dx ~= 0 then
       self._direction.x = self._direction.x * -1

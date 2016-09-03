@@ -1,5 +1,6 @@
 local EntityTypes = {}
 
+EntityTypes.GUI = "gui"
 EntityTypes.PLAYER = "player"
 EntityTypes.BULLET = "bullet"
 EntityTypes.BOXY = "boxy"

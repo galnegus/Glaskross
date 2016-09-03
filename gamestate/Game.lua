@@ -26,7 +26,7 @@ function game:update(dt)
   self.deathParticleSystem:update(dt)
   Entities.update(dt)
   self.world:update(dt)
-  self.timer.update(dt)
+  self.timer:update(dt)
 
   local heightRatio = love.graphics.getHeight() / self.world.height
   local widthRatio = love.graphics.getWidth() / self.world.width
@@ -94,10 +94,10 @@ function game:keyreleased(key)
   end
 
   if key == "escape" then
-    --Gamestate.switch(menu)
+    Gamestate.switch(menu)
     --Gamestate.switch(menu)
     --Signal.emit(Signals.BACKGROUND_COLOR, 0, 40, 40, 100)
     --Signal.emit(Signals.COLOUR_INVERT)
-    love.event.quit()
+    --love.event.quit()
   end
 end

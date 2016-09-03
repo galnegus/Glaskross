@@ -31,15 +31,15 @@ function BoxyBackgroundComponent:init()
   
   Signal.register(Signals.BOXY_NEXT_PHASE, function()
     if #self._boxes > 0 then
-      game.timer.tween(Constants.BOXY_PHASE_TRANS_TIME, self._boxes[#self._boxes], {alpha = 0}, 'in-out-sine', function()
+      game.timer:tween(Constants.BOXY_PHASE_TRANS_TIME, self._boxes[#self._boxes], {alpha = 0}, 'in-out-sine', function()
         table.remove(self._boxes)
       end)
     end
     if #self._boxes > 1 then
-      game.timer.tween(Constants.BOXY_PHASE_TRANS_TIME, self._boxes[#self._boxes - 1], {alpha = 255}, 'in-out-sine')
+      game.timer:tween(Constants.BOXY_PHASE_TRANS_TIME, self._boxes[#self._boxes - 1], {alpha = 255}, 'in-out-sine')
       for i = #self._boxes - 1, 1, -1 do
         local offset = (#self._boxes - 1 - i) * Constants.TILE_SIZE
-        game.timer.tween(Constants.BOXY_PHASE_TRANS_TIME, self._boxes[i], {xOffset = offset, yOffset = -offset}, 'in-out-sine')
+        game.timer:tween(Constants.BOXY_PHASE_TRANS_TIME, self._boxes[i], {xOffset = offset, yOffset = -offset}, 'in-out-sine')
       end
       Signal.emit(Signals.COLOUR_MIX, self._boxes[#self._boxes - 1].colour)
     end

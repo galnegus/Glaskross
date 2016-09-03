@@ -57,6 +57,8 @@ require "gamestate.Menu"
 require "gui.GameGUI"
 require "gui.HealthBar"
 require "gui.EntityListGUI"
+require "gui.menu.MenuItem"
+require "gui.menu.MenuList"
 
 function love.load()
   io.stdout:setvbuf("no")
