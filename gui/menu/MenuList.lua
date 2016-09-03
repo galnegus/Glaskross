@@ -14,7 +14,7 @@ function MenuList:init()
 
   self._entity = Entity.new(-1, EntityTypes.GUI)
   self._entity:addComponent(VelocityRotatingBodyComponent({
-    shape = HC.rectangle(Constants.TILE_SIZE * 4 + Constants.TILE_SIZE / 2, 0, Constants.TILE_SIZE, Constants.TILE_SIZE),
+    shape = menu.collider:rectangle(Constants.TILE_SIZE * 4 + Constants.TILE_SIZE / 2, 0, Constants.TILE_SIZE, Constants.TILE_SIZE),
     bodyType = BodyTypes.PLAYER,
     collisionRules = {}
   }))

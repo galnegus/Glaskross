@@ -1,6 +1,8 @@
 menu = {}
 
 function menu:init()
+  self.collider = HC.new() -- don't use HC in menu or else game objects will try to collide with this
+
   self._menuList = MenuList()
   self._menuList:add("start", function() Gamestate.switch(game) end)
   self._menuList:add("highscore", function() print("not yet") end)

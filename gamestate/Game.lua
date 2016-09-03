@@ -2,7 +2,7 @@ game = {}
 
 function game:init()
   self.camera = Camera.new()
-  self.world = World(Constants.TILE_SIZE * Constants.COLS, Constants.TILE_SIZE * Constants.ROWS, Constants.TILE_SIZE)
+  self.world = World(Constants.TILE_SIZE * Constants.COLS, Constants.TILE_SIZE * Constants.ROWS, Constants.TILE_SIZE, true)
   self.timer = Timer.new()
 
   self.deathParticleSystem = love.graphics.newParticleSystem(love.graphics.newImage("square.png"), 1000)
@@ -61,6 +61,7 @@ function game:draw()
       love.graphics.draw(self.deathParticleSystem)
     love.graphics.setColor(r, g, b, a)
   self.camera:detach()
+  self.gui:draw()
   love.graphics.setCanvas()
 
   love.graphics.setShader(shader)
