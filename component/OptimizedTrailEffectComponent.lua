@@ -45,11 +45,11 @@ function OptimizedTrailEffectComponent:update(dt)
   local pos = worldToMatrix(x, y)
   if pos ~= self._lastPosition or self._alpha[pos.x][pos.y] == 0 then
     if self._timerHandlers[pos.x][pos.y] ~= 0 then
-      game.timer:cancel(self._timerHandlers[pos.x][pos.y])
+      Timer.cancel(self._timerHandlers[pos.x][pos.y])
     end
     self._alpha[pos.x][pos.y] = 255
     self._toRender[pos.x * self._rows + pos.y] = pos
-    self._timerHandlers[pos.x][pos.y] = game.timer:during(self._duration, function()
+    self._timerHandlers[pos.x][pos.y] = Timer.during(self._duration, function()
       self._alpha[pos.x][pos.y] = self._alpha[pos.x][pos.y] - dt * 255 / self._duration
       if self._alpha[pos.x][pos.y] < 0 then
         self._alpha[pos.x][pos.y] = 0

@@ -88,7 +88,7 @@ function MovementComponent:update(dt)
 
   -- heun's method
   local movement = Vector((oldVelocity.x + self._velocity.x) * dt / 2, (oldVelocity.y + self._velocity.y) * dt / 2)
-  self.owner.events:emit(Signals.MOVE_SHAPE, movement.x, movement.y)
+  self.owner.events:emit(Signals.MOVE, movement.x, movement.y)
 
   if not self._continuousMovement then
     resetAcceleration(self)

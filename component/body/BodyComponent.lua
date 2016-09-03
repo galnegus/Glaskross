@@ -51,8 +51,11 @@ function BodyComponent:conception()
 end
 
 function BodyComponent:birth()
-  self.owner.events:register(Signals.MOVE_SHAPE, function(x, y)
+  self.owner.events:register(Signals.MOVE, function(x, y)
     self._shape:move(x, y)
+  end)
+  self.owner.events:register(Signals.MOVE_TO, function(x, y)
+    self._shape:moveTo(x, y)
   end)
   self._shape.active = true
   Component.birth(self)

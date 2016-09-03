@@ -18,8 +18,9 @@ Signals.COLOUR_MIX = "color mix"
 -- ENTITY SIGNALS
 -- MovementComponent.lua
 Signals.SET_MOVEMENT_DIRECTION = "set movement direction"
--- PhysicsComponent.lua
-Signals.MOVE_SHAPE = "move shape"
+-- BodyComponent.lua
+Signals.MOVE = "move"
+Signals.MOVE_TO = "moveTo"
 -- BoxyBackgroundComponent.lua, + others potentially
 Signals.BOXY_NEXT_PHASE = "boxy next phase"
 -- BouncerMovementComponent.lua
