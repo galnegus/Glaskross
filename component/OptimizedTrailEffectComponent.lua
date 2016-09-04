@@ -1,7 +1,7 @@
 OptimizedTrailEffectComponent = Class{}
 OptimizedTrailEffectComponent:include(Component)
 
-function OptimizedTrailEffectComponent:init(colour)
+function OptimizedTrailEffectComponent:init(color)
   Component.init(self)
 
   self.type = "trail effect"
@@ -21,7 +21,7 @@ function OptimizedTrailEffectComponent:init(colour)
   
   self._toRender = {} -- also a matrix but with the two indices composed into one ([x][y] -> [x * rows + y]) for iteration with for-in-pairs()
 
-  self._colour = colour
+  self._color = color
   self._lastCollidedWith = nil
   self._renderable = true
 
@@ -70,9 +70,9 @@ function OptimizedTrailEffectComponent:draw()
   for _, pos in pairs(self._toRender) do
     local x, y = matrixToWorld(pos)
     local x1, y1, x2, y2 = x - tileSize, y - tileSize, x + tileSize, y + tileSize
-    love.graphics.setColor(self._colour:r(), self._colour:g(), self._colour:b(), self._alpha[pos.x][pos.y] / 10)
+    love.graphics.setColor(self._color:r(), self._color:g(), self._color:b(), self._alpha[pos.x][pos.y] / 10)
     love.graphics.rectangle("fill", x1 + 1, y1 + 1, x2 - x1 - 2, y2 - y1 - 2)
-    love.graphics.setColor(self._colour:r(), self._colour:g(), self._colour:b(), self._alpha[pos.x][pos.y])
+    love.graphics.setColor(self._color:r(), self._color:g(), self._color:b(), self._alpha[pos.x][pos.y])
     love.graphics.rectangle("line", x1 + 1.5, y1 + 1.5, x2 - x1 - 2, y2 - y1 - 2)
   end
 end

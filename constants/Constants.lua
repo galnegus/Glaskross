@@ -17,7 +17,7 @@ Constants.BULLET_TIMESLICE = 1/80
 -- how often the player can shoot bullets
 Constants.BULLET_COOLDOWN = 0.2
 
--- how many seconds are spent on transitions between phases, i.e. colour transitions
+-- how many seconds are spent on transitions between phases, i.e. color transitions
 Constants.BOXY_PHASE_TRANS_TIME = 1
 
 -- birth durations

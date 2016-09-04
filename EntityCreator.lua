@@ -19,10 +19,10 @@ local function player(x, y)
 
   local entity = Entity.new(_idCounter, EntityTypes.PLAYER)
   entity:addComponent(VelocityRotatingBodyComponent(bodyOptions))
-  entity:addComponent(RenderComponent(Colours.PLAYER_RENDER, 0, Constants.DEFAULT_DEATH_DURATION, true))
+  entity:addComponent(RenderComponent(Colors.PLAYER_RENDER, 0, Constants.DEFAULT_DEATH_DURATION, true))
   entity:addComponent(MovementComponent(false, false))
   entity:addComponent(ShieldInputComponent())
-  entity:addComponent(OptimizedTrailEffectComponent(Colours.PLAYER_STEP))
+  entity:addComponent(OptimizedTrailEffectComponent(Colors.PLAYER_STEP))
   entity:addComponent(ParticleDeathEffectComponent(1))
   return entity
 end
@@ -66,9 +66,9 @@ local function bullet(x, y, targetDirX, targetDirY)
 
   local entity = Entity.new(_idCounter, EntityTypes.BULLET, true)
   entity:addComponent(RotatingBodyComponent(bodyOptions))
-  entity:addComponent(RenderComponent(Colours.BULLET_RENDER, Constants.BULLET_BIRTH_DURATION, Constants.DEFAULT_DEATH_DURATION, false))
+  entity:addComponent(RenderComponent(Colors.BULLET_RENDER, Constants.BULLET_BIRTH_DURATION, Constants.DEFAULT_DEATH_DURATION, false))
   entity:addComponent(ConstantMovementComponent(targetDirX, targetDirY, false))
-  entity:addComponent(OptimizedTrailEffectComponent(Colours.BULLET_STEP))
+  entity:addComponent(OptimizedTrailEffectComponent(Colors.BULLET_STEP))
   return entity
 end
 
@@ -134,7 +134,7 @@ local function deathWall(x, y, maxVelFactor)
   local entity = Entity.new(_idCounter, EntityTypes.DEATH_WALL, true)
   entity:addComponent(DeathWallBodyComponent(bodyOptions))
   entity:addComponent(ConstantMovementComponent(x, y, Constants.TERMINAL_VELOCITY * maxVelFactor))
-  entity:addComponent(RenderComponent(Colours.DEATH_WALL_RENDER, Constants.DEATH_WALL_BIRTH_DURATION, Constants.DEFAULT_DEATH_DURATION, true))
+  entity:addComponent(RenderComponent(Colors.DEATH_WALL_RENDER, Constants.DEATH_WALL_BIRTH_DURATION, Constants.DEFAULT_DEATH_DURATION, true))
   entity:addComponent(ParticleDeathEffectComponent(1))
   return entity
 end
@@ -162,7 +162,7 @@ local function bouncer(x, y, targetDirX, targetDirY)
   entity:addComponent(BouncerMovementComponent(targetDirX, targetDirY, Constants.TERMINAL_VELOCITY / 3, 10))
   entity:addComponent(BouncerBodyComponent(bodyOptions))
   entity:addComponent(HPComponent(Constants.BOUNCER_HP, Signals.BOUNCER_HIT))
-  entity:addComponent(RenderComponent(Colours.BOUNCER_RENDER, Constants.BOUNCER_BIRTH_DURATION, Constants.DEFAULT_DEATH_DURATION, true))
+  entity:addComponent(RenderComponent(Colors.BOUNCER_RENDER, Constants.BOUNCER_BIRTH_DURATION, Constants.DEFAULT_DEATH_DURATION, true))
   entity:addComponent(ParticleDeathEffectComponent(1))
   return entity
 end
@@ -188,7 +188,7 @@ local function shield(masterEntity)
 
   local entity = Entity.new(_idCounter, EntityTypes.SHIELD, true)
   entity:addComponent(ShieldBodyComponent(bodyOptions))
-  entity:addComponent(ShieldRenderComponent(Colours.SHIELD_RENDER, 0.5, 0.5, Constants.TILE_SIZE))
+  entity:addComponent(ShieldRenderComponent(Colors.SHIELD_RENDER, 0.5, 0.5, Constants.TILE_SIZE))
 
   return entity
 end
@@ -235,7 +235,7 @@ local function bouncerSword(masterEntity)
 
   local entity = Entity.new(_idCounter, EntityTypes.BOUNCER_SWORD, false)
   entity:addComponent(BouncerSwordBodyComponent(bodyOptions))
-  entity:addComponent(RenderComponent(Colours.BOUNCER_SWORD_RENDER, 0.5, 0.5, true))
+  entity:addComponent(RenderComponent(Colors.BOUNCER_SWORD_RENDER, 0.5, 0.5, true))
 
   return entity
 end

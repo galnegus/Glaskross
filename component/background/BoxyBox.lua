@@ -1,12 +1,12 @@
 BoxyBox = Class{}
 
-function BoxyBox:init(xOffset, yOffset, colour, xHover, yHover)
+function BoxyBox:init(xOffset, yOffset, color, xHover, yHover)
   self.xOffset = xOffset
   self.yOffset = yOffset
 
   -- color of box
-  self.colour = colour
-  self.alpha = colour:alpha()
+  self.color = color
+  self.alpha = color:alpha()
 
   -- variation in position (hovering effect)
   self.xHover = xHover or 0

@@ -14,9 +14,9 @@ end
 
 function Tile:draw()
   love.graphics.setColor(
-    Colours.BG_COLOUR:r() + love.math.random(Colours.BG_COLOUR_RAND:r()), 
-    Colours.BG_COLOUR:g() + love.math.random(Colours.BG_COLOUR_RAND:g()), 
-    Colours.BG_COLOUR:b() + love.math.random(Colours.BG_COLOUR_RAND:b()), 
-    Colours.BG_COLOUR:alpha())
+    Colors.BG_COLOR:r() + love.math.random(Colors.BG_COLOR_RAND:r()), 
+    Colors.BG_COLOR:g() + love.math.random(Colors.BG_COLOR_RAND:g()), 
+    Colors.BG_COLOR:b() + love.math.random(Colors.BG_COLOR_RAND:b()), 
+    Colors.BG_COLOR:alpha())
   love.graphics.rectangle("fill", self._x, self._y, self._width, self._height)
 end

@@ -98,7 +98,7 @@ function game:keyreleased(key)
     Gamestate.switch(menu)
     --Gamestate.switch(menu)
     --Signal.emit(Signals.BACKGROUND_COLOR, 0, 40, 40, 100)
-    --Signal.emit(Signals.COLOUR_INVERT)
+    --Signal.emit(Signals.COLOR_INVERT)
     --love.event.quit()
   end
 end

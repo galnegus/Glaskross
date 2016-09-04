@@ -2,8 +2,8 @@ MenuList = Class{}
 
 local OFFSET = 96
 
-local COLOUR = {255, 255, 255, 200}
-local SELECTED_COLOUR = {200, 150, 255, 200}
+local COLOR = {255, 255, 255, 200}
+local SELECTED_COLOR = {200, 150, 255, 200}
 
 local FONT = love.graphics.newFont("assets/fonts/Share/Share-Regular.ttf", 60)
 
@@ -18,9 +18,9 @@ function MenuList:init()
     bodyType = BodyTypes.PLAYER,
     collisionRules = {}
   }))
-  self._entity:addComponent(RenderComponent(Colours.PLAYER_RENDER, 0, Constants.DEFAULT_DEATH_DURATION, true))
+  self._entity:addComponent(RenderComponent(Colors.PLAYER_RENDER, 0, Constants.DEFAULT_DEATH_DURATION, true))
   self._entity:addComponent(TargettedMovementComponent(false, false))
-  self._entity:addComponent(OptimizedTrailEffectComponent(Colours.PLAYER_STEP))
+  self._entity:addComponent(OptimizedTrailEffectComponent(Colors.PLAYER_STEP))
   self._entity:conception()
 end
 
@@ -39,9 +39,9 @@ function MenuList:_cyclicalPos(n)
 end
 
 function MenuList:select(n)
-  self._menuItems[self._selected]:setColour(COLOUR, true)
+  self._menuItems[self._selected]:setColor(COLOR, true)
   self._selected = n
-  self._menuItems[self._selected]:setColour(SELECTED_COLOUR, true)
+  self._menuItems[self._selected]:setColor(SELECTED_COLOR, true)
   self._entity.movement:moveTo(Constants.TILE_SIZE * 4 + Constants.TILE_SIZE / 2, self:yPosition() + (n - 1) * OFFSET + FONT:getHeight() / 2)
 end
 

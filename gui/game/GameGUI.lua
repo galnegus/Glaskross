@@ -3,7 +3,7 @@ GameGUI = Class{}
 function GameGUI:init()
   self._elements = {}
 
-  self:addElement(HealthBar())
+  --self:addElement(HealthBar())
   self:addElement(EntityListGUI())
 end
 

@@ -11,9 +11,9 @@ Signals.REMOVE_ENTITY = "remove entity"
 Signals.BACKGROUND_COLOR = "background color"
 -- World.lua
 Signals.AREA_BEAM = "area beam"
--- Colour.lua
-Signals.COLOUR_INVERT = "color invert"
-Signals.COLOUR_MIX = "color mix"
+-- Color.lua
+Signals.COLOR_INVERT = "color invert"
+Signals.COLOR_MIX = "color mix"
 
 -- ENTITY SIGNALS
 -- MovementComponent.lua

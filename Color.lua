@@ -1,4 +1,4 @@
-Colour = Class{}
+Color = Class{}
 
 local function colorFunc(self, r, g, b, duration)
   duration = duration or Constants.BOXY_PHASE_TRANS_TIME
@@ -17,16 +17,16 @@ local function invert(self, duration)
   colorFunc(self, r, g, b, duration)
 end
 
-local function mix(self, colour, duration)
-  colour = colour or self._init
-  local r, g, b = (self._init.r + colour:r()) / 2, (self._init.g + colour:g()) / 2, (self._init.b + colour:b()) / 2
+local function mix(self, color, duration)
+  color = color or self._init
+  local r, g, b = (self._init.r + color:r()) / 2, (self._init.g + color:g()) / 2, (self._init.b + color:b()) / 2
   colorFunc(self, r, g, b, duration)
 end
 
-function Colour:init(r, g, b, alpha, static)
+function Color:init(r, g, b, alpha, static)
   assert(r and g and b and alpha, "arguments missing")
 
-  -- save the initial colour, this is necessary for modifying colours
+  -- save the initial color, this is necessary for modifying colors
   self._init = {
     r = r,
     g = g,
@@ -42,29 +42,29 @@ function Colour:init(r, g, b, alpha, static)
   self._alpha = alpha
 
   if not static then
-    if Colours.state == Signals.COLOUR_INVERT then
+    if Colors.state == Signals.COLOR_INVERT then
       invert(self, 0)
-    elseif Colours.state == Signals.COLOUR_MIX then
-      mix(self, Colours.stateColour, 0)
+    elseif Colors.state == Signals.COLOR_MIX then
+      mix(self, Colors.stateColor, 0)
     end
 
-    Signal.register(Signals.COLOUR_INVERT, function(duration)
+    Signal.register(Signals.COLOR_INVERT, function(duration)
       invert(self, duration)
     end)
-    Signal.register(Signals.COLOUR_MIX, function(colour, duration)
-      mix(self, colour, duration)
+    Signal.register(Signals.COLOR_MIX, function(color, duration)
+      mix(self, color, duration)
     end)
   end
 end
 
-function Colour:r() return self._r end
-function Colour:g() return self._g end
-function Colour:b() return self._b end
+function Color:r() return self._r end
+function Color:g() return self._g end
+function Color:b() return self._b end
 
-function Colour:alpha()
+function Color:alpha()
   return self._alpha
 end
 
-function Colour:unpack()
+function Color:unpack()
   return self.r, self.g, self.b
 end

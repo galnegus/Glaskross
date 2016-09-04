@@ -28,7 +28,7 @@ function ParticleDeathEffectComponent:death()
 
   local x1, y1, x2, y2 = self.owner.body:bbox()
   local xSpread, ySpread = (x2 - x1) / 2, (y2 - y1) / 2
-  local r, g, b, a = self.owner.render:colour()
+  local r, g, b, a = self.owner.render:color()
 
   self._deathParticleSystem:setAreaSpread("uniform", xSpread, ySpread)
   self._deathParticleSystem:setParticleLifetime(self._duration)

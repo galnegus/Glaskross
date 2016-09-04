@@ -1,16 +1,16 @@
 RenderComponent = Class{}
 RenderComponent:include(Component)
 
-function RenderComponent:init(colour, birthDuration, deathDuration, border)
-  assert(colour and birthDuration and deathDuration and border ~= nil, "arguments missing")
+function RenderComponent:init(color, birthDuration, deathDuration, border)
+  assert(color and birthDuration and deathDuration and border ~= nil, "arguments missing")
   Component.init(self)
 
   self.type = "render"
 
   self._renderable = true
 
-  self._colour = colour or Colours.DEFAULT_RENDER
-  self._alpha = self._colour:alpha()
+  self._color = color or Colors.DEFAULT_RENDER
+  self._alpha = self._color:alpha()
 
   self._border = border
   self._birthDuration = birthDuration
@@ -27,8 +27,8 @@ function RenderComponent:setOwner(owner)
   end
 end
 
-function RenderComponent:colour()
-  return self._colour:r(), self._colour:g(), self._colour:b(), self._alpha
+function RenderComponent:color()
+  return self._color:r(), self._color:g(), self._color:b(), self._alpha
 end
 
 function RenderComponent:conception()
@@ -56,11 +56,11 @@ function RenderComponent:draw()
     alpha = alpha / 10
   end
 
-  love.graphics.setColor(self._colour:r(), self._colour:g(), self._colour:b(), alpha)
+  love.graphics.setColor(self._color:r(), self._color:g(), self._color:b(), alpha)
   self.owner.body:draw("fill")
 
   if self._border then
-    love.graphics.setColor(self._colour:r(), self._colour:g(), self._colour:b(), self._alpha)
+    love.graphics.setColor(self._color:r(), self._color:g(), self._color:b(), self._alpha)
     self.owner.body:draw("line")
   end
 end
