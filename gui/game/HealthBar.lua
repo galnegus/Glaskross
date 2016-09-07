@@ -1,4 +1,6 @@
-HealthBar = Class {}
+local Class = require "lib.hump.Class"
+
+local HealthBar = Class {}
 
 function HealthBar:init()
   self.gui_id = "healthbar"
@@ -28,3 +30,5 @@ function HealthBar:draw()
   love.graphics.setColor(200, green, blue, 255)
   love.graphics.rectangle("fill", self._x, self._y, width, self._height)
 end
+
+return HealthBar

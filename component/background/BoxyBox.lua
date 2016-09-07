@@ -1,4 +1,6 @@
-BoxyBox = Class{}
+local Class = require "lib.hump.Class"
+
+local BoxyBox = Class{}
 
 function BoxyBox:init(xOffset, yOffset, color, xHover, yHover)
   self.xOffset = xOffset
@@ -16,3 +18,5 @@ function BoxyBox:init(xOffset, yOffset, color, xHover, yHover)
   self.xHoverDir = -1
   self.yHoverDir = 1
 end
+
+return BoxyBox

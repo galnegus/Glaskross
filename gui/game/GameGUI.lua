@@ -1,4 +1,7 @@
-GameGUI = Class{}
+local Class = require "lib.hump.Class"
+local EntityListGUI = require "gui.game.EntityListGUI"
+
+local GameGUI = Class{}
 
 function GameGUI:init()
   self._elements = {}
@@ -28,3 +31,5 @@ function GameGUI:draw()
   love.graphics.setColor(255, 255, 255, 255)
   love.graphics.print("Current FPS: " .. tostring(love.timer.getFPS( )), 10, love.graphics.getHeight() - 20)
 end
+
+return GameGUI

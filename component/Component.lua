@@ -1,4 +1,6 @@
-Component = Class{}
+local Class = require "lib.hump.Class"
+
+local Component = Class{}
 
 function Component:init()
   -- set to true when the component is ready to be "alive", e.g. render component is done fading in
@@ -49,3 +51,5 @@ function Component:death()
   self._alive = false
   self.owner:burialAttempt()
 end
+
+return Component

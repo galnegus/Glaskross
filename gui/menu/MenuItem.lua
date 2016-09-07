@@ -1,4 +1,6 @@
-MenuItem = Class{}
+local Class = require "lib.hump.Class"
+
+local MenuItem = Class{}
 
 function MenuItem:init(text, font, callback)
   self._text = text or "placeholder"
@@ -27,3 +29,5 @@ function MenuItem:draw(x, y)
   love.graphics.setColor(self._color)
   love.graphics.draw(self._graphic, x, y)
 end
+
+return MenuItem

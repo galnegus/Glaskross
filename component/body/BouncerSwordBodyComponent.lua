@@ -1,4 +1,7 @@
-BouncerSwordBodyComponent = Class{}
+local Class = require "lib.hump.Class"
+local RotatingBodyComponent = require "component.body.RotatingBodyComponent"
+
+local BouncerSwordBodyComponent = Class{}
 BouncerSwordBodyComponent:include(RotatingBodyComponent)
 
 function BouncerSwordBodyComponent:init(options)
@@ -14,3 +17,5 @@ function BouncerSwordBodyComponent:update(dt)
 
   RotatingBodyComponent.update(self, dt)
 end
+
+return BouncerSwordBodyComponent

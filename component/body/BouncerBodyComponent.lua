@@ -1,4 +1,9 @@
-BouncerBodyComponent = Class{}
+local Class = require "lib.hump.Class"
+local VelocityRotatingBodyComponent = require "component.body.VelocityRotatingBodyComponent"
+local EntityTypes = require "constants.EntityTypes"
+local Signals = require "constants.Signals"
+
+local BouncerBodyComponent = Class{}
 BouncerBodyComponent:include(VelocityRotatingBodyComponent)
 
 function BouncerBodyComponent:init(options)
@@ -18,3 +23,5 @@ function BouncerBodyComponent:death()
 
   VelocityRotatingBodyComponent.death(self)
 end
+
+return BouncerBodyComponent

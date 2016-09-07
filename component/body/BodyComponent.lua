@@ -1,4 +1,9 @@
-BodyComponent = Class{}
+local Class = require "lib.hump.Class"
+local Component = require "component.Component"
+local BodyTypes = require "constants.BodyTypes"
+local Signals = require "constants.Signals"
+
+local BodyComponent = Class{}
 BodyComponent:include(Component)
 
 function BodyComponent:init(options)
@@ -82,3 +87,5 @@ function BodyComponent:draw(mode)
   mode = mode or "fill"
   self._shape:draw(mode)
 end
+
+return BodyComponent

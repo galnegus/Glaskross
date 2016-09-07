@@ -1,10 +1,16 @@
-ChaserMovementComponent = Class{}
+local Class = require "lib.hump.Class"
+local MovementComponent = require "component.movement.MovementComponent"
+local Signals = require "constants.Signals"
+local EntityTypes = require "constants.EntityTypes"
+
+local ChaserMovementComponent = Class{}
 ChaserMovementComponent:include(MovementComponent)
 
 function ChaserMovementComponent:init(targetEntity, terminalVelocity)
   assert(targetEntity, "arguments missing")
   MovementComponent.init(self, terminalVelocity, true)
 
+  local targetDirX, targetDirY = targetEntity.body:center()
   self._targetDirX, self._targetDirY = targetDirX, targetDirY
   self._velocity.x = self._targetDirX * self._bouncerVelocity
   self._velocity.y = self._targetDirY * self._bouncerVelocity
@@ -43,3 +49,5 @@ function ChaserMovementComponent:conception()
   
   MovementComponent.conception(self)
 end
+
+return ChaserMovementComponent

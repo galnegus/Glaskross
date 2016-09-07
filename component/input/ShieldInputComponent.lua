@@ -1,4 +1,11 @@
-ShieldInputComponent = Class{}
+local Class = require "lib.hump.Class"
+local Component = require "component.Component"
+local InputComponent = require "component.input.InputComponent"
+local EntityTypes = require "constants.EntityTypes"
+local Signals = require "constants.Signals"
+local Constants = require "constants.Constants"
+
+local ShieldInputComponent = Class{}
 ShieldInputComponent:include(InputComponent)
 
 function ShieldInputComponent:init()
@@ -68,3 +75,5 @@ function ShieldInputComponent:update(dt)
 
   InputComponent.update(self, dt)
 end
+
+return ShieldInputComponent

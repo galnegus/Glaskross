@@ -1,4 +1,8 @@
-VelocityRotatingBodyComponent = Class{}
+local Class = require "lib.hump.Class"
+local BodyComponent = require "component.body.BodyComponent"
+local Helpers = require "Helpers"
+
+local VelocityRotatingBodyComponent = Class{}
 VelocityRotatingBodyComponent:include(BodyComponent)
 
 function VelocityRotatingBodyComponent:init(options, rotationSpeed)
@@ -49,3 +53,5 @@ function VelocityRotatingBodyComponent:update(dt)
 
   BodyComponent.update(self, dt)
 end
+
+return VelocityRotatingBodyComponent

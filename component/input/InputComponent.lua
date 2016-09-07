@@ -1,4 +1,8 @@
-InputComponent = Class{}
+local Class = require "lib.hump.Class"
+local Component = require "component.Component"
+local Signals = require "constants.Signals"
+
+local InputComponent = Class{}
 InputComponent:include(Component)
 
 function InputComponent:init()
@@ -7,7 +11,7 @@ function InputComponent:init()
   Component.init(self)
 end
 
-function InputComponent:update(dt)
+function InputComponent:update()
   if love.keyboard.isDown("w") then
     self.owner.events:emit(Signals.SET_MOVEMENT_DIRECTION, "up")
   end
@@ -21,3 +25,5 @@ function InputComponent:update(dt)
     self.owner.events:emit(Signals.SET_MOVEMENT_DIRECTION, "right")
   end
 end
+
+return InputComponent

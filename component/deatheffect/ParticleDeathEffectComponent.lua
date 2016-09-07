@@ -1,4 +1,7 @@
-ParticleDeathEffectComponent = Class{}
+local Class = require "lib.hump.Class"
+local Component = require "component.Component"
+
+local ParticleDeathEffectComponent = Class{}
 ParticleDeathEffectComponent:include(Component)
 
 function ParticleDeathEffectComponent:init(duration)
@@ -28,7 +31,7 @@ function ParticleDeathEffectComponent:death()
 
   local x1, y1, x2, y2 = self.owner.body:bbox()
   local xSpread, ySpread = (x2 - x1) / 2, (y2 - y1) / 2
-  local r, g, b, a = self.owner.render:color()
+  local r, g, b = self.owner.render:color()
 
   self._deathParticleSystem:setAreaSpread("uniform", xSpread, ySpread)
   self._deathParticleSystem:setParticleLifetime(self._duration)
@@ -39,3 +42,5 @@ function ParticleDeathEffectComponent:death()
   
   game.timer:after(self._duration, function() Component.death(self) end)
 end
+
+return ParticleDeathEffectComponent

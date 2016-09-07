@@ -1,4 +1,6 @@
-Pattern = Class{}
+local Class = require "lib.hump.Class"
+
+local Pattern = Class{}
 
 function Pattern:init()
   self._data = {}
@@ -55,3 +57,5 @@ function Pattern:start(callback)
     game.timer:after(beam.delay, function() self:_nextBeam(callback) end)
   end
 end
+
+return Pattern

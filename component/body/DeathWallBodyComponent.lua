@@ -1,4 +1,8 @@
-DeathWallBodyComponent = Class{}
+local Class = require "lib.hump.Class"
+local BodyComponent = require "component.body.BodyComponent"
+local Signals = require "constants.Signals"
+
+local DeathWallBodyComponent = Class{}
 DeathWallBodyComponent:include(BodyComponent)
 
 function DeathWallBodyComponent:init(options)
@@ -15,3 +19,5 @@ function DeathWallBodyComponent:update(dt)
 
   BodyComponent.update(self, dt)
 end
+
+return DeathWallBodyComponent

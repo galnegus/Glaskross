@@ -1,4 +1,7 @@
-ConstantMovementComponent = Class{}
+local Class = require "lib.hump.Class"
+local MovementComponent = require "component.movement.MovementComponent"
+
+local ConstantMovementComponent = Class{}
 ConstantMovementComponent:include(MovementComponent)
 
 function ConstantMovementComponent:init(targetDirX, targetDirY, terminalVelocity)
@@ -12,3 +15,5 @@ function ConstantMovementComponent:init(targetDirX, targetDirY, terminalVelocity
   self._direction.x = self._targetDirX
   self._direction.y = self._targetDirY
 end
+
+return ConstantMovementComponent

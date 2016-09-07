@@ -1,4 +1,11 @@
-BouncerMovementComponent = Class{}
+local Class = require "lib.hump.Class"
+local MovementComponent = require "component.movement.MovementComponent"
+local Constants = require "constants.Constants"
+local EntityTypes = require "constants.EntityTypes"
+local Signals = require "constants.Signals"
+local Helpers = require "Helpers"
+
+local BouncerMovementComponent = Class{}
 BouncerMovementComponent:include(MovementComponent)
 
 function BouncerMovementComponent:init(targetDirX, targetDirY, initialVelocity, steps, splittingVelocity)
@@ -72,3 +79,5 @@ function BouncerMovementComponent:update(dt)
 
   MovementComponent.update(self, dt)
 end
+
+return BouncerMovementComponent

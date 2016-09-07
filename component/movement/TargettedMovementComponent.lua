@@ -1,4 +1,9 @@
-TargettedMovementComponent = Class{}
+local Class = require "lib.hump.Class"
+local Vector = require "lib.hump.Vector"
+local MovementComponent = require "component.movement.MovementComponent"
+local Signals = require "constants.Signals"
+
+local TargettedMovementComponent = Class{}
 TargettedMovementComponent:include(MovementComponent)
 
 function TargettedMovementComponent:init(terminalVelocity)
@@ -38,3 +43,5 @@ function TargettedMovementComponent:update(dt)
 
   --MovementComponent.update(self, dt)
 end
+
+return TargettedMovementComponent

@@ -1,4 +1,11 @@
-BoxyBackgroundComponent = Class{}
+local Class = require "lib.hump.Class"
+local Component = require "component.Component"
+local Constants = require "constants.Constants"
+local Colors = require "constants.Colors"
+local Signals = require "constants.Signals"
+local BoxyBox = require "component.background.BoxyBox"
+
+local BoxyBackgroundComponent = Class{}
 BoxyBackgroundComponent:include(Component)
 
 local hoverLimit = Constants.TILE_SIZE / 2
@@ -82,7 +89,7 @@ function BoxyBackgroundComponent:update(dt)
 end
 
 function BoxyBackgroundComponent:bgDraw()
-  for i, box in ipairs(self._boxes) do
+  for _, box in ipairs(self._boxes) do
     local x = self._x + box.xOffset + box.xHover
     local y = self._y + box.yOffset + box.yHover
     love.graphics.setColor(box.color:r(), box.color:g(), box.color:b(), box.alpha / 10)
@@ -91,3 +98,5 @@ function BoxyBackgroundComponent:bgDraw()
     love.graphics.rectangle("line", x + 0.5, y + 0.5, self._boxWidth, self._boxHeight)
   end
 end
+
+return BoxyBackgroundComponent

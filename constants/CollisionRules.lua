@@ -1,4 +1,6 @@
-CollisionRules = {}
+local Signals = require "constants.Signals"
+
+local CollisionRules = {}
 
 -- CollisionRules (when sent to BodyComponent they are tables where the key is the body type, and the value is a list of rules from the functions below)
 

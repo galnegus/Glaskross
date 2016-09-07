@@ -1,4 +1,14 @@
-BoxyAIComponent = Class{}
+local Class = require "lib.hump.Class"
+
+local Component = require "component.Component"
+local BoxyBeamPattern = require "component.ai.BoxyBeamPattern"
+local PatternChainer = require "component.ai.PatternChainer"
+local DeathWallPattern = require "component.ai.DeathWallPattern"
+
+local Signals = require "constants.Signals"
+local Constants = require "constants.Constants"
+
+local BoxyAIComponent = Class{}
 BoxyAIComponent:include(Component)
 
 function BoxyAIComponent:init()
@@ -6,33 +16,31 @@ function BoxyAIComponent:init()
 
   self.type = "ai"
 
-
   self._beams = {}
   -- first beam needs to have 2 sec delay
 
-  s_x1y1r = BoxyBeamPattern()
+  local s_x1y1r = BoxyBeamPattern()
   s_x1y1r:add(1, 1, 2)
   s_x1y1r:add(2, 1, 0.5)
   s_x1y1r:add(3, 1, 0.5)
   s_x1y1r:add(4, 1, 0.5)
   s_x1y1r:add(5, 1, 0.5)
 
-  x5y3l = BoxyBeamPattern()
+  local x5y3l = BoxyBeamPattern()
   x5y3l:add(5, 3, 1)
   x5y3l:add(4, 3, 0.5)
   x5y3l:add(3, 3, 0.5)
   x5y3l:add(2, 3, 0.5)
   x5y3l:add(1, 3, 0.5)
 
-  x1y2r = BoxyBeamPattern()
+  local x1y2r = BoxyBeamPattern()
   x1y2r:add(1, 2, 1)
   x1y2r:add(2, 2, 0.5)
   x1y2r:add(3, 2, 0.5)
   x1y2r:add(4, 2, 0.5)
   x1y2r:add(5, 2, 0.5)
 
-  chain = PatternChainer()
-
+  local chain = PatternChainer()
   chain:add(s_x1y1r)
   chain:add(x5y3l)
   chain:add(x1y2r)
@@ -42,7 +50,7 @@ function BoxyAIComponent:init()
 
   --chain:start()
 
-  death1 = DeathWallPattern()
+  local death1 = DeathWallPattern()
   death1:add(1, 0, 0.5, 0.1)
   death1:add(0, 1, 0.5, 0.1)
   death1:add(-1, 0, 0.5, 0.1)
@@ -60,7 +68,7 @@ function BoxyAIComponent:init()
   death1:add(-1, 0, 0.5, 0.1)
   death1:add(0, -1, 0.5, 0.1)
 
-  deathChain = PatternChainer()
+  local deathChain = PatternChainer()
   deathChain:add(death1)
   deathChain:add(death1)
   deathChain:add(death1)
@@ -84,3 +92,5 @@ function BoxyAIComponent:init()
 
   --beamPattern:start(function() beamPattern:start() end)
 end
+
+return BoxyAIComponent

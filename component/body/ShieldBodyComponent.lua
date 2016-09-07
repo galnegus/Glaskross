@@ -1,4 +1,9 @@
-ShieldBodyComponent = Class{}
+local Class = require "lib.hump.Class"
+local BodyComponent = require "component.body.BodyComponent"
+local Signals = require "constants.Signals"
+local Constants = require "constants.Constants"
+
+local ShieldBodyComponent = Class{}
 ShieldBodyComponent:include(BodyComponent)
 
 function ShieldBodyComponent:init(options)
@@ -83,3 +88,5 @@ function ShieldBodyComponent:update(dt)
 
   BodyComponent.update(self, dt)
 end
+
+return ShieldBodyComponent

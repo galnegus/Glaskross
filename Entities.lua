@@ -1,7 +1,9 @@
+local Signals = require "constants.Signals"
+local Constants = require "constants.Constants"
+
 Entities = {}
 
 local _entityArray = {}
-local _bulletArray = {}
 local _toRemove = {}
 
 Signal.register(Signals.ADD_ENTITY, function(entity)

@@ -1,4 +1,6 @@
-PatternChainer = Class{}
+local Class = require "lib.hump.Class"
+
+local PatternChainer = Class{}
 
 function PatternChainer:init()
   self._patterns = {}
@@ -17,3 +19,5 @@ function PatternChainer:start()
     end
   end)
 end
+
+return PatternChainer

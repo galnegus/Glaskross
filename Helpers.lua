@@ -1,4 +1,4 @@
-Helpers = {}
+local Helpers = {}
 
 -- needed to deal with situations when going crossing the 2 * pi rad mark,
 -- i.e. when numeric difference between current rotation and target rotation is greater than pi, 
@@ -13,3 +13,5 @@ function Helpers.distanceToTargetRotation(currentRotation, targetRotation)
   end
   return targetRotation - currentRotation
 end
+
+return Helpers

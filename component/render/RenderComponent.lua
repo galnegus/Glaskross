@@ -1,4 +1,8 @@
-RenderComponent = Class{}
+local Class = require "lib.hump.Class"
+local Component = require "component.Component"
+local Colors = require "constants.Colors"
+
+local RenderComponent = Class{}
 RenderComponent:include(Component)
 
 function RenderComponent:init(color, birthDuration, deathDuration, border)
@@ -64,3 +68,5 @@ function RenderComponent:draw()
     self.owner.body:draw("line")
   end
 end
+
+return RenderComponent

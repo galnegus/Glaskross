@@ -1,4 +1,6 @@
-EntityListGUI = Class{}
+local Class = require "lib.hump.Class"
+
+local EntityListGUI = Class{}
 
 function EntityListGUI:init(entities)
   self.gui_id = "entity_list"
@@ -22,3 +24,5 @@ function EntityListGUI:draw()
     i = i + 1
   end
 end
+
+return EntityListGUI

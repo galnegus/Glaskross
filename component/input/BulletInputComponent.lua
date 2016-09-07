@@ -1,4 +1,10 @@
-BulletInputComponent = Class{}
+local Class = require "lib.hump.Class"
+local InputComponent = require "component.input.InputComponent"
+local Signals = require "constants.Signals"
+local EntityTypes = require "constants.EntityTypes"
+local Constants = require "constants.Constants"
+
+local BulletInputComponent = Class{}
 BulletInputComponent:include(InputComponent)
 
 function BulletInputComponent:init()
@@ -57,3 +63,5 @@ function BulletInputComponent:_bulletCooldown()
     game.timer:after(Constants.BULLET_COOLDOWN, function() self._bullet = true end)
   end
 end
+
+return BulletInputComponent

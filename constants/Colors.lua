@@ -1,4 +1,7 @@
-Colors = {}
+local Color = require "Color"
+local Signals = require "constants.Signals"
+
+local Colors = {}
 
 -- tile steps
 Colors.DEFAULT_STEP = Color(255, 255, 255, 0) --255

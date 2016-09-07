@@ -1,4 +1,8 @@
-BoxyBeamPattern = Class{}
+local Class = require "lib.hump.Class"
+local Pattern = require "component.ai.Pattern"
+local Signals = require "constants.Signals"
+
+local BoxyBeamPattern = Class{}
 BoxyBeamPattern:include(Pattern)
 
 function BoxyBeamPattern:init()
@@ -14,3 +18,5 @@ end
 function BoxyBeamPattern:boom(entry)
   Signal.emit(Signals.AREA_BEAM, entry.x, entry.y, entry.duration)
 end
+
+return BoxyBeamPattern

@@ -1,4 +1,10 @@
-MovementComponent = Class{}
+local Class = require "lib.hump.Class"
+local Component = require "component.Component"
+local Vector = require "lib.hump.Vector"
+local Constants = require "constants.Constants"
+local Signals = require "constants.Signals"
+
+local MovementComponent = Class{}
 MovementComponent:include(Component)
 
 function MovementComponent:init(terminalVelocity, continuousMovement)
@@ -66,11 +72,11 @@ local function resetAcceleration(self)
 end
 
 local function newVelocity(oldVelocity, acceleration, friction, dt)
-  local newVelocity = (oldVelocity / friction ^ dt)
+  local velocity = (oldVelocity / friction ^ dt)
   if friction == 1 then
-    return newVelocity + acceleration * dt
+    return velocity + acceleration * dt
   else
-    return newVelocity + acceleration * ((1 / friction ^ dt - 1) / ((1 / friction) - 1))
+    return velocity + acceleration * ((1 / friction ^ dt - 1) / ((1 / friction) - 1))
   end
 end
 
@@ -94,3 +100,5 @@ function MovementComponent:update(dt)
     resetAcceleration(self)
   end
 end
+
+return MovementComponent

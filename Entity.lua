@@ -1,4 +1,6 @@
-Entity = {}
+local Signals = require "constants.Signals"
+
+local Entity = {}
 Entity.__index = Entity
 
 function Entity.new(id, type, bullet)
@@ -55,7 +57,7 @@ function Entity:bgDraw()
 end
 
 function Entity:draw()
-  for compType, comp in pairs(self._components) do
+  for _, comp in pairs(self._components) do
     if comp:renderable() then
       comp:draw()
     end
@@ -109,3 +111,5 @@ end
 function Entity:isAlive()
   return self._isAlive
 end
+
+return Entity

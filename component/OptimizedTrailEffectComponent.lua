@@ -1,4 +1,9 @@
-OptimizedTrailEffectComponent = Class{}
+local Class = require "lib.hump.Class"
+local Vector = require "lib.hump.Vector"
+local Component = require "component.Component"
+local Constants = require "constants.Constants"
+
+local OptimizedTrailEffectComponent = Class{}
 OptimizedTrailEffectComponent:include(Component)
 
 function OptimizedTrailEffectComponent:init(color)
@@ -76,3 +81,5 @@ function OptimizedTrailEffectComponent:draw()
     love.graphics.rectangle("line", x1 + 1.5, y1 + 1.5, x2 - x1 - 2, y2 - y1 - 2)
   end
 end
+
+return OptimizedTrailEffectComponent

@@ -1,4 +1,11 @@
-World = Class{}
+local Class = require "lib.hump.Class"
+local Vector = require "lib.hump.Vector"
+local BodyTypes = require "constants.BodyTypes"
+local Signals = require "constants.Signals"
+local Constants = require "constants.Constants"
+local Tile = require "Tile"
+
+local World = Class{}
 
 function World:init(width, height, tileSize, doWalls)
   self.width = width
@@ -35,8 +42,8 @@ function World:init(width, height, tileSize, doWalls)
   end
 
   Signal.register(Signals.AREA_BEAM, function(x, y, duration)
-    tiles = self:getFloorSection(x, y)
-    for _, tile in pairs(tiles) do
+    local tiles = self:getFloorSection(x, y)
+    for _, _ in pairs(tiles) do
       error("AREA BEAM ARE CANCELLED ASSHOLE, maybe bring them back later?")
     end
   end)
@@ -103,3 +110,5 @@ function World:draw()
   end
   
 end
+
+return World

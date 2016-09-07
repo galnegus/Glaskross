@@ -1,4 +1,8 @@
-HPComponent = Class{}
+local Class = require "lib.hump.Class"
+local Component = require "component.Component"
+local Signals = require "constants.Signals"
+
+local HPComponent = Class{}
 HPComponent:include(Component)
 
 function HPComponent:init(hp, hitSignal)
@@ -21,3 +25,5 @@ function HPComponent:conception()
   
   Component.conception(self)
 end
+
+return HPComponent

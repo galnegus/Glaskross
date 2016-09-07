@@ -1,4 +1,9 @@
-ShieldRenderComponent = Class{}
+local Class = require "lib.hump.Class"
+local RenderComponent = require "component.render.RenderComponent"
+local Signals = require "constants.Signals"
+local Constants = require "constants.Constants"
+
+local ShieldRenderComponent = Class{}
 ShieldRenderComponent:include(RenderComponent)
 
 function ShieldRenderComponent:init(color, birthDuration, deathDuration, radius)
@@ -47,7 +52,7 @@ function ShieldRenderComponent:draw()
       love.graphics.translate(x, y)
       love.graphics.rotate(self.owner.body:getVelRotation())
 
-      local x, y = 0, 0
+      x, y = 0, 0
       -- fuck this is annoying
       local vertices = {x - self._yOffset, y - self._xOffset, 
                 x + self._xOffset, y + self._yOffset, 
@@ -68,3 +73,5 @@ function ShieldRenderComponent:draw()
     love.graphics.pop()
   end
 end
+
+return ShieldRenderComponent

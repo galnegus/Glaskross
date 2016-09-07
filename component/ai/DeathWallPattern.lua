@@ -1,4 +1,9 @@
-DeathWallPattern = Class{}
+local Class = require "lib.hump.Class"
+local Pattern = require "component.ai.Pattern"
+local Signals = require "constants.Signals"
+local EntityTypes = require "constants.EntityTypes"
+
+local DeathWallPattern = Class{}
 DeathWallPattern:include(Pattern)
 
 function DeathWallPattern:init()
@@ -15,3 +20,5 @@ end
 function DeathWallPattern:boom(entry)
   Signal.emit(Signals.ADD_ENTITY, EntityCreator.create(EntityTypes.DEATH_WALL, entry.x, entry.y, entry.maxVelFactor))
 end
+
+return DeathWallPattern

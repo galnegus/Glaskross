@@ -1,3 +1,9 @@
+local Camera = require "lib.hump.Camera"
+local World = require "World"
+local GameGUI = require "gui.game.GameGUI"
+local Constants = require "constants.Constants"
+local Signals = require "constants.Signals"
+
 game = {}
 
 function game:init()

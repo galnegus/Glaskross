@@ -1,4 +1,8 @@
-Color = Class{}
+local Class = require "lib.hump.Class"
+local Constants = require "constants.Constants"
+local Signals = require "constants.Signals"
+
+local Color = Class{}
 
 local function colorFunc(self, r, g, b, duration)
   duration = duration or Constants.BOXY_PHASE_TRANS_TIME
@@ -42,11 +46,11 @@ function Color:init(r, g, b, alpha, static)
   self._alpha = alpha
 
   if not static then
-    if Colors.state == Signals.COLOR_INVERT then
+    --[[if Colors.state == Signals.COLOR_INVERT then
       invert(self, 0)
     elseif Colors.state == Signals.COLOR_MIX then
       mix(self, Colors.stateColor, 0)
-    end
+    end]]
 
     Signal.register(Signals.COLOR_INVERT, function(duration)
       invert(self, duration)
@@ -68,3 +72,5 @@ end
 function Color:unpack()
   return self.r, self.g, self.b
 end
+
+return Color

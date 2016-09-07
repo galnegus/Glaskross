@@ -1,3 +1,7 @@
+local MenuList = require "gui.menu.MenuList"
+local World = require "World"
+local Constants = require "constants.Constants"
+
 menu = {}
 
 function menu:init()

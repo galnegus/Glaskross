@@ -1,3 +1,30 @@
+local Entity = require "Entity"
+
+local BoxyAIComponent = require "component.ai.BoxyAIComponent"
+local DeathWallBodyComponent = require "component.body.DeathWallBodyComponent"
+local BoxyBackgroundComponent = require "component.background.BoxyBackgroundComponent"
+local VelocityRotatingBodyComponent = require "component.body.VelocityRotatingBodyComponent"
+local BouncerBodyComponent = require "component.body.BouncerBodyComponent"
+local RotatingBodyComponent = require "component.body.RotatingBodyComponent"
+local ShieldBodyComponent = require "component.body.ShieldBodyComponent"
+local BouncerSwordBodyComponent = require "component.body.BouncerSwordBodyComponent"
+local ParticleDeathEffectComponent = require "component.deatheffect.ParticleDeathEffectComponent"
+local ShieldInputComponent = require "component.input.ShieldInputComponent"
+local MovementComponent = require "component.movement.MovementComponent"
+local ConstantMovementComponent =  require "component.movement.ConstantMovementComponent"
+local BouncerMovementComponent = require "component.movement.BouncerMovementComponent"
+local ShieldRenderComponent = require "component.render.ShieldRenderComponent"
+local RenderComponent = require "component.render.RenderComponent"
+local HPComponent = require "component.HPComponent"
+local OptimizedTrailEffectComponent = require "component.OptimizedTrailEffectComponent"
+
+local BodyTypes = require "constants.BodyTypes"
+local CollisionRules = require "constants.CollisionRules"
+local EntityTypes = require "constants.EntityTypes"
+local Colors = require "constants.Colors"
+local Signals = require "constants.Signals"
+local Constants = require "constants.Constants"
+
 EntityCreator = {}
 
 local _idCounter = 0
@@ -91,10 +118,7 @@ local function deathWall(x, y, maxVelFactor)
     (x == -1 and y == 0) or (x == 1 and y == 0), 
     "Invalid values of 'x' and 'y' parameters of death wall")
 
-  local startX = 0
-  local startY = 0
-  local width = 0
-  local height = 0
+  local startX, startY, width, height
 
   if x ~= 0 then
     width = Constants.TILE_SIZE

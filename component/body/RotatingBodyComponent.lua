@@ -1,4 +1,7 @@
-RotatingBodyComponent = Class{}
+local Class = require "lib.hump.Class"
+local BodyComponent = require "component.body.BodyComponent"
+
+local RotatingBodyComponent = Class{}
 RotatingBodyComponent:include(BodyComponent)
 
 function RotatingBodyComponent:init(options)
@@ -17,3 +20,5 @@ function RotatingBodyComponent:update(dt)
 
   BodyComponent.update(self, dt)
 end
+
+return RotatingBodyComponent

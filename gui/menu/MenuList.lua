@@ -1,4 +1,16 @@
-MenuList = Class{}
+local Class = require "lib.hump.Class"
+local Entity = require "Entity"
+local VelocityRotatingBodyComponent = require "component.body.VelocityRotatingBodyComponent"
+local RenderComponent = require "component.render.RenderComponent"
+local TargettedMovementComponent = require "component.movement.TargettedMovementComponent"
+local OptimizedTrailEffectComponent = require "component.OptimizedTrailEffectComponent"
+local EntityTypes = require "constants.EntityTypes"
+local BodyTypes = require "constants.BodyTypes"
+local Colors = require "constants.Colors"
+local Constants = require "constants.Constants"
+local MenuItem = require "gui.menu.MenuItem"
+
+local MenuList = Class{}
 
 local OFFSET = 96
 
@@ -87,3 +99,5 @@ function MenuList:_debugDraw()
   --local listHeight = FONT:getHeight() * self._size + OFFSET * (self._size - 1)
   love.graphics.rectangle("fill", 185, (love.graphics.getHeight() / 2 - self:height() / 2), 3, self:height())
 end
+
+return MenuList
