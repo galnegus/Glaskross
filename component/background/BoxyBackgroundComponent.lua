@@ -33,7 +33,7 @@ function BoxyBackgroundComponent:init()
   self._boxes[2] = BoxyBox(Constants.TILE_SIZE, -Constants.TILE_SIZE, Colors.BOXY_LAYER_TWO, hoverLimit * 0.8, hoverLimit * 0.2) -- 8. 2
   self._boxes[3] = BoxyBox(0, 0, Colors.BOXY_LAYER_THREE, hoverLimit, 0) -- 10, 0
 
-  self._boxes[#self._boxes].alpha = 255
+  self._boxes[#self._boxes].alpha = 1
   Signal.emit(Signals.COLOR_MIX, self._boxes[#self._boxes].color, 0)
   
   Signal.register(Signals.BOXY_NEXT_PHASE, function()
@@ -43,7 +43,7 @@ function BoxyBackgroundComponent:init()
       end)
     end
     if #self._boxes > 1 then
-      game.timer:tween(Constants.BOXY_PHASE_TRANS_TIME, self._boxes[#self._boxes - 1], {alpha = 255}, 'in-out-sine')
+      game.timer:tween(Constants.BOXY_PHASE_TRANS_TIME, self._boxes[#self._boxes - 1], {alpha = 1}, 'in-out-sine')
       for i = #self._boxes - 1, 1, -1 do
         local offset = (#self._boxes - 1 - i) * Constants.TILE_SIZE
         game.timer:tween(Constants.BOXY_PHASE_TRANS_TIME, self._boxes[i], {xOffset = offset, yOffset = -offset}, 'in-out-sine')

@@ -95,7 +95,7 @@ end
 function World:draw()
   -- draw walls
   --[[
-  love.graphics.setColor(0, 0, 0, 255)
+  love.graphics.setColor(0, 0, 0, 1)
   self._walls.bottom:draw('fill')
   self._walls.left:draw('fill')
   self._walls.right:draw('fill')

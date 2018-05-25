@@ -6,7 +6,7 @@ function MenuItem:init(text, font, callback)
   self._text = text or "placeholder"
   self._graphic = love.graphics.newText(font, self._text);
   self._callback = callback
-  self._color = {255, 255, 255, 200}
+  self._color = {1, 1, 1, 0.78}
   self._tweenHandler = nil
 end
 

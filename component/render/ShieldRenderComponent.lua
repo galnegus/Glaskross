@@ -44,7 +44,7 @@ function ShieldRenderComponent:draw()
   if self._active then
     local x, y = self.owner.body:center()
 
-    love.graphics.setColor(255, 0, 0, 50)
+    love.graphics.setColor(1, 0, 0, 0.2)
     --self.owner.body:draw()
 
     love.graphics.push()

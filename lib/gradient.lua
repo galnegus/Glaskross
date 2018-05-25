@@ -15,7 +15,7 @@ function gradient(colors)
         else
             x, y = i - 1, 0
         end
-        result:setPixel(x, y, color[1], color[2], color[3], color[4] or 255)
+        result:setPixel(x, y, color[1], color[2], color[3], color[4] or 1)
     end
     result = love.graphics.newImage(result)
     result:setFilter('linear', 'linear')

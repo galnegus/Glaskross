@@ -28,7 +28,7 @@ function GameGUI:draw()
     element:draw()
   end
 
-  love.graphics.setColor(255, 255, 255, 255)
+  love.graphics.setColor(1, 1, 1, 1)
   love.graphics.print("Current FPS: " .. tostring(love.timer.getFPS( )), 10, love.graphics.getHeight() - 20)
 end
 

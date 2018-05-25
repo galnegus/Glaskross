@@ -16,10 +16,10 @@ function Tile:update(dt)
 end
 
 function Tile:draw()
-  love.graphics.setColor(
-    Colors.BG_COLOR:r() + love.math.random(Colors.BG_COLOR_RAND:r()), 
-    Colors.BG_COLOR:g() + love.math.random(Colors.BG_COLOR_RAND:g()), 
-    Colors.BG_COLOR:b() + love.math.random(Colors.BG_COLOR_RAND:b()), 
+  love.graphics.setColor( -- random generates number between 1 and the argument, FIX!
+    Colors.BG_COLOR:r() + love.math.random() * Colors.BG_COLOR_RAND:r(), 
+    Colors.BG_COLOR:g() + love.math.random() * Colors.BG_COLOR_RAND:g(), 
+    Colors.BG_COLOR:b() + love.math.random() * Colors.BG_COLOR_RAND:b(), 
     Colors.BG_COLOR:alpha())
   love.graphics.rectangle("fill", self._x, self._y, self._width, self._height)
 end

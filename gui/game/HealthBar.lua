@@ -24,10 +24,10 @@ end
 
 function HealthBar:draw()
   local width = self._health * self._width
-  local blue = self._health * 200
-  local green = self._health * 200
+  local blue = self._health * 0.78
+  local green = self._health * 0.78
 
-  love.graphics.setColor(200, green, blue, 255)
+  love.graphics.setColor(0.78, green, blue, 1)
   love.graphics.rectangle("fill", self._x, self._y, width, self._height)
 end
 

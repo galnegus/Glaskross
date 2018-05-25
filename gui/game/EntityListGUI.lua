@@ -11,7 +11,7 @@ function EntityListGUI:update(dt)
 end
 
 function EntityListGUI:draw()
-  love.graphics.setColor(255, 255, 255, 255)
+  love.graphics.setColor(1, 1, 1, 1)
   local rowHeight = 20;
   local y = 50;
   local x = 20;

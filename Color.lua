@@ -17,7 +17,7 @@ local function colorFunc(self, r, g, b, duration)
 end
 
 local function invert(self, duration)
-  local r, g, b = 255 - self._r, 255 - self._g, 255 - self._b
+  local r, g, b = 1 - self._r, 1 - self._g, 1 - self._b
   colorFunc(self, r, g, b, duration)
 end
 

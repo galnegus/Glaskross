@@ -14,8 +14,8 @@ local MenuList = Class{}
 
 local OFFSET = 96
 
-local COLOR = {255, 255, 255, 200}
-local SELECTED_COLOR = {200, 150, 255, 200}
+local COLOR = {1, 1, 1, 0.78}
+local SELECTED_COLOR = {0.78, 0.58, 1, 0.78}
 
 local FONT = love.graphics.newFont("assets/fonts/Share/Share-Regular.ttf", 60)
 

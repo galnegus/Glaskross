@@ -2,12 +2,12 @@ return {
   defaultScheme = "phaseOne",
   schemes = {
     phaseOne = {
-      player = {255, 255, 255, 255},
-      monster = {255, 0, 0, 255}
+      player = {1, 1, 1, 1},
+      monster = {1, 0, 0, 1}
     },
     phaseTwo = {
-      player = {255, 255, 255, 255},
-      monster = {255, 0, 0, 255}
+      player = {1, 1, 1, 1},
+      monster = {1, 0, 0, 1}
     }
   }
   
